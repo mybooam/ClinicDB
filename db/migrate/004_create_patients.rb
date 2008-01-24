@@ -4,8 +4,8 @@ class CreatePatients < ActiveRecord::Migration
 	  t.column :first_name, :string, :null => false
 	  t.column :last_name, :string, :null => false
 	  t.column :dob, :date, :null => false
-	  t.column :sex, :enum, :limit => [:male, :female], :null => false
-	  t.column :ethnicity, :integer, :null => false
+	  t.column :sex, :string, :null => false
+	  t.column :ethnicity_id, :integer, :null => false
       t.column :prev_etoh_use, :boolean
 	  t.column :curr_etoh_use, :boolean
 	  t.column :etoh_notes, :text

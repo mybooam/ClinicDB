@@ -1,0 +1,3 @@
+class PrescriptionChoiceController < ApplicationController
+	active_scaffold
+end
