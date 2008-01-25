@@ -9,11 +9,11 @@ class PopulateChoices < ActiveRecord::Migration
 	ChildhoodDisease.create :name => "Chicken Pox"
 	ChildhoodDisease.create :name => "Polio"
 	
-	Immunization.create :name=>"Measles"
-	Immunization.create :name=>"Mumps"
-	Immunization.create :name=>"Rubella"
-	Immunization.create :name=>"Polio"
-	Immunization.create :name=>"Hepatitis B"
+	ImmunizationHistory.create :name=>"Measles"
+	ImmunizationHistory.create :name=>"Mumps"
+	ImmunizationHistory.create :name=>"Rubella"
+	ImmunizationHistory.create :name=>"Polio"
+	ImmunizationHistory.create :name=>"Hepatitis B"
 	
 	FamilyHistory.create :name => "Hypertension"
 	FamilyHistory.create :name => "Diabetes"
@@ -31,6 +31,13 @@ class PopulateChoices < ActiveRecord::Migration
 	Ethnicity.create :name => "Hispanic"
 	Ethnicity.create :name => "Asian/Pacific Islander"
 	Ethnicity.create :name => "Other"
+	
+	Drug.create :name => "Tylenol", :units => "mg"
+	Drug.create :name => "Asprin", :units => "mg"
+	Drug.create :name => "Ibuprofen", :units => "mg"
+	
+	ImmunizationDrug.create :name => "Fluvax"
+	
   end
 
   def self.down

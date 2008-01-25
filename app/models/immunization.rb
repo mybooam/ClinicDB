@@ -1,7 +1,8 @@
 class Immunization < ActiveRecord::Base
-	has_and_belongs_to_many :patients
+	belongs_to :visit
+	belongs_to :immunization_drug
 	
 	def to_label
-		"#{name}"
+		"#{immunization_drug.name} #{visit.session.session_date}"
 	end
 end

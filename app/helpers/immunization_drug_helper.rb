@@ -1,0 +1,2 @@
+module ImmunizationDrugHelper
+end

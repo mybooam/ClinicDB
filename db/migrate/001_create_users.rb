@@ -4,6 +4,7 @@ class CreateUsers < ActiveRecord::Migration
 	  t.column :first_name, :string, :null => false
 	  t.column :last_name, :string, :null => false
 	  t.column :email, :string, :null => false
+	  t.column :active, :boolean, :default => true
       t.timestamps
     end
   end

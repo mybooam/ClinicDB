@@ -1,0 +1,2 @@
+module ImmunizationHistoryHelper
+end
