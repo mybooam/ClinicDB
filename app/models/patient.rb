@@ -6,4 +6,8 @@ class Patient < ActiveRecord::Base
 	has_and_belongs_to_many :childhood_diseases
 	has_and_belongs_to_many :family_histories
 	has_and_belongs_to_many :immunizations
+	
+	def to_label
+		"#{last_name}, #{first_name} (#{dob})"
+	end
 end
