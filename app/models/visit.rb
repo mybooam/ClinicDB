@@ -4,6 +4,6 @@ class Visit < ActiveRecord::Base
 	has_many :prescriptions
 	
 	def to_label
-		"#{patient.to_label} on #{session.session_date}"
+		"#{patient.to_label} seen #{session.session_date}"
 	end
 end
