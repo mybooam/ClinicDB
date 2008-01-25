@@ -1,5 +1,5 @@
 class UserController < ApplicationController
-  active_scaffold :user do |config|
+	active_scaffold :user do |config|
       config.label = "Users"
       config.columns = [:first_name, :last_name, :email]
       list.sorting = [{:last_name => 'ASC'}, {:first_name => 'ASC'}, {:email => 'ASC'}]
