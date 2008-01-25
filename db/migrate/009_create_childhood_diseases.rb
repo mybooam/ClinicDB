@@ -5,10 +5,12 @@ class CreateChildhoodDiseases < ActiveRecord::Migration
        t.timestamps
     end
 	
-	  create_table :childhood_diseases_patients, :engine => :InnoDB do |t|
+	  create_table :childhood_diseases_patients, :engine => :InnoDB, :primary_key => 'childhood_diseases_patients_index', :id=> false do |t|
   		t.column :patient_id, :integer, :null => false
   		t.column :childhood_disease_id, :integer, :null => false
   	end
+	
+	add_index :childhood_diseases_patients, [:patient_id, :childhood_disease_id], :name => 'childhood_diseases_patients_index'
   end
 
   def self.down
