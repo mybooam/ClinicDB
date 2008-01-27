@@ -1,0 +1,171 @@
+body
+{
+	text-align: center;
+	background-image: url('/images/Caduceus.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed
+}
+
+#frame
+{
+	background-color: #F8F8FF;
+	width: 650px;
+	margin-right:auto;
+	margin-left:145px;
+	margin-top:px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	border: #AAAAAA solid thin;
+}
+
+h1
+{
+	margin-left:5px;
+	margin-right:5px;
+	font-family: courier, serif;
+	border-bottom: #CCCCCC solid thin;
+	border-right: #CCCCCC solid thin;
+	color: #000088;
+	text-align: left;
+}
+
+h2
+{
+	margin-left:25px;
+	margin-right:5px;
+	font-family: courier, serif;
+	color: #000088;
+	text-align: left;
+}
+
+hr
+{
+	border: 0;
+	height: 1px;
+	background-color: #CCCCCC;
+	width: 80%;
+}
+
+table.user_box{
+
+}
+
+table.list
+{
+	border-collapse: collapse;
+	border: #AAAADD solid thin;
+}
+
+table.layout
+{
+	border-collapse: collapse;
+	border: none;
+}
+
+th
+{
+	text-align: left;
+	color: #000088;
+	background-color: #AAAAFF;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top:4px;
+	padding-bottom:2px;
+}
+
+td
+{
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top:4px;
+	padding-bottom:2px;
+}
+
+tr.odd_row
+{
+	background-color: #FFFFFF
+}
+
+tr.even_row
+{
+	background-color: #EEEEFF
+}
+
+.warning
+{
+	background:#FFAAAA;
+	border:1px solid black;
+	padding-left: 5pt;
+	padding-right: 5pt;
+	padding-top: 3pt;
+	padding-bottom: 3pt;
+}
+
+.error
+{
+	background:#AAAAFF;
+	border:1px solid black;
+	padding-left: 5pt;
+	padding-right: 5pt;
+	padding-top: 3pt;
+	padding-bottom: 3pt;
+}
+
+.notice
+{
+	background:#FF8888;
+	border:1px solid black;
+	padding-left: 5pt;
+	padding-right: 5pt;
+	padding-top: 3pt;
+	padding-bottom: 3pt;
+}
+
+p.big {
+	font-size: 14pt;
+	color: #888888;
+}
+
+a.big {
+font-size: 18pt;
+font-weight: bold;
+font-family: courier, serif;
+}
+
+a.list {
+	font-size: 10pt;
+	font-family: monospace;
+	vertical-align: middle;
+}
+
+a.small {
+	font-size: 10pt;
+}
+
+a.list:before {
+content: "[";
+}
+
+a.list:after {
+	content: "]";
+}
+
+a:link {
+	color: #1111DD;
+	text-decoration: none;
+}
+a:visited {
+	color: #1111DD;
+	text-decoration: none;
+}
+a:hover {
+	color: #4444FF;
+	text-decoration: none;
+}
+a:active {
+	color: #1111DD;
+	text-decoration: none;
+}

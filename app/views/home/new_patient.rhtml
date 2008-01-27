@@ -1,0 +1,18 @@
+<h2>New Patient</h2>
+
+<table class="layout">
+	<tr>
+		<td>Name:</td>
+		<td><%= text_field(:patient, :first_name, :size => 20) %></td>
+		<td><%= text_field(:patient, :last_name, :size => 20) %></td>
+	</tr>
+	<tr>
+		<td>Date of birth:</td>
+		<td colspan=2><%= text_field(:patient, :dob, :size => 20) %></td>
+	</tr>
+	<tr>
+		<td>Sex:</td>
+		<td><%= radio_button(:patient, :sex, "M", :checked=>true) %> Male</td>
+		<td><%= radio_button(:patient, :sex, "F") %> Female</td>
+	</tr>
+</table>

@@ -1,0 +1,18 @@
+<h1>PPD: <%= "#{@item.patient.first_name} #{@item.patient.last_name} - #{@item.given_arm} Arm" %></h1>
+
+<% form_tag :action => 'set_result' do -%>
+	<table class='layout'>
+		<tr valign=top>
+			<td>Result:</td>
+			<td><%= select_tag "result", "<option>Positive</option><option>Negative</option><option>Unknown</option>" %></td>
+		</tr>
+		<tr valign=top>
+			<td>Notes:</td>
+			<td><%= text_area_tag "notes" %></td>
+		</tr>
+		<tr>
+	    	<td colspan=2 align=right><%= submit_tag 'Save' %></td>
+		</tr>
+	</table>
+	<%= hidden_field_tag 'id', "#{@item.id}" %>
+<% end -%>

@@ -4,6 +4,10 @@ class PatientController < ApplicationController
 		
 		config.list.columns.exclude :curr_smoking, :prev_smoking, :smoking_py, :curr_etoh_use, :prev_etoh_use, :etoh_notes, :curr_drug_use, :prev_drug_use, :drug_notes, :adult_illness, :surgeries, :allergies, :immunization_histories, :childhood_diseases, :family_histories
 		
+		config.columns[:dob].form_ui = :textarea
+		config.columns[:dob].options[:cols] = 10
+		config.columns[:dob].options[:rows] = 1
+		
 		config.columns[:ethnicity].form_ui = :select
 		config.columns[:curr_smoking].form_ui = :checkbox
 		config.columns[:prev_smoking].form_ui = :checkbox
