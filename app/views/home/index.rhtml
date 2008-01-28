@@ -28,14 +28,14 @@
 			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
 			<% overdue = item.given_date + 3 < Date.today %>
 			<tr class='<%= style %>'>
-				<td width="70px"><font color='<%= overdue ? '#FF0000' : '#000000'%>'><%= item.given_date.strftime('%A') %></font></td>
-				<td width="110px"><font color='<%= overdue ? '#FF0000' : '#000000'%>'><%= Date.today - item.given_date %> days ago</font></td>
+				<td width="70px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= item.given_date.strftime('%A') %></font></td>
+				<td width="110px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= Date.today - item.given_date %> days ago</font></td>
 				<td width="250px"><%= "#{item.patient.last_name}, #{item.patient.first_name}" %></td>
 				<% if overdue %>
 					<td colspan=2><%= link_to 'Clear', {:controller => 'tb_test', :action => 'no_show', :id => item}, :class => 'list' %></td>
 				<% else %>
 					<td><%= link_to 'Read', {:controller => 'tb_test', :action => 'read', :id => item}, :class => 'list' %></td>
-					<td><%= link_to 'No-Show', {:controller => 'tb_test', :action => 'no_show', :id => item}, :class => 'list' %></td>
+					<td><%= link_to 'No-Show', {:controller => 'tb_test', :action => 'no_show', :id => item}, :confirm => "Are you sure you want to mark #{item.patient.first_name} #{item.patient.last_name} as a No-Show?", :class => 'list' %></td>
 				<% end %>
 			</tr>	
 		<% end %>

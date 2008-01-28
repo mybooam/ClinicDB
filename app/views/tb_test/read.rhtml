@@ -2,13 +2,17 @@
 
 <% form_tag :action => 'set_result' do -%>
 	<table class="layout">
-		<tr>
+		<tr bgcolor=#F0F0FF>
 			<td><label for='result'>Result:</label></td>
 			<td><%= select :tb_test, :result, ["Positive", "Negative", "Unknown"] %></td>
 		</tr>
 		<tr>
 			<td><label for='notes'>Notes:</label></td>
 			<td><%= text_area :tb_test, :notes, :value => @item.notes, :cols => 15, :rows => 3 %></td>
+		</tr>
+		<tr bgcolor=#F0F0FF>
+			<td><label>Read by:</label></td>
+			<td><%= text_field :tb_test, :readby_user_id, :size => 16  %></td>
 		</tr>
 		<tr>
 			<td colspan=2 align=right><%= submit_tag 'Save' %></td>
