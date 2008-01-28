@@ -1,0 +1,41 @@
+<% patient=Patient.find(params[:patient_id]) %>
+<h2> <%= "#{patient.first_name} #{patient.last_name}" %>: Visit</h2>
+
+<% default_lot = "" %>
+<% default_exp_date = "" %>
+<% todays_tests = TbTest.find(:all).delete_if{|a| a.given_date != Date.today()}.sort{|a,b| b.created_at <=> a.created_at} %>
+<% if(todays_tests.length>0) %>
+	<% default_lot = todays_tests[0].lot_number %>
+	<% default_exp_date = '%d/%d/%02d' % [todays_tests[0].expiration_date.mon, todays_tests[0].expiration_date.mday, todays_tests[0].expiration_date.year] %>
+<% end %>
+
+<% form_tag "add_for_patient" do %>
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label>Arm:</label></td>
+		<td><%= select :tb_test, :given_arm, ["Right", "Left"], :size => 16  %></td>
+	</tr>
+	<tr>
+		<td><label>Lot #:</label></td>
+		<td><%= text_field :tb_test, :lot_number, :value=>default_lot, :size => 16  %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td><label>Expiration Date:</label></td>
+		<td><%= text_field :tb_test, :expiration_date, :value=>default_exp_date, :size => 10  %></td>
+	</tr>
+	<tr>
+		<td><label>Notes:</label></td>
+		<td><%= text_area :tb_test, :notes, :cols => 15, :rows => 3 %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td><label>Given by:</label></td>
+		<td><%= text_field :tb_test, :givenby_user_id, :size => 16  %></td>
+	</tr>
+	<tr style="border-top: #aaa solid thin">
+		<td colspan=2 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+	<%= hidden_field :tb_test, :patient_id, :value => "#{patient.id}" %>
+</table>
+</center>
+<% end %>

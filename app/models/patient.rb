@@ -7,11 +7,14 @@ class Patient < ActiveRecord::Base
 	has_and_belongs_to_many :family_histories
 	has_and_belongs_to_many :immunization_histories
 	
+	has_many :prescriptions
+	has_many :immunizations
+	
 	def to_label
-		"#{last_name}, #{first_name} (#{dob})"
+		"#{last_name}, #{first_name} (#{dob_str})"
 	end
 	
 	def dob_str
-	  "#{'%d' % dob.mon}/#{'%d' % dob.mday}/#{'%02d' % (dob.year % 100)}"
+	  '%d/%d/%02d' % [dob.mon, dob.mday, dob.year]
   end
 end

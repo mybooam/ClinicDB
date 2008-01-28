@@ -1,7 +1,7 @@
 class CreateVisits < ActiveRecord::Migration
   def self.up
     create_table :visits, :engine => :InnoDB do |t|
-      t.column :session_id, :integer, :null => false
+      t.column :visit_date, :date, :null => false
       t.column :patient_id, :integer, :null => false
       t.column :blood_press_sys, :float
       t.column :blood_press_dias, :float

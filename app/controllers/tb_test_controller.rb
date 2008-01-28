@@ -22,9 +22,9 @@ class TbTestController < ApplicationController
   end
   
   def set_result
-    @item = TbTest.find(params[:id])
-    @item.result=params[:result]
-    @item.notes=params[:notes]
+    @item = TbTest.find(params[:tb_test][:id])
+    @item.result=params[:tb_test][:result]
+    @item.notes=params[:tb_test][:notes]
     @item.read_date = Date.today
     if @item.save
       flash[:notice] = "TB Test result saved"
@@ -32,5 +32,13 @@ class TbTestController < ApplicationController
       flash[:error] = "Error applying TB Test result"
     end
     redirect_to :controller => 'home'
+  end
+  
+  def add_for_patient
+    test = TbTest.new(params[:tb_test])
+    test.given_date = Date.today()
+    test.save
+    
+    redirect_to :controller => 'home', :action => 'patient_visit', :patient_id => test.patient_id
   end
 end

@@ -3,12 +3,10 @@
 	<table class='layout'>
 		<tr>
 			<td width='150px' align=center style='border: #777777 dotted 0px; padding-left: 25px; padding-right: 25px;'>
-				<%= link_to image_tag('/images/new_patient.png', :mouseover=> '/images/new_patient_over.png', :width=>150, :border=>0) , :action => 'new_patient' %> <br/>
-				<%= link_to 'New Patient', {:action => 'new_patient'}, :class=>'big'  %>
+				<%= link_to "#{image_tag '/images/new_patient.png', :mouseover=> '/images/new_patient_over.png', :width=>150, :border=>0 }<br/>New Patient", {:action => 'new_patient'}, :class=>'big'  %>
 			</td>
 			<td width='150px' align=center style='border: #777777 dotted 0px; padding-left: 25px; padding-right: 25px;'>
-				<%= link_to image_tag('/images/existing_patient.png', :mouseover=> '/images/existing_patient_over.png', :width=>150, :border=>0) , :action => 'existing_patient' %> <br/>
-				<%= link_to 'Existing Patient', {:action => 'existing_patient'}, :class=>'big'  %>
+				<%= link_to "#{image_tag '/images/existing_patient.png', :mouseover=> '/images/existing_patient_over.png', :width=>150, :border=>0 }Existing Patient", {:action => 'existing_patient'}, :class=>'big'  %>
 			</td>
 		</tr>
 	</table>

@@ -1,7 +1,8 @@
 class AddedPrescriptionTable < ActiveRecord::Migration
   def self.up
     create_table :prescriptions, :engine => :InnoDB do |t|
-      t.column :visit_id, :integer
+      t.column :patient_id, :integer
+      t.column :given_date, :date
       t.column :drug_id, :integer
       t.column :quantity, :float
       t.column :units, :string

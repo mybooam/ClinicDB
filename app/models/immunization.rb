@@ -1,5 +1,5 @@
 class Immunization < ActiveRecord::Base
-	belongs_to :visit
+	belongs_to :patient
 	belongs_to :immunization_drug
 	
 	def to_label

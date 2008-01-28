@@ -1,5 +1,5 @@
 class Prescription < ActiveRecord::Base
-	belongs_to :visit
+	belongs_to :patient
 	belongs_to :drug
 	
 	def to_label

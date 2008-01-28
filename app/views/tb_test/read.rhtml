@@ -4,16 +4,16 @@
 	<table class="layout">
 		<tr>
 			<td><label for='result'>Result:</label></td>
-			<td><%= select_tag("result", "<option>Positive</option><option>Negative</option><option>Unknown</option>") %></td>
+			<td><%= select :tb_test, :result, ["Positive", "Negative", "Unknown"] %></td>
 		</tr>
 		<tr>
 			<td><label for='notes'>Notes:</label></td>
-			<td><%= text_area_tag "notes" %></td>
+			<td><%= text_area :tb_test, :notes, :value => @item.notes, :cols => 15, :rows => 3 %></td>
 		</tr>
 		<tr>
 			<td colspan=2 align=right><%= submit_tag 'Save' %></td>
 		</tr>
 	</table>
 	
-	<%= hidden_field_tag 'id', "#{@item.id}" %>
+	<%= hidden_field :tb_test, :id, :value=>"#{@item.id}" %>
 <% end -%>
