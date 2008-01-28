@@ -12,10 +12,10 @@
 	</tr>
 	<tr height=100px>
 		<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin">
-			<%= link_to "#{image_tag '/images/stethoscope.png', :height => 80, :border => 0 }<br/>TB Test", {:controller => 'tb_test', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'big' %>
+			<%= link_to "#{image_tag '/images/lung.png', :height => 80, :border => 0 }<br/>TB Test", {:controller => 'tb_test', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'big' %>
 		</td>
 		<td width='150px' align=center style="padding: 15px">
-			<%= link_to "#{image_tag '/images/hypodermic.png', :width => 80, :border => 0 }<br/>Immunization", {:controller => 'immunization', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'big' %>
+			<%= link_to "#{image_tag '/images/hypodermic.png', :height => 80, :border => 0 }<br/>Immunization", {:controller => 'immunization', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'big' %>
 		</td>
 	</tr>
 </table>
