@@ -3,7 +3,8 @@ body
 	text-align: center;
 	background-image: url('/images/Caduceus.png');
 	background-repeat: no-repeat;
-	background-attachment: fixed
+	background-attachment: fixed;
+	color: #000088;
 }
 
 #frame
@@ -57,6 +58,7 @@ table.list
 {
 	border-collapse: collapse;
 	border: #AAAADD solid thin;
+	font-size: 14pt;
 }
 
 table.layout
@@ -94,6 +96,22 @@ tr.even_row
 	background-color: #EEEEFF
 }
 
+table.live_search
+{
+	margin-left:25px;
+	margin-top:15px;
+	border-collapse: collapse;
+	font-size: 16pt;
+	font-color: #2222AA;
+}
+
+table.live_search>tr.patient {
+	background-color: #AAFFAA;
+}
+
+table.live_search>tr.spacer {
+}
+
 .warning
 {
 	background:#FFAAAA;
@@ -124,15 +142,21 @@ tr.even_row
 	padding-bottom: 3pt;
 }
 
-p.big {
+.small
+{
+	font-size: 10pt;
+	color: #333333;
+}
+
+.big {
 	font-size: 14pt;
 	color: #888888;
 }
 
 a.big {
-font-size: 18pt;
-font-weight: bold;
-font-family: courier, serif;
+	font-size: 18pt;
+	font-weight: bold;
+	font-family: courier, serif;
 }
 
 a.list {
@@ -168,4 +192,79 @@ a:hover {
 a:active {
 	color: #1111DD;
 	text-decoration: none;
+}
+
+label {
+	text-align:right;
+	float:left;
+	padding:0.2em;
+	margin:0;
+	margin-top:0.3em;
+	font-family: serif;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #000088;
+} 
+
+input {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	padding: 3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000;
+	color: #000088;
+}
+
+input.checkbox {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	width: 20px;
+	height: 20px;
+	padding: 3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000;
+	color: #000088;
+}
+
+input.radio {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	width: 20px;
+	height: 20px;
+	padding: 3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000;
+	color: #000088;
+}
+
+textarea {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	padding: 3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000;
+	color: #000088;
+}
+
+select {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000000;
+	color: #000088;
 }

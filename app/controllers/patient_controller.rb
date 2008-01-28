@@ -20,4 +20,36 @@ class PatientController < ApplicationController
 		config.columns[:childhood_diseases].form_ui = :select
 		config.columns[:family_histories].form_ui = :select
 	end
+	
+	def live_search
+	    max_listing = 15
+      post_sections = request.raw_post.split('&')
+      if(post_sections.length>1)
+        phrases = post_sections[0].split('%20')
+      
+        query_any = phrases.collect { |a|
+          "(first_name LIKE '%#{a}%' OR last_name LIKE '%#{a}%' OR dob LIKE '%#{a}%')"
+        }.join(" OR ")
+        
+        query_all = phrases.collect { |a|
+          "(first_name LIKE '%#{a}%' OR last_name LIKE '%#{a}%' OR dob LIKE '%#{a}%')"
+        }.join(" AND ")
+      
+        @results_all = Patient.find(:all, :conditions => query_all).sort{|a, b| a.to_label <=> b.to_label}
+        @results_any = Patient.find(:all, :conditions => query_any).sort{|a, b| a.to_label <=> b.to_label}
+        
+        @results = (@results_all + @results_any).uniq
+        
+        if(@results.length > max_listing)
+          @results = @results_all
+        end
+
+        @number_match = @results.length
+        
+        @too_big = @number_match > max_listing
+      end  
+
+      render(:layout => false)
+  end
+  
 end

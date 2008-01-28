@@ -8,6 +8,7 @@ class TbTestController < ApplicationController
 	def no_show
     @item = TbTest.find(params[:id])
     @item.result="No-Show"
+    @item.read_date = Date.today
     if @item.save
       flash[:notice] = "TB Test result saved"
     else
@@ -24,6 +25,7 @@ class TbTestController < ApplicationController
     @item = TbTest.find(params[:id])
     @item.result=params[:result]
     @item.notes=params[:notes]
+    @item.read_date = Date.today
     if @item.save
       flash[:notice] = "TB Test result saved"
     else

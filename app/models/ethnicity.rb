@@ -4,4 +4,8 @@ class Ethnicity < ActiveRecord::Base
 	def to_label
 		"#{name}"
 	end
+	
+	def to_s
+	  to_label
+  end
 end

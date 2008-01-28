@@ -10,4 +10,8 @@ class Patient < ActiveRecord::Base
 	def to_label
 		"#{last_name}, #{first_name} (#{dob})"
 	end
+	
+	def dob_str
+	  "#{'%d' % dob.mon}/#{'%d' % dob.mday}/#{'%02d' % (dob.year % 100)}"
+  end
 end

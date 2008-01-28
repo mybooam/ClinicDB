@@ -1,0 +1,24 @@
+<% if @results %>
+	<% if @results.empty? %>
+		<center><div class="big">- No Matching Patients -</div></center>
+	<% elsif @too_big%>
+		<center><div class="big">- Too Many Results -</div></center>
+	<% else %>
+		<center>
+		<table width="350px" class="live_search">
+		<% for result in @results do %>
+			<tr style="border: #AAAAFF solid thin">
+				<td align=left bgcolor="#AAFFAA">
+					<%= link_to "#{result.last_name}, #{result.first_name}", :controller => 'home', :action => "patient_visit", :patient_id => "#{result.id}" %> <br\>
+					<div class=small><%= result.dob_str %> - <%= result.ethnicity.name %> <%= result.sex %></div>
+				</td>
+				<td align=right bgcolor="#AAFFAA"><%= link_to "[Select]", :controller => 'home', :action => "patient_visit", :patient_id => "#{result.id}" %></td>
+			</tr>	
+			<tr class="spacer" height="10px">
+				<td colspan=2> </td>
+			</tr>
+		<% end %>
+		</table>
+		</center>
+	<% end %>
+<% end %>

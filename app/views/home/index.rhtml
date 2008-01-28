@@ -12,6 +12,7 @@
 			</td>
 		</tr>
 	</table>
+	<hr />
 	<h2>TB Testing</h2>
 	<% if @tb_tests_open.length==0 %>
 		<p class="big">
@@ -29,8 +30,8 @@
 			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
 			<% overdue = item.given_date + 3 < Date.today %>
 			<tr class='<%= style %>'>
-				<td width="60px"><font color='<%= overdue ? '#FF0000' : '#000000'%>'><%= item.given_date.strftime('%A') %></font></td>
-				<td width="90px"><font color='<%= overdue ? '#FF0000' : '#000000'%>'><%= Date.today - item.given_date %> days ago</font></td>
+				<td width="70px"><font color='<%= overdue ? '#FF0000' : '#000000'%>'><%= item.given_date.strftime('%A') %></font></td>
+				<td width="110px"><font color='<%= overdue ? '#FF0000' : '#000000'%>'><%= Date.today - item.given_date %> days ago</font></td>
 				<td width="250px"><%= "#{item.patient.last_name}, #{item.patient.first_name}" %></td>
 				<% if overdue %>
 					<td colspan=2><%= link_to 'Clear', {:controller => 'tb_test', :action => 'no_show', :id => item}, :class => 'list' %></td>
