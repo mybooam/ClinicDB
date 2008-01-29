@@ -15,12 +15,12 @@
 }
 
 td.patient_box_title {
+	background-color: #ffc;
 	color: #000000;
 	border: #aad solid thin;
 	border-bottom: none;
 	font-size: 15pt;
 	font-family: monospace;
-	background-color: #ccf;
 	padding-bottom: 5px;
 	padding-left: 10px;
 }
@@ -33,14 +33,14 @@ td.patient_box_title_blank {
 }
 
 tr.patient_box_top {
-	background-color: #eef;
+	background-color: #ffe;
 	border: #aad solid thin;
 	border-bottom: none;
 }
 
 tr.patient_box_history {
 	border-top: none;
-	background-color: #eef;
+	background-color: #ffe;
 	border-right: #aad solid thin;
 }
 

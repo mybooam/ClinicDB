@@ -27,8 +27,9 @@
 	<h2>Today</h2>
 	<table class="layout">
 		<tr>
-			<% if @todays_visits.length >0 %>
-				<td width=250px>
+			<% if @todays_visits.length > 0 %>
+				<td>
+					<%= render :partial => 'visit/card', :locals => {:visit_id => @todays_visits[0].id} %>
 				</td>
 			<% end %>
 		</tr>
