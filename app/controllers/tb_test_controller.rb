@@ -39,6 +39,6 @@ class TbTestController < ApplicationController
     test.given_date = Date.today()
     test.save
     
-    redirect_to :controller => 'home', :action => 'patient_visit', :patient_id => test.patient_id
+    redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
   end
 end

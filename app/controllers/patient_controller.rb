@@ -39,17 +39,12 @@ class PatientController < ApplicationController
         @results_any = Patient.find(:all, :conditions => query_any).sort{|a, b| a.to_label <=> b.to_label}
         
         @results = (@results_all + @results_any).uniq
-        
-        if(@results.length > max_listing)
-          @results = @results_all
-        end
-
-        @number_match = @results.length
-        
-        @too_big = @number_match > max_listing
       end  
 
       render(:layout => false)
   end
   
+  def set_patient
+    redirect_to :controller => 'home', :action => "patient_home", :patient_id => params[:patient_id]
+  end
 end

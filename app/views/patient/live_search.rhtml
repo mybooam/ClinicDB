@@ -1,21 +1,35 @@
 <% if @results %>
 	<% if @results.empty? %>
 		<center><div class="big">- No Matching Patients -</div></center>
-	<% elsif @too_big%>
-		<center><div class="big">- Too Many Results -</div></center>
 	<% else %>
+		<% if(@results.length>3)	
+			@results_trimmed = @results[1..3]
+		else
+			@results_trimmed = @results
+		end
+		%>
+		<%= hidden_field_tag :patient_id, @results_trimmed[0].id %>
 		<center>
-		<table width="350px" class="live_search">
-		<% for result in @results do %>
-			<tr style="border: #AAAAFF solid thin">
+		<table width="500px" class="live_search">
+		<% first = true %>
+		<% for result in @results_trimmed do %>
+			<tr style="border: <%= first ? '#5555FF solid 4px' : '#AAAAFF solid thin'%>">
 				<td align=left bgcolor="#AAFFAA">
-					<%= link_to "#{result.last_name}, #{result.first_name}", :controller => 'home', :action => "patient_visit", :patient_id => "#{result.id}" %> <br\>
+					<%= link_to "#{result.last_name}, #{result.first_name}", :action => "set_patient", :patient_id => "#{result.id}" %> <br\>
 					<div class=small><%= result.dob_str %> - <%= result.ethnicity.name %> <%= result.sex %></div>
 				</td>
-				<td align=right bgcolor="#AAFFAA"><%= link_to "[Select]", :controller => 'home', :action => "patient_visit", :patient_id => "#{result.id}" %></td>
+				<td align=right bgcolor="#AAFFAA"><%= link_to "[ #{first ? 'Enter to ' : ''}Select]", :action => "set_patient", :patient_id => "#{result.id}" %></td>
 			</tr>	
 			<tr class="spacer" height="10px">
 				<td colspan=2> </td>
+			</tr>
+			<% first = false %>
+		<% end %>
+		<% if @results_trimmed.length<@results.length %>
+			<tr style="border: #AAAAFF solid thin">
+				<td align=center bgcolor="#AAFFAA" colspan=2>
+					<div class="big">(<%= @results.length - @results_trimmed.length %> More Patient<%= @results.length - @results_trimmed.length>1 ? 's' : '' %>)</div>
+				</td>
 			</tr>
 		<% end %>
 		</table>

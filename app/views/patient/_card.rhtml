@@ -1,0 +1,147 @@
+<% patient = Patient.find(params[:patient_id])%>
+
+<div class="patient_box">
+	<table class="layout" width=100%>
+		<tr>
+			<td class="patient_box_title" width=40%>
+				<%= "#{patient.last_name}, #{patient.first_name}"%>
+			</td>
+			<td colspan=2 class="patient_box_title_blank">
+				&nbsp;
+			</td>
+		<tr>
+		<tr class="patient_box_top">
+			<td colspan=2>
+				<div class="patient_box_personal">
+					<%= patient.ethnicity %> <%= patient.sex %>, Age: <%= patient.age %> (<%= patient.dob_str %>)
+				</div>
+			</td>
+			<td>
+				<div class="patient_box_editlink">
+					<%= link_to "[edit]", :controller => 'patient', :action => 'edit', :id => patient.id %>
+				</div>
+			</td>
+		</tr>
+		
+		<tr class="patient_box_history">
+			<td class="patient_box_history" colspan=3>
+				<div class="patient_box_group">
+					<div class="patient_box_heading">
+						Adult Illnesses:
+					</div>
+					<div class="patient_box_text">
+						<%= patient.adult_illness ? (patient.adult_illness.length > 0 ? patient.adult_illness : 'None') : 'None' %>
+					</div>
+				</div>
+				
+				<div class="patient_box_group">
+					<div class="patient_box_heading">
+						Surgeries:
+					</div>
+					<div class="patient_box_text">
+						<%= patient.surgeries ? (patient.surgeries.length > 0 ? patient.surgeries : 'None') : 'None' %>
+					</div>
+				</div>
+				
+				<div class="patient_box_group">
+					<div class="patient_box_heading">
+						Allergies:
+					</div>
+					<div class="patient_box_text">
+						<%= patient.allergies ? (patient.allergies.length > 0 ? patient.allergies : 'None') : 'None' %>
+					</div>
+				</div>
+			</td>
+		</tr>
+		
+		<tr class="patient_box_history">
+			<td width=80% class="patient_box_history" colspan=2>
+				<div class="patient_box_group">
+					<% text="None" %>
+					<% if patient.childhood_diseases %>
+						<% if patient.childhood_diseases.length>1 %>
+							<% text = patient.childhood_diseases.collect{|a| "#{a.to_s}"}.join(", ") %>
+						<% else %>
+						 	<% text = "None" %>
+						<% end %>
+					<% end %>
+					<div class="patient_box_heading">
+						Childhood Diseases:
+					</div>
+					<div class="patient_box_text">
+						<%= text %>
+					</div>
+				</div>
+				
+				<div class="patient_box_group">
+					<% text="None" %>
+					<% if patient.immunization_histories %>
+						<% if patient.immunization_histories.length>1 %>
+							<% text = patient.immunization_histories.collect{|a| "#{a.to_s}"}.join(", ") %>
+						<% end %>
+					<% end %>
+					<div class="patient_box_heading">
+						Childhood Immunizations:
+					</div>
+					<div class="patient_box_text">
+						<%= text %>
+					</div>
+				</div>
+				
+				<div class="patient_box_group">
+					<% text="None" %>
+					<% if patient.family_histories %>
+						<% if patient.family_histories.length>1 %>
+							<% text = patient.family_histories.collect{|a| "#{a.to_s}"}.join(", ") %>
+						<% end %>
+					<% end %>
+					<div class="patient_box_heading">
+						Family History:
+					</div>
+					<div class="patient_box_text">
+						<%= text %>
+					</div>
+				</div>
+			</td>
+			
+			<td class="patient_box_history">
+				<div class="patient_box_group">
+					<div class="patient_box_heading">
+						<%= patient.curr_smoking ? 'Current' : (patient.prev_smoking ? 'Previous' : 'No') %> Smoking<%= (patient.prev_smoking||patient.curr_smoking) ? " - #{patient.smoking_py} py" : '' %>
+					</div>
+				</div>
+				<div class="patient_box_group">
+					<% if patient.etoh_notes %>
+						<% if patient.etoh_notes.length>1 %>
+							<% etoh_notes = patient.etoh_notes %>
+						<% end %>
+					<% end %>
+					<div class="patient_box_heading">
+						<%= patient.curr_etoh_use ? 'Current Alcohol Use' : (patient.prev_etoh_use ? 'Previous Alcohol Use' : 'No Alcohol Use') %><%= etoh_notes ? ':' : '' %>
+					</div>
+					<% if etoh_notes %>
+						<div class="patient_box_text">
+							<%= etoh_notes %>
+						</div>
+					<% end %>
+				</div>
+				
+				<div class="patient_box_group">
+					<% if patient.drug_notes %>
+						<% if patient.drug_notes.length>1 %>
+							<% drug_notes = patient.drug_notes %>
+						<% end %>
+					<% end %>
+					<div class="patient_box_heading">
+						<%= patient.curr_drug_use ? 'Current Drug Use' : (patient.prev_drug_use ? 'Previous Drug Use' : 'No Drug Use') %><%= drug_notes ? ':' : '' %>
+					</div>
+					<% if drug_notes %>
+						<div class="patient_box_text">
+							<%= drug_notes %>
+						</div>
+					<% end %>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>

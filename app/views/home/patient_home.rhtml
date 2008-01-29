@@ -1,0 +1,36 @@
+<center>
+	<%= render :partial => 'patient/card', :locals => {:patient_id => @patient.id} %>
+</center>
+
+<center>
+<div class="patient_action_box">
+	<table class=layout align=center>
+		<tr height=100px>
+			<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin;">
+				<%= link_to "#{image_tag '/images/stethoscope.png', :height => 80, :border => 0 }<br/>New Visit", {:controller => 'visit', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+			</td>
+			<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin;">
+				<%= link_to "#{image_tag '/images/mortor_and_pestol.png', :height => 80, :border => 0 }<br/>New Prescription", {:controller => 'prescription', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+			</td>
+			<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin">
+				<%= link_to "#{image_tag '/images/lung.png', :height => 80, :border => 0 }<br/>TB Test", {:controller => 'tb_test', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+			</td>
+			<td width='150px' align=center style="padding: 15px">
+				<%= link_to "#{image_tag '/images/hypodermic.png', :height => 80, :border => 0 }<br/>Immunization", {:controller => 'immunization', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+			</td>
+		</tr>
+	</table>
+</div>
+</center>
+
+<% if @todays_visits.length + @todays_tb_tests.length + @todays_prescrioptions.length + @todays_immunizations.length > 0 %>
+	<h2>Today</h2>
+	<table class="layout">
+		<tr>
+			<% if @todays_visits.length >0 %>
+				<td width=250px>
+				</td>
+			<% end %>
+		</tr>
+	</table>
+<% end %>

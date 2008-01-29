@@ -1,0 +1,97 @@
+.patient_box {
+	padding: 0px;
+	margin: 5px;
+	width: 550px;
+	margin-bottom: 15px;
+	border-left: #aad solid thin;
+	border-bottom: #aad solid thin;
+}
+
+.patient_box_editlink {
+	text-align: right;
+	font-size: 10pt;
+	margin-right: 0px;
+	padding-right: 0px;
+}
+
+td.patient_box_title {
+	color: #000000;
+	border: #aad solid thin;
+	border-bottom: none;
+	font-size: 15pt;
+	font-family: monospace;
+	background-color: #ccf;
+	padding-bottom: 5px;
+	padding-left: 10px;
+}
+
+td.patient_box_title_blank {
+	border-right: none;
+	border-top: none;
+	border-bottom: #aad solid thin;
+	background-color: none;
+}
+
+tr.patient_box_top {
+	background-color: #eef;
+	border: #aad solid thin;
+	border-bottom: none;
+}
+
+tr.patient_box_history {
+	border-top: none;
+	background-color: #eef;
+	border-right: #aad solid thin;
+}
+
+td.patient_box_history {
+	vertical-align: top;
+}
+
+.patient_box_personal {
+	color: #000000;
+	font-family: monospace;
+	font-size: 10pt;
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.patient_box_editlink {
+	text-align: right;
+	font-size: 10pt;
+	margin-right: 0px;
+	padding-right: 0px;
+	margin-top: 4px;
+}
+
+.patient_box_group {
+	margin-bottom: 5px;
+	padding-left: 5px;
+	padding-top: 4px;
+	border-left: #ccd solid thin;
+	border-top: #ccd solid thin;
+}
+
+.patient_box_heading {
+	color: #000088;
+	font-size: 11pt;
+	font-family: sans-serif;
+}
+
+.patient_box_text {
+	color: #000000;
+	font-size: 10pt;
+	font-family: monospace;
+	margin-left: 0px;
+	padding-left: 25px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+.patient_action_box {
+	background-color: #dfd;
+	border: #aad solid thin;
+	padding: 0px;
+	margin: 5px;
+	margin-bottom: 15px;
+}

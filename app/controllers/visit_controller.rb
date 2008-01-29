@@ -8,4 +8,12 @@ class VisitController < ApplicationController
 		config.columns[:session].form_ui = :select
 		config.columns[:users].form_ui = :select
 	end
+	
+	def add_for_patient
+    visit = Visit.new(params[:visit])
+    visit.visit_date = Date.today()
+    visit.save
+    
+    redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
+  end
 end

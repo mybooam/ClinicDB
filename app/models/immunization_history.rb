@@ -4,4 +4,8 @@ class ImmunizationHistory < ActiveRecord::Base
 	def to_label
 		"#{name}"
 	end
+
+  	def to_s
+  	  "#{name}"
+    end
 end

@@ -1,12 +1,11 @@
+<% form_tag :controller => 'patient', :action => 'set_patient' do -%>
 <table class="layout">
 	<tr>
 		<td>
 			<h2>Find Patient:</h2>
 		</td>
 		<td align="right">
-			<% form_tag :action => 'set_patient' do -%>
 			<%= text_field_tag :searchtext %> <img align="top" alt="spinner" id="spinner" src="/images/spinner.gif" style="display:none;" />
-			<% end %>
 		</td>
 	</tr>
 </table>
@@ -23,3 +22,4 @@
                  :url => { :controller => :patient, :action => :live_search }) %>
 
 <div id="search_hits"></div>
+<% end %>

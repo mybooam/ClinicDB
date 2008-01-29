@@ -17,4 +17,8 @@ class Patient < ActiveRecord::Base
 	def dob_str
 	  '%d/%d/%02d' % [dob.mon, dob.mday, dob.year]
   end
+  
+  def age
+    Date.today().year - dob.year - ((dob.mon*100+dob.mday >  Date.today().mon*100+Date.today().mday) ? 1 : 0)
+  end
 end

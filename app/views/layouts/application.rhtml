@@ -4,6 +4,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="/stylesheets/default.css" type="text/css" />
+		<link rel="stylesheet" href="/stylesheets/boxes.css" type="text/css" />
 		<title>
 			ClinicDB::<%= controller.controller_name.sub("_", " ").capitalize %>::<%= controller.action_name.sub("_", " ").capitalize %>
 		</title>
@@ -21,40 +22,42 @@
 		</SCRIPT>
 	</head>
 	<body>
-		<div id="frame">
-			<% if flash[:error] -%>
-		    	<div class=error><%= flash[:error] %> </div>
-		    <% end -%>
+		<div id="frame1">
+			<div id="frame2">
+				<% if flash[:error] -%>
+			    	<div class=error><%= flash[:error] %> </div>
+			    <% end -%>
 		
-			<% if flash[:warning] -%>
-		    	<div class=error><%= flash[:warning] %> </div>
-		    <% end -%>
+				<% if flash[:warning] -%>
+			    	<div class=error><%= flash[:warning] %> </div>
+			    <% end -%>
 		
-			<% if flash[:notice] -%>
-		    	<div class=error><%= flash[:notice] %> </div>
-		    <% end -%>
-			<h1>ClinicDB: <%= controller.controller_name.sub("_", " ").capitalize %></h1>
+				<% if flash[:notice] -%>
+			    	<div class=error><%= flash[:notice] %> </div>
+			    <% end -%>
+				<h1>ClinicDB: <%= controller.controller_name.sub("_", " ").capitalize %></h1>
 			
-			<%= yield  %>
+				<%= yield  %>
 			
-			<hr/>
-			<div align=center>
-				<a href="/home" class="small">Home</a> |
-				<a href="/patient" class="small">Patients</a> |
-				<a href="/visit" class="small">Visits</a> |
-				<a href="/tb_test" class="small">TB Tests</a> |
-				<a href="/session" class="small">Sessions</a> |
-				<a href="/attending" class="small">Attendings</a> |
-				<a href="/user" class="small">Users</a>
-				<br/>
-				<a href="/drug" class="small">Drugs</a> |
-				<a href="/immunization_drug" class="small">Immunization Drugs</a> |
-				<a href="/immunization_history" class="small">Immunization Histories</a> |
-				<a href="/family_history" class="small">Family Histories</a> |
-				<a href="/childhood_disease" class="small">Childhood Diseases</a> |
-				<a href="/ethnicity" class="small">Ethnicities</a>
+				<hr/>
+				<div align=center>
+					<a href="/home" class="small">Home</a> |
+					<a href="/patient" class="small">Patients</a> |
+					<a href="/visit" class="small">Visits</a> |
+					<a href="/tb_test" class="small">TB Tests</a> |
+					<a href="/session" class="small">Sessions</a> |
+					<a href="/attending" class="small">Attendings</a> |
+					<a href="/user" class="small">Users</a>
+					<br/>
+					<a href="/drug" class="small">Drugs</a> |
+					<a href="/immunization_drug" class="small">Immunization Drugs</a> |
+					<a href="/immunization_history" class="small">Immunization Histories</a> |
+					<a href="/family_history" class="small">Family Histories</a> |
+					<a href="/childhood_disease" class="small">Childhood Diseases</a> |
+					<a href="/ethnicity" class="small">Ethnicities</a>
+				</div>
 			</div>
-			
+			<p class="footer">Created for the LSUSHC Homeless Clinic System</p>
 		</div>
 	</body>
 </html>

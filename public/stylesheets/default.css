@@ -7,13 +7,21 @@ body
 	color: #000088;
 }
 
-#frame
+#frame1
 {
-	background-color: #F8F8FF;
 	width: 650px;
 	margin-right:auto;
 	margin-left:145px;
-	margin-top:px;
+	margin-top:5px;
+	padding: 0px;
+	text-align: left;
+}
+
+#frame2
+{
+	background-color: #F8F8FF;
+	width: 650px;
+	margin:0px;
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-top: 5px;
@@ -153,8 +161,22 @@ table.live_search>tr.spacer {
 	color: #888888;
 }
 
+p.footer {
+	font-size: 9pt;
+	font-family: monospace;
+	color: #AAAAAA;
+	margin-top: 3px;
+	text-align: right;
+}
+
 a.big {
 	font-size: 18pt;
+	font-weight: bold;
+	font-family: courier, serif;
+}
+
+a.medium {
+	font-size: 14pt;
 	font-weight: bold;
 	font-family: courier, serif;
 }
