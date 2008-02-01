@@ -7,11 +7,11 @@ class HomeController < ApplicationController
   end
   
   def patient_home
-    @patient = Patient.find(params['patient_id'])
+    @patient = Patient.find(params['patient_id'], :include=> [:visits, :tb_tests, :immunizations, :prescriptions] )
     
     @todays_visits = @patient.visits.select{|a| a.visit_date == Date.today()}
     @todays_tb_tests = @patient.tb_tests.select{|a| a.given_date == Date.today() || a.read_date == Date.today()}
-    @todays_prescrioptions = @patient.prescriptions.select{|a| a.given_date == Date.today()}
+    @todays_prescriptions = @patient.prescriptions.select{|a| a.given_date == Date.today()}
     @todays_immunizations = @patient.immunizations.select{|a| a.given_date == Date.today()}
     
     @other_visits = @patient.visits.delete_if{|a| @todays_visits.include?(a)}.sort{|a,b| b.visit_date <=> a.visit_date }

@@ -23,15 +23,33 @@
 </div>
 </center>
 
-<% if @todays_visits.length + @todays_tb_tests.length + @todays_prescrioptions.length + @todays_immunizations.length > 0 %>
+<% if @todays_visits.length + @todays_tb_tests.length + @todays_prescriptions.length + @todays_immunizations.length > 0 %>
 	<h2>Today</h2>
 	<table class="layout">
 		<tr>
 			<% if @todays_visits.length > 0 %>
-				<td>
+				<td width=50%>
 					<%= render :partial => 'visit/card', :locals => {:visit_id => @todays_visits[0].id} %>
 				</td>
 			<% end %>
+			<td>
+				<% if @todays_prescriptions.length > 0 %>
+					<h5>Prescriptions</h5>
+					<ul>
+						<% for scrip in @todays_prescriptions %>
+							<li><%= link_to "#{scrip.drug.name} #{scrip.quanity} #{scrip.units}", :controller => 'prescription', :action => 'show', :id => scrip.id %></li>
+						<% end %>
+					</ul>
+				<% end %>
+				<% if @todays_immunizations.length > 0 %>
+					<h5>Immunizations</h5>
+					<ul>
+						<% for immu in @todays_immunizations %>
+							<li><%= link_to "#{immu.immunization_drug.name}", :controller => 'immunization', :action => 'show', :id => immu.id %></li>
+						<% end %>
+					</ul>
+				<% end %>	
+			</td>
 		</tr>
 	</table>
 <% end %>
