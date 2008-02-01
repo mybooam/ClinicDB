@@ -2,7 +2,7 @@ class HomeController < ApplicationController
   def index
     @all_tb_tests = TbTest.find(:all)
     @tb_tests_open = TbTest.find(:all).select { |item| 
-      (item.result == nil || item.result == "") && item.given_date + 2 <= Date.today
+      item.open
     }
   end
   
@@ -16,8 +16,22 @@ class HomeController < ApplicationController
     
     @other_visits = @patient.visits.delete_if{|a| @todays_visits.include?(a)}.sort{|a,b| b.visit_date <=> a.visit_date }
     @other_tb_tests = @patient.tb_tests.delete_if{|a| @todays_tb_tests.include?(a) }.sort{|a,b| b.given_date <=> a.given_date }
-    @other_prescriptions = @patient.prescriptions.delete_if{|a| @todays_prescrioptions.include?(a) }.sort{|a,b| b.given_date <=> a.given_date }
+    @other_prescriptions = @patient.prescriptions.delete_if{|a| @todays_prescriptions.include?(a) }.sort{|a,b| b.given_date <=> a.given_date }
     @other_immunizations = @patient.immunizations.delete_if{|a| @todays_immunizations.include?(a) }.sort{|a,b| b.given_date <=> a.given_date }
+    
+    @todays_cards = []
+    
+    for tb_test in @todays_tb_tests
+      @todays_cards << {:partial_name => 'tb_test/card', :locals => {:tb_test => tb_test}}
+    end
+    
+    for scrip in @todays_prescriptions
+      @todays_cards << {:partial_name => 'prescription/card', :locals => {:scrip => scrip}}
+    end
+    
+    for immu in @todays_immunizations
+      @todays_cards << {:partial_name => 'immunization/card', :locals => {:immu => immu}}
+    end
   end
   
   def add_patient

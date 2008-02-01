@@ -1,5 +1,5 @@
 <center>
-	<%= render :partial => 'patient/card', :locals => {:patient_id => @patient.id} %>
+	<%= render :partial => 'patient/card', :locals => {:patient => @patient} %>
 </center>
 
 <center>
@@ -21,35 +21,40 @@
 		</tr>
 	</table>
 </div>
-</center>
 
 <% if @todays_visits.length + @todays_tb_tests.length + @todays_prescriptions.length + @todays_immunizations.length > 0 %>
+	<hr />
 	<h2>Today</h2>
 	<table class="layout">
 		<tr>
 			<% if @todays_visits.length > 0 %>
-				<td width=50%>
-					<%= render :partial => 'visit/card', :locals => {:visit_id => @todays_visits[0].id} %>
+				<td width=50% colspan=3>
+					<%= render :partial => 'visit/card', :locals => {:visit => @todays_visits[0]} %>
 				</td>
 			<% end %>
+		</tr>
+		<tr>
 			<td>
-				<% if @todays_prescriptions.length > 0 %>
-					<h5>Prescriptions</h5>
-					<ul>
-						<% for scrip in @todays_prescriptions %>
-							<li><%= link_to "#{scrip.drug.name} #{scrip.quanity} #{scrip.units}", :controller => 'prescription', :action => 'show', :id => scrip.id %></li>
+				<table class="layout">
+					<% count = 0 %>
+					<% for card in @todays_cards %>
+						<% if count.modulo(3)==0%>
+							<tr>
 						<% end %>
-					</ul>
-				<% end %>
-				<% if @todays_immunizations.length > 0 %>
-					<h5>Immunizations</h5>
-					<ul>
-						<% for immu in @todays_immunizations %>
-							<li><%= link_to "#{immu.immunization_drug.name}", :controller => 'immunization', :action => 'show', :id => immu.id %></li>
+						<% count = count+1 %>
+						<td width=170px align=center valign=top>
+							<%= render :partial => card[:partial_name], :locals => card[:locals] %>	
+						</td>
+						<% if count.modulo(3)== 0%>
+							</tr>
 						<% end %>
-					</ul>
-				<% end %>	
+					<% end %>	
+					<% if count.modulo(3) != 0%>
+						</tr>
+					<% end %>
+				</table>
 			</td>
 		</tr>
 	</table>
 <% end %>
+</center>

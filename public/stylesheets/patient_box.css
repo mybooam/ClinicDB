@@ -95,3 +95,71 @@ td.patient_box_history {
 	margin: 5px;
 	margin-bottom: 15px;
 }
+
+.prescription_box {
+	background-color: #eee;
+	border: #aad solid thin;
+}
+
+td.prescription_box {
+	border: #aad solid thin;
+}
+
+.prescription_box_text {
+	color: #000000;
+	font-size: 10pt;
+	font-family: monospace;
+	margin-left: 0px;
+	padding-left: 3px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.prescription_box_signature {
+	color: #008;
+	font-size: 10pt;
+	font-family: cursive;
+	margin-left: 0px;
+	padding-left: 3px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	text-align: right;
+}
+
+.prescription_box_top {
+	border-bottom: #aad solid thin;
+}
+
+.prescription_box_orders {
+	border-bottom: #aad solid thin;
+}
+
+.tb_test_box {
+	background-color: #fee;
+	border: #aad solid thin;
+}
+
+td.tb_test_box {
+	border: #aad solid thin;
+}
+
+.tb_test_box_text {
+	color: #000000;
+	font-size: 10pt;
+	font-family: monospace;
+	margin-left: 0px;
+	padding-left: 3px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.tb_test_box_top {
+	border-bottom: #aad solid thin;
+}
+
+.tb_test_box_middle {
+	border-bottom: #aad solid thin;
+}
+
+.tb_test_box_bottom {
+}

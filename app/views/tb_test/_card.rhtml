@@ -1,0 +1,26 @@
+<table class="tb_test_box" width=200px>
+	<% if tb_test.read %>
+	<tr>
+		<td class="tb_test_box_top"><span class="tb_test_box_text"><%= "#{tb_test.result}" %></span></td>
+	</tr>
+	<tr>
+		<td class="tb_test_box_middle"><span class="tb_test_box_text"><%= "#{tb_test.lot_number} - exp:#{tb_test.expiration_date}" %></span></td>
+	</tr>
+	<% else %>
+		<tr>
+			<td class="tb_test_box_top">PPD Given: <span class="tb_test_box_text"><%= "#{tb_test.given_date}" %></span></td>
+		</tr>
+		<tr>
+			<td class="tb_test_box_middle">Arm: <span class="tb_test_box_text"><%= "#{tb_test.given_arm}" %></span></td>
+		</tr>
+		<tr>
+			<td class="tb_test_box_middle">Given By: <span class="tb_test_box_text"><%= "#{tb_test.givenby_user_id}" %></span></td>
+		</tr>
+		<tr>
+			<td class="tb_test_box_middle">Notes: <span class="tb_test_box_text"><%= "#{tb_test.notes}" %></span></td>
+		</tr>
+		<tr>
+			<td class="tb_test_box_bottom">Due: <span class="tb_test_box_text"><%= "#{tb_test.due_date_min.strftime('%A')} - #{tb_test.due_date_max.strftime('%A')}" %></span></td>
+		</tr>
+	<% end %>
+</table>
