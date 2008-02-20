@@ -1,0 +1,31 @@
+<center>
+<table class="list">
+	<tr>
+		<th>Name</th>
+		<th>Birthdate</th>
+		<th>Ethnicity</th>
+	</tr>
+	<tr class="odd_row">
+		<td colspan=3 align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
+	</tr>
+<% counter=1 %>
+<% for patient in @patients %>
+	<% counter = counter + 1 %>
+	<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+	<tr class="<%= style %>">
+		<td>
+			<%= link_to "#{patient.last_name}, #{patient.first_name}", :controller => "patient", :action => "set_patient", :patient_id => "#{patient.id}" %>
+		</td>
+		<td>
+			<%= patient.dob_str %>
+		</td>
+		<td>
+			<%= patient.ethnicity %>
+		</td>
+	</tr>
+<% end %>
+	<tr class="<%= (counter+1).modulo(2).nonzero? ? 'odd_row' : 'even_row' %>">
+		<td colspan=3 align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
+	</tr>
+</table>
+</center>

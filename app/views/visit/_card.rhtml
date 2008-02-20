@@ -71,6 +71,14 @@
 						<%= visit.referrals %>
 					</div>
 				</div>
+				<div class="visit_box_group">
+					<div class="visit_box_heading">
+						Seen By:
+					</div>	
+					<div class="visit_box_text">
+						<%= visit.users.collect{|a| a.to_label }.join(", ") %>
+					</div>
+				</div>
 			</td>
 		</tr>
 	</table>

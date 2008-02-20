@@ -48,4 +48,8 @@ class HomeController < ApplicationController
     
     redirect_to :action => :patient_home, :patient_id => pat.id
   end
+  
+  def list_patients
+    @patients = Patient.find(:all).sort{|a,b| a.to_label.downcase <=> b.to_label.downcase }
+  end
 end

@@ -30,7 +30,7 @@
 	</tr>
 	<tr bgcolor=#F0F0FF>
 		<td><label>Given by:</label></td>
-		<td><%= text_field :tb_test, :givenby_user_id, :size => 16  %></td>
+		<td><%= user_field :tb_test, :givenby_user_id  %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
 		<td colspan=2 align=right><%= submit_tag 'Save' %></td>

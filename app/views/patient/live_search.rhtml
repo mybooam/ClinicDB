@@ -2,8 +2,8 @@
 	<% if @results.empty? %>
 		<center><div class="big">- No Matching Patients -</div></center>
 	<% else %>
-		<% if(@results.length>3)	
-			@results_trimmed = @results[1..3]
+		<% if(@results.length>7)	
+			@results_trimmed = @results[1..7]
 		else
 			@results_trimmed = @results
 		end
@@ -33,6 +33,8 @@
 			</tr>
 		<% end %>
 		</table>
+		<div class="big">
+			<%= link_to "[Select From a List]", :controller => "home", :action=> "list_patients"%> | <%= link_to "[New Patient]", :controller => "home", :action=> "new_patient"%></div>
 		</center>
 	<% end %>
 <% end %>
