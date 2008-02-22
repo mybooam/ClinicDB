@@ -28,7 +28,7 @@
 	<table class="layout">
 		<tr>
 			<% if @todays_visits.length > 0 %>
-				<td width=50% colspan=3>
+				<td width=50% colspan=3 align=center>
 					<%= render :partial => 'visit/card', :locals => {:visit => @todays_visits[0]} %>
 				</td>
 			<% end %>

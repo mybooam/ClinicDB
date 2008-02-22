@@ -22,4 +22,8 @@
                  :url => { :controller => :patient, :action => :live_search }) %>
 
 <div id="search_hits"></div>
+<center>
+<div class="big">
+	<%= link_to "[Select From a List]", :controller => "home", :action=> "list_patients"%> | <%= link_to "[New Patient]", :controller => "home", :action=> "new_patient"%></div>
+</center>
 <% end %>

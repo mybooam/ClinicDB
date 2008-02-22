@@ -30,4 +30,36 @@ class TbTest < ActiveRecord::Base
   def open
     ready_to_be_read || overdue
   end
+  
+  def positive?
+    result == positive_result
+  end
+  
+  def negative?
+    result == negative_result
+  end
+  
+  def unknown?
+    result == unknown_result
+  end
+  
+  def noshow?
+    result == noshow_result
+  end
+  
+  def noshow_result
+    "No-Show"
+  end
+  
+  def positive_result
+    "Positive"
+  end
+  
+  def negative_result
+    "Negative"
+  end
+  
+  def unknown_result
+    "Unknown"
+  end
 end

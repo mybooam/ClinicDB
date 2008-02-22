@@ -26,6 +26,7 @@ class TbTestController < ApplicationController
     @item.result=params[:tb_test][:result]
     @item.notes=params[:tb_test][:notes]
     @item.read_date = Date.today
+    @item.readby_user = User.find(params[:tb_test][:readby_user_id])
     if @item.save
       flash[:notice] = "TB Test result saved"
     else

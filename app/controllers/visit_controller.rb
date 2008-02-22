@@ -11,10 +11,19 @@ class VisitController < ApplicationController
 	def add_for_patient
     visit = Visit.new(params[:visit])
     visit.visit_date = Date.today()
-    if(visit.temperature < 50)
-      visit.temperature = visit.temperature * 1.8 + 32
+    if(visit.temperature)
+      if(visit.temperature < 50)
+        visit.temperature = visit.temperature * 1.8 + 32
+      end
     end
-    visit.users = [User.find(params[:user][:users_id])]
+    visit.users = []
+    
+    if params[:user][:users_id1] && params[:user][:users_id1]!=""
+      visit.users << User.find(params[:user][:users_id1])
+    end
+    if params[:user][:users_id2] && params[:user][:users_id2]!=""
+      visit.users << User.find(params[:user][:users_id2])
+    end
     visit.save
     
     redirect_to :controller => 'home', :action => 'patient_home', :patient_id => params[:visit][:patient_id]

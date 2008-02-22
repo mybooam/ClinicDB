@@ -4,7 +4,7 @@
 	<table class="layout">
 		<tr bgcolor=#F0F0FF>
 			<td><label for='result'>Result:</label></td>
-			<td><%= select :tb_test, :result, ["Positive", "Negative", "Unknown"] %></td>
+			<td><%= select :tb_test, :result, [@item.positive_result, @item.negative_result, @item.unknown_result], {:include_blank => true, :selected => nil} %></td>
 		</tr>
 		<tr>
 			<td><label for='notes'>Notes:</label></td>
@@ -12,7 +12,7 @@
 		</tr>
 		<tr bgcolor=#F0F0FF>
 			<td><label>Read by:</label></td>
-			<td><%= user_field :tb_test, :readby_user_id, :size => 16  %></td>
+			<td><%= user_field :tb_test, :readby_user_id, {:size => 26}  %></td>
 		</tr>
 		<tr>
 			<td colspan=2 align=right><%= submit_tag 'Save' %></td>
