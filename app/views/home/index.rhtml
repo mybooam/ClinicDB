@@ -30,7 +30,7 @@
 			<tr class='<%= style %>'>
 				<td width="70px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= item.given_date.strftime('%A') %></font></td>
 				<td width="110px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= Date.today - item.given_date %> days ago</font></td>
-				<td width="250px"><%= "#{item.patient.last_name}, #{item.patient.first_name}" %></td>
+				<td width="250px"><%= link_to "#{item.patient.last_name}, #{item.patient.first_name}", {:action => 'patient_home', :patient_id => item.patient } %></td>
 				<% if overdue %>
 					<td colspan=2><%= link_to 'Clear', {:controller => 'tb_test', :action => 'no_show', :id => item}, :class => 'list' %></td>
 				<% else %>

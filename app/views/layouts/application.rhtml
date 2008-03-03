@@ -39,7 +39,12 @@
 				<% if flash[:notice] -%>
 			    	<div class=error><%= flash[:notice] %> </div>
 			    <% end -%>
-				<h1>ClinicDB: <%= controller.controller_name.sub("_", " ").capitalize %></h1>
+				<% ctrl_link = controller.controller_name.sub("_", " ").capitalize %>
+				<% if ctrl_link != "Home" %>
+					<h1><a href="/">ClinicDB</a>:<%= ctrl_link %></h1>
+				<% else %>
+					<h1><a href="/">ClinicDB:Home</a></h1>
+				<% end %>
 			
 				<%= yield  %>
 			

@@ -9,6 +9,6 @@
 		<td class="prescription_box_orders">Notes: <span class="prescription_box_text"><%= "#{scrip.notes}" %></span></td>
 	</tr>
 	<tr>
-		<td class="prescription_box_signature"><%= "#{scrip.signed} - #{scrip.given_date}" %></td>
+		<td class="prescription_box_signature"><%= "#{scrip.signed} - #{scrip.given_date.strftime('%D')}" %></td>
 	</tr>
 </table>

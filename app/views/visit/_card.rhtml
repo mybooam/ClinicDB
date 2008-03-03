@@ -23,7 +23,7 @@
 	<table class="layout" width=100%>
 		<tr class="visit_box_top">
 			<td class="visit_box_title" colspan="<%= total_col-1 %>">
-				<%= "#{visit.visit_date.strftime("%A, %B %d, %Y")}"%>
+				<%= "#{visit.visit_date.strftime("%A, %B %e, %Y")}"%>
 			</td>
 			<td class="visit_box_editlink">
 				<%= link_to "[edit]", :controller=>'visit', :action=>'edit', :id => visit.id %>
@@ -32,23 +32,27 @@
 		<% if !hide_telem %>
 			<tr>
 				<td class="visit_box_telem">
+					BP
 					<% if visit.blood_press_sys&&visit.blood_press_dias %>
-						BP: <span class="visit_box_telem_text"><%= ('%d/%d' % [visit.blood_press_sys, visit.blood_press_dias]) %></span>
+						<span class="visit_box_telem_text"><%= ('%d/%d' % [visit.blood_press_sys, visit.blood_press_dias]) %></span>
 					<% end %>	
 				</td>
 				<td class="visit_box_telem">
+					Pulse:
 					<% if visit.pulse %>
-						Pulse: <span class="visit_box_telem_text"><%= '%d' % visit.pulse %></span>
+						<span class="visit_box_telem_text"><%= '%d' % visit.pulse %></span>
 					<% end %>
 				</td>
 				<td class="visit_box_telem">
+					Temp: 
 					<% if visit.temperature %>
-						Temp: <span class="visit_box_telem_text"><%= '%.1f F' % visit.temperature %></span>
+						<span class="visit_box_telem_text"><%= '%.1f F' % visit.temperature %></span>
 					<% end %>
 				</td>
 				<td class="visit_box_telem">
+					Weight:
 					<% if visit.weight %>
-						Weight: <span class="visit_box_telem_text"><%= '%.1f lb' % visit.weight %></span>
+						<span class="visit_box_telem_text"><%= '%.1f lb' % visit.weight %></span>
 					<% end %>
 				</td>
 			</tr>

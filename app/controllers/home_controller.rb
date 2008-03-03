@@ -9,29 +9,42 @@ class HomeController < ApplicationController
   def patient_home
     @patient = Patient.find(params['patient_id'], :include=> [:visits, :tb_tests, :immunizations, :prescriptions] )
     
-    @todays_visits = @patient.visits.select{|a| a.visit_date == Date.today()}
-    @todays_tb_tests = @patient.tb_tests.select{|a| a.given_date == Date.today() || a.read_date == Date.today()}
-    @todays_prescriptions = @patient.prescriptions.select{|a| a.given_date == Date.today()}
-    @todays_immunizations = @patient.immunizations.select{|a| a.given_date == Date.today()}
+    @cards = {}
+    @dates = []
     
-    @other_visits = @patient.visits.delete_if{|a| @todays_visits.include?(a)}.sort{|a,b| b.visit_date <=> a.visit_date }
-    @other_tb_tests = @patient.tb_tests.delete_if{|a| @todays_tb_tests.include?(a) }.sort{|a,b| b.given_date <=> a.given_date }
-    @other_prescriptions = @patient.prescriptions.delete_if{|a| @todays_prescriptions.include?(a) }.sort{|a,b| b.given_date <=> a.given_date }
-    @other_immunizations = @patient.immunizations.delete_if{|a| @todays_immunizations.include?(a) }.sort{|a,b| b.given_date <=> a.given_date }
-    
-    @todays_cards = []
-    
-    for tb_test in @todays_tb_tests
-      @todays_cards << {:partial_name => 'tb_test/card', :locals => {:tb_test => tb_test}}
+    for visit in @patient.visits
+      if @cards[visit.visit_date.to_s] == nil
+        @cards[visit.visit_date.to_s] = []
+        @dates << visit.visit_date
+      end
+      @cards[visit.visit_date.to_s] << {:type => 'visit', :partial_name => 'visit/card', :locals => {:visit => visit}}
     end
     
-    for scrip in @todays_prescriptions
-      @todays_cards << {:partial_name => 'prescription/card', :locals => {:scrip => scrip}}
+    for scrip in @patient.prescriptions
+      if @cards[scrip.given_date.to_s] == nil
+        @cards[scrip.given_date.to_s] = []
+        @dates << scrip.given_date
+      end
+      @cards[scrip.given_date.to_s] << {:type => 'prescription', :partial_name => 'prescription/card', :locals => {:scrip => scrip}}
     end
     
-    for immu in @todays_immunizations
-      @todays_cards << {:partial_name => 'immunization/card', :locals => {:immu => immu}}
+    for tb_test in @patient.tb_tests
+      if @cards[tb_test.given_date.to_s] == nil
+        @cards[tb_test.given_date.to_s] = []
+        @dates << tb_test.given_date
+      end
+      @cards[tb_test.given_date.to_s] << {:type => 'tb_test', :partial_name => 'tb_test/card', :locals => {:tb_test => tb_test}}
     end
+    
+    for immunization in @patient.immunizations
+      if @cards[immunization.given_date.to_s] == nil
+        @cards[immunization.given_date.to_s] = []
+        @dates << immunization.given_date
+      end
+      @cards[immunization.given_date.to_s] << {:type => 'immunization', :partial_name => 'immunization/card', :locals => {:immu => immunization}}
+    end
+    
+    @dates = @dates.uniq.sort
   end
   
   def add_patient

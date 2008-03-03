@@ -22,22 +22,28 @@
 	</table>
 </div>
 
-<% if @todays_visits.length + @todays_tb_tests.length + @todays_prescriptions.length + @todays_immunizations.length > 0 %>
+<% for date in @dates%>
 	<hr />
-	<h2>Today</h2>
+	<% if date==Date.today() %>
+		<h2>Today</h2>
+	<% else %>
+		<h2><%= "#{date.strftime("%A, %B %e, %Y")}" %></h2>
+	<% end %>
+	<% visit_cards = @cards[date.to_s].select{|a| a[:type] == "visit"} %>
+	<% other_cards = @cards[date.to_s].select{|a| a[:type] != "visit"} %>
 	<table class="layout">
-		<tr>
-			<% if @todays_visits.length > 0 %>
+		<% for card in visit_cards %>
+			<tr>
 				<td width=50% colspan=3 align=center>
-					<%= render :partial => 'visit/card', :locals => {:visit => @todays_visits[0]} %>
+					<%= render :partial => card[:partial_name], :locals => card[:locals] %>
 				</td>
-			<% end %>
-		</tr>
+			</tr>
+		<% end %>
 		<tr>
 			<td>
 				<table class="layout">
 					<% count = 0 %>
-					<% for card in @todays_cards %>
+					<% for card in other_cards  %>
 						<% if count.modulo(3)==0%>
 							<tr>
 						<% end %>
@@ -54,7 +60,7 @@
 					<% end %>
 				</table>
 			</td>
-		</tr>
+		</tr>	
 	</table>
 <% end %>
 </center>
