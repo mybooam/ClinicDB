@@ -4,12 +4,12 @@
 <center>
 <table class="layout" valign=top style="border: #aaa solid thin">
 	<tr bgcolor=#F0F0FF>
-		<td><label>Name:</label></td>
+		<td><label>Name (<i>first last</i>):</label></td>
 		<td><%= text_field :patient, :first_name, :size => 10 %></td>
 		<td><%= text_field :patient, :last_name, :size => 10 %></td>
 	</tr>
 	<tr>
-		<td><label>Date of Birth:</label></td>
+		<td><label>Date of Birth (<i>mm/dd/yy</i>):</label></td>
 		<td colspan=2><%= text_field :patient, :dob, :size => 10 %></td>
 	</tr>
 	<tr bgcolor=#F0F0FF>

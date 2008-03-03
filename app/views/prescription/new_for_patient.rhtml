@@ -1,0 +1,32 @@
+<% patient=Patient.find(params[:patient_id]) %>
+<% attending = lastSession.attending %>
+
+<h2> <%= "#{patient.first_name} #{patient.last_name}" %>: Prescription</h2>
+
+<% form_tag "add_for_patient" do %>
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label>Drug:</label></td>
+		<td><%= select :prescription, :drug_id, Drug.find(:all).sort{|a, b| a.name <=> b.name}.collect{|a| [a.name, a.id]}, {:size => 16, :include_blank => true, :selected => nil}  %></td>
+	</tr>
+	<tr>
+		<td><label>Orders:</label></td>
+		<td><%= text_area :prescription, :orders, :cols => 15, :rows => 3 %></td>
+	</tr>
+	
+	<tr bgcolor=#F0F0FF>
+		<td><label>Notes:</label></td>
+		<td><%= text_area :prescription, :notes, :cols => 15, :rows => 3 %></td>
+	</tr>
+	<tr>
+		<td><label>Signed:</label></td>
+		<td><%= text_field :prescription, :signed, :value => "#{attending.first_name} #{attending.last_name}", :size => 16 %></td>
+	</tr>
+	<tr style="border-top: #aaa solid thin" bgcolor=#F0F0FF>
+		<td colspan=2 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+	<%= hidden_field :prescription, :patient_id, :value => "#{patient.id}" %>
+</table>
+</center>
+<% end %>

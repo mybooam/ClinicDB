@@ -115,6 +115,16 @@ td.prescription_box {
 	margin-bottom: 2px;
 }
 
+.prescription_box_title_text {
+	color: #000000;
+	font-size: 12pt;
+	font-family: monospace;
+	margin-left: 0px;
+	padding-left: 3px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
 .prescription_box_signature {
 	color: #008;
 	font-size: 10pt;
