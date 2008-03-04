@@ -127,34 +127,37 @@ table.live_search>tr.patient {
 table.live_search>tr.spacer {
 }
 
-.warning
+.warning_flash
 {
-	background:#FFAAAA;
+	background:#FFFFAA;
 	border:1px solid black;
 	padding-left: 5pt;
 	padding-right: 5pt;
-	padding-top: 3pt;
+	padding-top: 5pt;
 	padding-bottom: 3pt;
+	margin-bottom: 5pt;
 }
 
-.error
-{
-	background:#AAAAFF;
-	border:1px solid black;
-	padding-left: 5pt;
-	padding-right: 5pt;
-	padding-top: 3pt;
-	padding-bottom: 3pt;
-}
-
-.notice
+.error_flash
 {
 	background:#FF8888;
 	border:1px solid black;
 	padding-left: 5pt;
 	padding-right: 5pt;
-	padding-top: 3pt;
+	padding-top: 5pt;
 	padding-bottom: 3pt;
+	margin-bottom: 5pt;
+}
+
+.notice_flash
+{
+	background:#AAAAFF;
+	border:1px solid black;
+	padding-left: 5pt;
+	padding-right: 5pt;
+	padding-top: 5pt;
+	padding-bottom: 3pt;
+	margin-bottom: 5pt;
 }
 
 .small

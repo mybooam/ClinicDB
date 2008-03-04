@@ -29,15 +29,15 @@
 		<div id="frame1">
 			<div id="frame2">
 				<% if flash[:error] -%>
-			    	<div class=error><%= flash[:error] %> </div>
+			    	<div class=error_flash><%= flash[:error] %></div>
 			    <% end -%>
 		
 				<% if flash[:warning] -%>
-			    	<div class=error><%= flash[:warning] %> </div>
+			    	<div class=warning_flash><%= flash[:warning] %></div>
 			    <% end -%>
 		
 				<% if flash[:notice] -%>
-			    	<div class=error><%= flash[:notice] %> </div>
+			    	<div class=notice_flash><%= flash[:notice] %></div>
 			    <% end -%>
 				<% ctrl_link = controller.controller_name.sub("_", " ").capitalize %>
 				<% if ctrl_link != "Home" %>

@@ -59,11 +59,11 @@ class TbTestController < ApplicationController
     
     if test.save
       flash[:notice] = "TB Test saved"
-      if test.expiration_date - 28 < Date.today()
-        flash[:notice] << " - PPD batch expires on " + expdate
-      end
     else
       flash[:error] = "Error saving TB Test."
+    end  
+    if test.expiration_date - 28 < Date.today()
+      flash[:warning] = "PPD batch expires on " + expdate
     end
     
     redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
