@@ -21,8 +21,8 @@
 		<td><%= text_field :tb_test, :lot_number, :value=>default_lot, :size => 16  %></td>
 	</tr>
 	<tr bgcolor=#F0F0FF>
-		<td><label>Expiration Date:</label></td>
-		<td><%= text_field :tb_test, :expiration_date, :value=>default_exp_date, :size => 10  %></td>
+		<td><label>Expiration Date:<br/>(<i>m/d/y</i> or <i>m/y</i>)</label></td>
+		<td><%= text_field :other, :expiration_date, :value=>default_exp_date, :size => 10  %></td>
 	</tr>
 	<tr>
 		<td><label>Notes:</label></td>

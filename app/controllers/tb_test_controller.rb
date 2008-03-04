@@ -38,7 +38,33 @@ class TbTestController < ApplicationController
   def add_for_patient
     test = TbTest.new(params[:tb_test])
     test.given_date = Date.today()
-    test.save
+    expdate = params[:other][:expiration_date]
+    nums = (expdate.count(',')>0) ? expdate.split(',') : expdate.split('/')
+    
+    if nums.size==3
+      month = nums[0].to_i
+      day = nums[1].to_i
+      year = nums[2].to_i
+    elsif nums.size==2
+      month = nums[0].to_i
+      day = 1
+      year = nums[1].to_i
+    end
+    
+    year = year<100 ? year + 2000 : year
+
+#    print "\n\n#{nums.size} - #{nums.join(" ")} - #{month}/#{day}/#{year}\n\n"
+    
+    test.expiration_date = Date.civil(year, month, day)
+    
+    if test.save
+      flash[:notice] = "TB Test saved"
+      if test.expiration_date - 28 < Date.today()
+        flash[:notice] << " - PPD batch expires on " + expdate
+      end
+    else
+      flash[:error] = "Error saving TB Test."
+    end
     
     redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
   end
