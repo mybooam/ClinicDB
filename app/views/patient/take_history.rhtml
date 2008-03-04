@@ -1,0 +1,140 @@
+<% patient = Patient.find(params['patient_id'], :include=> [:visits, :tb_tests, :immunizations, :prescriptions] ) %>
+<h2>History for <%= patient.properLastName %></h2>
+
+<% form_tag "add_history" do %>
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label>Name (<i>first last</i>):</label></td>
+		<td colspan=2 class="form_filled_in"><%= patient.first_name %> <%= patient.last_name %></td>
+	</tr>
+	<tr>
+		<td><label>Date of Birth (<i>mm/dd/yy</i>):</label></td>
+		<td colspan=2 class="form_filled_in"><%= patient.dob_str %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td><label>Sex:</label></td>
+		<td colspan=2 class="form_filled_in"><%= patient.sex %></td>
+	</tr>
+	<tr>
+		<td><label>Ethnicity:</label></td>
+		<td colspan=2 class="form_filled_in"><%= patient.ethnicity %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF style="border-top: #aaa solid thin">
+		<td valign=top><label>Adult Illness:</label></td>
+		<td colspan=2>
+			<%= text_area :patient, :adult_illness, {:cols => 20, :rows => 2} %>
+		</td>
+	</tr>
+	<tr>
+		<td valign=top><label>Surgeries:</label></td>
+		<td colspan=2>
+			<%= text_area :patient, :surgeries, {:cols => 20, :rows => 2} %>
+		</td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td valign=top><label>Allergies:</label></td>
+		<td colspan=2>
+			<%= text_area :patient, :allergies, {:cols => 20, :rows => 2} %>
+		</td>
+	</tr>
+	<tr style="border-top: #aaa solid thin">
+		<td valign=top><label>Smoking:</label></td>
+		<td>
+			<%= check_box :patient, :curr_smoking, :class => 'checkbox' %> Current <br />
+			<%= check_box :patient, :prev_smoking, :class => 'checkbox' %> Previous
+		</td>
+		<td valign=top>
+			Pack-years: <%= text_field :patient, :smoking_py, :size => 3 %>
+		</td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td valign=top><label>Alcohol Use:</label></td>
+		<td>
+			<%= check_box :patient, :curr_etoh_use, :class => 'checkbox' %> Current <br />
+			<%= check_box :patient, :prev_etoh_use, :class => 'checkbox' %> Previous
+		</td>
+		<td>
+			<%= text_area :patient, :etoh_notes, {:cols => 12, :rows => 2} %>
+		</td>
+	</tr>
+	<tr>
+		<td valign=top><label>Drug Use:</label></td>
+		<td>
+			<%= check_box :patient, :curr_drug_use, :class => 'checkbox' %> Current <br />
+			<%= check_box :patient, :prev_drug_use, :class => 'checkbox' %> Previous
+		</td>
+		<td>
+			<%= text_area :patient, :drug_notes, {:cols => 12, :rows => 2} %>
+		</td>
+	</tr>
+	<tr bgcolor=#F0F0FF style="border-top: #aaa solid thin">
+		<td valign=top><label>Childhood Diseases:</label></td>
+		<td valign=top>
+			<% count = 0 %>
+			<% for disease in ChildhoodDisease.find(:all) do %>
+				<% count=count+1 %>
+				<% if count.modulo(2).nonzero? %>
+					<%= check_box :childhood_disease, "#{disease.id}", :class => 'checkbox' %> <%= "#{disease.name}" %><br />
+				<% end %>
+			<% end %>
+		</td>
+		<td valign=top>
+			<% count = 1 %>
+			<% for disease in ChildhoodDisease.find(:all) do %>
+				<% count=count+1 %>
+				<% if count.modulo(2).nonzero? %>
+					<%= check_box :childhood_disease, "#{disease.id}", :class => 'checkbox' %> <%= "#{disease.name}" %><br />
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<tr>
+		<td valign=top><label>Immunizations:</label></td>
+		<td valign=top>
+			<% count = 0 %>
+			<% for disease in ImmunizationHistory.find(:all) do %>
+				<% count=count+1 %>
+				<% if count.modulo(2).nonzero? %>
+					<%= check_box :immunization_history, "#{disease.id}", :class => 'checkbox' %> <%= "#{disease.name}" %><br />
+				<% end %>
+			<% end %>
+		</td>
+		<td valign=top>
+			<% count = 1 %>
+			<% for disease in ImmunizationHistory.find(:all) do %>
+				<% count=count+1 %>
+				<% if count.modulo(2).nonzero? %>
+					<%= check_box :immunization_history, "#{disease.id}", :class => 'checkbox' %> <%= "#{disease.name}" %><br />
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td valign=top><label>Family History:</label></td>
+		<td valign=top>
+			<% count = 0 %>
+			<% for disease in FamilyHistory.find(:all) do %>
+				<% count=count+1 %>
+				<% if count.modulo(2).nonzero? %>
+					<%= check_box :family_history, "#{disease.id}", :class => 'checkbox' %> <%= "#{disease.name}" %><br />
+				<% end %>
+			<% end %>
+		</td>
+		<td valign=top>
+			<% count = 1 %>
+			<% for disease in FamilyHistory.find(:all) do %>
+				<% count=count+1 %>
+				<% if count.modulo(2).nonzero? %>
+					<%= check_box :family_history, "#{disease.id}", :class => 'checkbox' %> <%= "#{disease.name}" %><br />
+				<% end %>
+			<% end %>
+		</td>
+	</tr>
+	<tr style="border-top: #aaa solid thin">
+		<td colspan=3 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+	<%= hidden_field :patient_id, :patient_id, :value => "#{patient.id}" %>
+</table>
+</center>
+<% end %>

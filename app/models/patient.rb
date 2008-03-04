@@ -21,4 +21,8 @@ class Patient < ActiveRecord::Base
   def age
     Date.today().year - dob.year - ((dob.mon*100+dob.mday >  Date.today().mon*100+Date.today().mday) ? 1 : 0)
   end
+  
+  def properLastName
+    "#{sex=='Male' ? 'Mr.' : 'Ms.'} #{last_name}"
+  end
 end

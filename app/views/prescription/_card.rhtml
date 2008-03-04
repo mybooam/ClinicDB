@@ -5,10 +5,12 @@
 	<tr>
 		<td class="prescription_box_orders">Orders: <span class="prescription_box_text"><%= "#{scrip.orders}" %></span></td>
 	</tr>
+	<% if scrip.notes.strip != '' %>
 	<tr>
 		<td class="prescription_box_orders">Notes: <span class="prescription_box_text"><%= "#{scrip.notes}" %></span></td>
 	</tr>
+	<% end %>
 	<tr>
-		<td class="prescription_box_signature"><%= "#{scrip.signed} - #{scrip.given_date.strftime('%D')}" %></td>
+		<td class="prescription_box_signature"><%= "#{scrip.signed} - %d/%d/%4d" % [scrip.given_date.mon, scrip.given_date.mday, scrip.given_date.year] %></td>
 	</tr>
 </table>

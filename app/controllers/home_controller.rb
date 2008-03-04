@@ -44,7 +44,7 @@ class HomeController < ApplicationController
       @cards[immunization.given_date.to_s] << {:type => 'immunization', :partial_name => 'immunization/card', :locals => {:immu => immunization}}
     end
     
-    @dates = @dates.uniq.sort
+    @dates = @dates.uniq.sort{|a, b| b <=> a}
   end
   
   def add_patient
@@ -54,12 +54,15 @@ class HomeController < ApplicationController
       pat.dob = Date.civil(pat.dob.year-100, pat.dob.mon, pat.dob.mday)
     end
     pat.ethnicity = Ethnicity.find(:all, :conditions=>"name LIKE '#{params[:ethnicity][:ethnicity]}'")[0]
-    pat.childhood_diseases = params[:childhood_disease].delete_if {|k,v| v=='0'}.collect{|a| ChildhoodDisease.find(a[0])}
-    pat.immunization_histories = params[:immunization_history].delete_if {|k,v| v=='0'}.collect{|a| ImmunizationHistory.find(a[0])}
-    pat.family_histories = params[:family_history].delete_if {|k,v| v=='0'}.collect{|a| FamilyHistory.find(a[0])}
+    pat.history_taken = false;
+#    if pat.history_taken
+#      pat.childhood_diseases = params[:childhood_disease].delete_if {|k,v| v=='0'}.collect{|a| ChildhoodDisease.find(a[0])}
+#      pat.immunization_histories = params[:immunization_history].delete_if {|k,v| v=='0'}.collect{|a| ImmunizationHistory.find(a[0])}
+#      pat.family_histories = params[:family_history].delete_if {|k,v| v=='0'}.collect{|a| FamilyHistory.find(a[0])}
+#    end
     pat.save
     
-    redirect_to :action => :patient_home, :patient_id => pat.id
+    redirect_to :action => :patient_history_query, :patient_id => pat.id
   end
   
   def list_patients

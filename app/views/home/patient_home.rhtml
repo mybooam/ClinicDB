@@ -1,3 +1,12 @@
+<script type="text/javascript">
+<!--
+function directHome(){
+    window.location = "/"
+}
+setTimeout("directHome()", 90000)
+//-->
+</script>
+
 <center>
 	<%= render :partial => 'patient/card', :locals => {:patient => @patient} %>
 </center>
@@ -7,16 +16,16 @@
 	<table class=layout align=center>
 		<tr height=100px>
 			<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin;">
-				<%= link_to "#{image_tag '/images/stethoscope.png', :height => 80, :border => 0 }<br/>New Visit", {:controller => 'visit', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+				<%= link_to "<div>#{image_tag '/images/stethoscope.png', :height => 80, :border => 0 }<br/>New Visit</div>", {:controller => 'visit', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
 			</td>
 			<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin;">
-				<%= link_to "#{image_tag '/images/mortor_and_pestol.png', :height => 80, :border => 0 }<br/>New Prescription", {:controller => 'prescription', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+				<%= link_to "<div>#{image_tag '/images/mortor_and_pestol.png', :height => 80, :border => 0 }<br/>New Prescription</div>", {:controller => 'prescription', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
 			</td>
 			<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin">
-				<%= link_to "#{image_tag '/images/lung.png', :height => 80, :border => 0 }<br/>TB Test", {:controller => 'tb_test', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+				<%= link_to "<div>#{image_tag '/images/lung.png', :height => 80, :border => 0 }<br/>TB Test</div>", {:controller => 'tb_test', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
 			</td>
 			<td width='150px' align=center style="padding: 15px">
-				<%= link_to "#{image_tag '/images/hypodermic.png', :height => 80, :border => 0 }<br/>Immunization", {:controller => 'immunization', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+				<%= link_to "<div>#{image_tag '/images/hypodermic.png', :height => 80, :border => 0 }<br/>Immunization</div>", {:controller => 'immunization', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
 			</td>
 		</tr>
 	</table>
@@ -26,6 +35,8 @@
 	<hr />
 	<% if date==Date.today() %>
 		<h2>Today</h2>
+	<% elsif date > Date.today()-8%>
+		<h2>Last <%= date.strftime("%A") %></h2>
 	<% else %>
 		<h2><%= "#{date.strftime("%A, %B %e, %Y")}" %></h2>
 	<% end %>

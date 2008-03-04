@@ -1,0 +1,17 @@
+<% patient = Patient.find(params['patient_id'], :include=> [:visits, :tb_tests, :immunizations, :prescriptions] ) %>
+<h3>Was a full history taken for <%= patient.properLastName %>?</h3>
+
+<center>
+<table width=300pt>
+	<tr>
+		<td width=50% align=center style="background: #ada">
+			<%= link_to "<div>Yes</div>", {:controller => 'patient', :action => 'take_history', :patient_id => patient}, :class => 'big' %>
+		</td>
+		<td width=50pt> </td>
+		<td width=50% align=center style="background: #daa">
+			<%= link_to "<div>No</div>", {:controller => 'home', :action => 'patient_home', :patient_id => patient}, :class => 'big' %>
+		</td>
+	</tr>
+</table>
+<br/>
+</center>
