@@ -10,6 +10,13 @@ class Patient < ActiveRecord::Base
 	has_many :prescriptions
 	has_many :immunizations
 	
+	validates_presence_of :first_name
+	validates_presence_of :last_name
+	validates_presence_of :dob
+  validates_presence_of :sex
+  validates_presence_of :ethnicity_id
+  validates_presence_of :history_taken
+	
 	def to_label
 		"#{last_name}, #{first_name} (#{dob_str})"
 	end

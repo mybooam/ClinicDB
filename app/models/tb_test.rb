@@ -3,6 +3,10 @@ class TbTest < ActiveRecord::Base
 	belongs_to :givenby_user, {:class_name => 'User', :foreign_key => 'givenby_user_id'}
 	belongs_to :readby_user, {:class_name => 'User', :foreign_key => 'readby_user_id'}
 	
+	validates_presence_of :patient_id
+	validates_presence_of :givenby_user
+	validates_presence_of :given_date
+	
 	def to_label
 		"#{patient.to_label} TB Test"
 	end
