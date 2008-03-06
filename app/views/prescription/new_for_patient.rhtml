@@ -8,7 +8,7 @@
 <table class="layout" valign=top style="border: #aaa solid thin">
 	<tr bgcolor=#F0F0FF>
 		<td><label>Drug:</label></td>
-		<td><%= select :prescription, :drug_id, Drug.find(:all).sort{|a, b| a.name <=> b.name}.collect{|a| [a.name, a.id]}, {:size => 16, :include_blank => true, :selected => nil}  %></td>
+		<td><%= select :prescription, :drug_id, Drug.find(:all).sort{|a, b| a.name <=> b.name}.collect{|a| [a, a.id]}, {:size => 16, :include_blank => true, :selected => nil}  %></td>
 	</tr>
 	<tr>
 		<td><label>Orders:</label></td>

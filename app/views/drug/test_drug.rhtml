@@ -1,0 +1,11 @@
+<% form_tag "test_new_drug" do %>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label>Drug:</label></td>
+		<td><%= text_field :drug, :name %></td>
+	</tr>
+	<tr style="border-top: #aaa solid thin" bgcolor=#F0F0FF>
+		<td colspan=2 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+</table>
+<% end %>
