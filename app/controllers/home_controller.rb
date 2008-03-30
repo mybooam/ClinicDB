@@ -60,9 +60,14 @@ class HomeController < ApplicationController
 #      pat.immunization_histories = params[:immunization_history].delete_if {|k,v| v=='0'}.collect{|a| ImmunizationHistory.find(a[0])}
 #      pat.family_histories = params[:family_history].delete_if {|k,v| v=='0'}.collect{|a| FamilyHistory.find(a[0])}
 #    end
-    pat.save
-    
-    redirect_to :action => :patient_history_query, :patient_id => pat.id
+
+    if pat.save 
+      flash[:notice] = "#{pat.properLastName} was saved successfully"
+      redirect_to :action => :patient_history_query, :patient_id => pat
+    else
+      flash[:error] = "Saving patient failed."
+      redirect_to :action => :new_patient
+    end
   end
   
   def list_patients

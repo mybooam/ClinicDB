@@ -1,0 +1,8 @@
+<% for date in @dates%>
+	<h2><%= "#{date.strftime('%a, %B %e, %Y')}" %><%= @sessions[date.to_s] ? " - #{@sessions[date.to_s].attending.to_label}" : "" %></h2>
+	<ul>
+	<% for patient in @patients[date.to_s] %>
+		<li><%= link_to "#{patient.last_name}, #{patient.first_name}", :controller => :home, :action => :patient_home, :patient_id => patient %></li>
+	<% end %>
+	</ul>
+<% end %>

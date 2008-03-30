@@ -15,7 +15,6 @@ class Patient < ActiveRecord::Base
 	validates_presence_of :dob
   validates_presence_of :sex
   validates_presence_of :ethnicity_id
-  validates_presence_of :history_taken
 	
 	def to_label
 		"#{last_name}, #{first_name} (#{dob_str})"

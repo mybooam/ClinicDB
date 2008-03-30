@@ -56,14 +56,15 @@ class TbTestController < ApplicationController
 #    print "\n\n#{nums.size} - #{nums.join(" ")} - #{month}/#{day}/#{year}\n\n"
     
     test.expiration_date = Date.civil(year, month, day)
+     
+    if test.expiration_date - 28 < Date.today()
+      flash[:warning] = "PPD batch expires on " + expdate
+    end
     
     if test.save
       flash[:notice] = "TB Test saved"
     else
       flash[:error] = "Error saving TB Test."
-    end  
-    if test.expiration_date - 28 < Date.today()
-      flash[:warning] = "PPD batch expires on " + expdate
     end
     
     redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
