@@ -1,4 +1,8 @@
 class ReportController < ApplicationController
+  def index
+    redirect_to :action=>:patient_profile
+  end
+  
   def patients_by_session
     @dates = []
     @sessions = {}

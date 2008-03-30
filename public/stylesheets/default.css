@@ -301,3 +301,22 @@ select {
 	border:solid 1px #000000;
 	color: #000088;
 }
+
+.chart_box {
+	margin: 0px;
+	padding: 0px;
+	border: solid thin #888;
+}
+
+.instructions {
+	padding-left:10px;
+	padding-right:10px;
+	padding-top:4px;
+	padding-bottom:4px;
+	margin-left:30px;
+	margin-right:30px;
+	border: solid 1px #8888ff;
+	background: #ffd;
+	font-size:11pt;
+	font-style: italic;
+}

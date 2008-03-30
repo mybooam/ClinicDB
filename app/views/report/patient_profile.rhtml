@@ -1,0 +1,8 @@
+<h2>Patients - <%= Patient.find(:all).size %> total</h2>
+<%= render :partial => "chart", :locals => {:data_source_action => "visit_line"}%>
+
+<h2>Age</h2>
+<%= render :partial => "chart", :locals => {:data_source_action => "age_histogram"} %>
+
+<h2>Ethnicity</h2>
+<%= render :partial => "chart", :locals => {:data_source_action => "ethnicity_pie"} %>

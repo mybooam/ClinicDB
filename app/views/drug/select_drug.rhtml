@@ -1,0 +1,34 @@
+<div class="instructions">
+	Enter a drug name, such as <b>Asprin - 83mg</b>.  If the drug you are searching for does not appear in the list below, select <b>Add new drug</b>, and the drug will be created with the specified name.
+</div>
+
+<% form_tag :controller => 'prescription', :action => 'set_drug' do -%>
+<table class="layout">
+	<tr>
+		<td>
+			<h2>Find Drug:</h2>
+		</td>
+		<td align="right">
+			<%= text_field_tag :searchtext %> <img align="top" alt="spinner" id="spinner" src="/images/spinner.gif" style="display:none;" />
+		</td>
+	</tr>
+</table>
+
+<script language="JAVASCRIPT">
+	document.getElementById("searchtext").focus();
+</script>
+
+<%= observe_field(:searchtext,
+                 :frequency => 0.1,
+                 :update => :search_hits,
+                 :loading => "Element.show('spinner')",
+                 :complete => "Element.hide('spinner')",
+                 :url => { :controller => :drug, :action => :live_search }) %>
+
+<div id="search_hits"></div>
+<center>
+<div class="big">
+	<%= link_to "[Select From a List]", :controller => "drug", :action=> "list_drugs"%>
+</div>
+</center>
+<% end %>

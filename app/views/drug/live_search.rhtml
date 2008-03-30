@@ -1,0 +1,37 @@
+<% if @results %>
+	<% if @results.empty? %>
+		<center><div class="big">- No Matching Drugs -</div></center>
+	<% else %>
+		<% if(@results.length>7)	
+			@results_trimmed = @results[1..7]
+		else
+			@results_trimmed = @results
+		end
+		%>
+		<%= hidden_field_tag :drug_id, @results_trimmed[0].id %>
+		<center>
+		<table width="500px" class="live_search">
+		<% first = true %>
+		<% for result in @results_trimmed do %>
+			<tr style="border: <%= first ? '#5555FF solid 4px' : '#AAAAFF solid thin'%>">
+				<td align=left bgcolor="#AAFFAA">
+					<%= link_to "#{result.to_label}", :action => "set_drug", :drug_id => "#{result.id}" %>
+				</td>
+				<td align=right bgcolor="#AAFFAA"><%= link_to "[ #{first ? 'Enter to ' : ''}Select]", :action => "set_patient", :patient_id => "#{result.id}" %></td>
+			</tr>	
+			<tr class="spacer" height="10px">
+				<td colspan=2> </td>
+			</tr>
+			<% first = false %>
+		<% end %>
+		<% if @results_trimmed.length<@results.length %>
+			<tr style="border: #AAAAFF solid thin">
+				<td align=center bgcolor="#AAFFAA" colspan=2>
+					<div class="big">(<%= @results.length - @results_trimmed.length %> More Drug<%= @results.length - @results_trimmed.length>1 ? 's' : '' %>)</div>
+				</td>
+			</tr>
+		<% end %>
+		</table>
+		</center>
+	<% end %>
+<% end %>	
