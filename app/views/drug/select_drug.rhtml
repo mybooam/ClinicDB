@@ -1,3 +1,6 @@
+<% patient = Patient.find(params[:patient_id]) %>
+<h2>Rx: <%= patient.properLastName %></h2>
+
 <div class="instructions">
 	Enter a drug name, such as <b>Asprin - 83mg</b>.  If the drug you are searching for does not appear in the list below, select <b>Add new drug</b>, and the drug will be created with the specified name.
 </div>
@@ -23,12 +26,12 @@
                  :update => :search_hits,
                  :loading => "Element.show('spinner')",
                  :complete => "Element.hide('spinner')",
-                 :url => { :controller => :drug, :action => :live_search }) %>
+                 :url => { :controller => :drug, :action => :live_search, :patient_id => patient.id }) %>
 
 <div id="search_hits"></div>
 <center>
 <div class="big">
-	<%= link_to "[Select From a List]", :controller => "drug", :action=> "list_drugs"%>
+	<%= link_to "[Select From a List]", :controller => "drug", :action => "list_drugs", :patient_id => patient.id %>
 </div>
 </center>
 <% end %>

@@ -1,4 +1,5 @@
 <% patient=Patient.find(params[:patient_id]) %>
+<% drug = Drug.find(params[:drug_id]) %>
 <% attending = lastSession.attending %>
 
 <h2> <%= "#{patient.first_name} #{patient.last_name}" %>: Prescription</h2>
@@ -8,7 +9,12 @@
 <table class="layout" valign=top style="border: #aaa solid thin">
 	<tr bgcolor=#F0F0FF>
 		<td><label>Drug:</label></td>
-		<td><%= select :prescription, :drug_id, Drug.find(:all).sort{|a, b| a.name <=> b.name}.collect{|a| [a, a.id]}, {:size => 16, :include_blank => true, :selected => nil}  %></td>
+		<% if drug %>
+			<td><%= drug.to_label %></td>
+			<%= hidden_field :prescription, :drug_id, :value => "#{drug.id}" %>
+		<% else %>
+			<td><%= select :prescription, :drug_id, Drug.find(:all).sort{|a, b| a.name <=> b.name}.collect{|a| [a, a.id]}, {:size => 16, :include_blank => true, :selected => params[:drug_id]}  %></td>
+		<% end %>
 	</tr>
 	<tr>
 		<td><label>Orders:</label></td>

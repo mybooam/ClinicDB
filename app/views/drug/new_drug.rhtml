@@ -1,0 +1,18 @@
+<% form_tag "add_drug" do %>
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label>Drug Name:</label></td>
+		<td><%= text_field :drug, :name, :size => 20, :value => @drug_name %></td>
+	</tr>
+	<tr>
+		<td><label>Dosage:</label></td>
+		<td colspan=2><%= text_field :drug, :dosage, :size => 10, :value => @dose_unit %></td>
+	</tr>
+	<tr style="border-top: #aaa solid thin">
+		<td colspan=3 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+</table>
+</center>
+<%= hidden_field_tag :patient_id, params[:patient_id] %>
+<% end %>

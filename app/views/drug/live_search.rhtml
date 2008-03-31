@@ -1,25 +1,35 @@
 <% if @results %>
+	<center>
+	<table width="500px" class="live_search_small">
+		<tr style="border: #AAAAFF solid thin">
+			<td align=center bgcolor="#AAFFFF" colspan=2>
+				<%= link_to "[Add new drug: #{@search_string}#{@results.empty? ? ' (Press Enter)' : ''}]", :controller => "prescription", :action => "set_drug", :drug_name => "#{@search_string}", :patient_id => @patient %>
+			</td>
+		</tr>	
+		<tr class="spacer" height="15px">
+			<td colspan=2> </td>
+		</tr>
 	<% if @results.empty? %>
-		<center><div class="big">- No Matching Drugs -</div></center>
+		<%= hidden_field_tag :drug_name, @search_string %>
+		<%= hidden_field_tag :patient_id, @patient.id %>
 	<% else %>
-		<% if(@results.length>7)	
-			@results_trimmed = @results[1..7]
+		<% if(@results.length>15)	
+			@results_trimmed = @results[1..15]
 		else
 			@results_trimmed = @results
 		end
 		%>
 		<%= hidden_field_tag :drug_id, @results_trimmed[0].id %>
-		<center>
-		<table width="500px" class="live_search">
+		<%= hidden_field_tag :patient_id, @patient.id %>
 		<% first = true %>
 		<% for result in @results_trimmed do %>
 			<tr style="border: <%= first ? '#5555FF solid 4px' : '#AAAAFF solid thin'%>">
 				<td align=left bgcolor="#AAFFAA">
-					<%= link_to "#{result.to_label}", :action => "set_drug", :drug_id => "#{result.id}" %>
+					<%= link_to "#{result.to_label}", :controller => "prescription", :action => "set_drug", :drug_id => "#{result.id}", :patient_id => @patient %>
 				</td>
-				<td align=right bgcolor="#AAFFAA"><%= link_to "[ #{first ? 'Enter to ' : ''}Select]", :action => "set_patient", :patient_id => "#{result.id}" %></td>
+				<td align=right bgcolor="#AAFFAA"><%= link_to "[ #{first ? 'Enter to ' : ''}Select]", :controller => "prescription", :action => "set_drug", :drug_id => "#{result.id}", :patient_id => @patient %></td>
 			</tr>	
-			<tr class="spacer" height="10px">
+			<tr class="spacer" height="5px">
 				<td colspan=2> </td>
 			</tr>
 			<% first = false %>
@@ -31,7 +41,7 @@
 				</td>
 			</tr>
 		<% end %>
-		</table>
-		</center>
-	<% end %>
+	<% end %>	
+	</table>
+	</center>
 <% end %>	

@@ -19,7 +19,7 @@ setTimeout("directHome()", 90000)
 				<%= link_to "<div>#{image_tag '/images/stethoscope.png', :height => 80, :border => 0 }<br/>New Visit</div>", {:controller => 'visit', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
 			</td>
 			<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin;">
-				<%= link_to "<div>#{image_tag '/images/mortor_and_pestol.png', :height => 80, :border => 0 }<br/>New Prescription</div>", {:controller => 'prescription', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
+				<%= link_to "<div>#{image_tag '/images/mortor_and_pestol.png', :height => 80, :border => 0 }<br/>New Prescription</div>", {:controller => 'drug', :action => 'select_drug', :patient_id => "#{@patient.id}"}, :class => 'medium' %>
 			</td>
 			<td width='150px' align=center style="padding: 15px; border-right: #aaa solid thin">
 				<%= link_to "<div>#{image_tag '/images/lung.png', :height => 80, :border => 0 }<br/>TB Test</div>", {:controller => 'tb_test', :action => 'new_for_patient', :patient_id => "#{@patient.id}"}, :class => 'medium' %>

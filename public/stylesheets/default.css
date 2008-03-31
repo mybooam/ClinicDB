@@ -111,6 +111,19 @@ tr.even_row
 	background-color: #EEEEFF
 }
 
+table.live_search_small
+{
+	margin-left:25px;
+	margin-top:10px;
+	border-collapse: collapse;
+	font-size: 12pt;
+	font-color: #2222AA;
+}
+
+table.live_search_small>tr.result {
+	background-color: #AAFFAA;
+}
+
 table.live_search
 {
 	margin-left:25px;
@@ -316,7 +329,7 @@ select {
 	margin-left:30px;
 	margin-right:30px;
 	border: solid 1px #8888ff;
-	background: #ffd;
-	font-size:11pt;
+	background: #ffe;
+	font-size:10pt;
 	font-style: italic;
 }
