@@ -1,0 +1,31 @@
+<div class="instructions">  Select the attending for today's session (<%= Date.today() %>).  If the attending is not listed, add them using the form at the bottom of the page.</div>
+<ul>
+<% for att in @attendings %>
+	<li><%= link_to att.to_label, :action => "create_session", :attending_id => att.id %>
+<% end %>
+</ul>
+
+<hr/>
+
+<% form_tag "create_session_with_attending" do %>
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label>First Name:</label></td>
+		<td><%= text_field :attending, :first_name, :size => 10 %></td>
+	</tr>
+	<tr>
+		<td><label>Last Name:</label></td>
+		<td><%= text_field :attending, :last_name, :size => 10 %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td><label>Email Address (optional):</label></td>
+		<td colspan=2><%= text_field :attending, :email, :size => 10 %></td>
+	</tr>
+	<tr style="border-top: #aaa solid thin">
+		<td colspan=3 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+</table>
+</center>
+<% end %>
+

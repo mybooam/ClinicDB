@@ -23,6 +23,38 @@ class PatientController < ApplicationController
 		config.columns[:family_histories].form_ui = :select
 	end
 	
+	def add_patient
+    pat = Patient.new(params[:patient])
+    
+    if params[:patient][:dob].match("[1-9]{1,2}[- /.][1-9]{1,2}[- /.](19|20|)[0-9]{2}").nil?
+      flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
+      redirect_to :controller=>:home, :action => :new_patient
+      return
+    end
+    
+    begin
+      pat.dob = Date.parse(params[:patient][:dob], true)
+    rescue
+      flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
+      redirect_to :controller=>:home, :action => :new_patient
+      return
+    end
+    
+    if pat.dob>Date.today()
+      pat.dob = Date.civil(pat.dob.year-100, pat.dob.mon, pat.dob.mday)
+    end
+    pat.ethnicity = Ethnicity.find(:all, :conditions=>"name LIKE '#{params[:ethnicity][:ethnicity]}'")[0]
+    pat.history_taken = false;
+
+    if pat.save 
+      flash[:notice] = "#{pat.properLastName} was saved successfully"
+      redirect_to :controller=>:home, :action => :patient_history_query, :patient_id => pat
+    else
+      flash[:error] = "Saving patient failed."
+      redirect_to :controller=>:home, :action => :new_patient
+    end
+  end
+	
 	def live_search
 	    max_listing = 15
       post_sections = request.raw_post.split('&')

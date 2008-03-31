@@ -29,6 +29,10 @@ class Patient < ActiveRecord::Base
   end
   
   def properLastName
-    "#{sex=='Male' ? 'Mr.' : 'Ms.'} #{last_name}"
+    "#{isMale? ? 'Mr.' : 'Ms.'} #{last_name}"
+  end
+  
+  def isMale?
+    sex=='Male'
   end
 end

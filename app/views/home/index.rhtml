@@ -1,44 +1,52 @@
 <center>
-	<h2>Patient Visit</h2>
-	<table class='layout'>
-		<tr>
-			<td width='150px' align=center style='border: #777777 dotted 0px; padding-left: 25px; padding-right: 25px;'>
-				<%= link_to "<div>#{image_tag '/images/new_patient.png', :width=>150, :border=>0 }<br/>New Patient</div>", {:action => 'new_patient'}, :class=>'big'  %>
-			</td>
-			<td width='150px' align=center style='border: #777777 dotted 0px; padding-left: 25px; padding-right: 25px;'>
-				<%= link_to "<div>#{image_tag '/images/existing_patient.png', :width=>150, :border=>0 }Existing Patient</div>", {:action => 'existing_patient'}, :class=>'big'  %>
-			</td>
-		</tr>
-	</table>
-	<hr />
-	<h2>TB Testing</h2>
-	<% if @tb_tests_open.length==0 %>
-		<p class="big">
-			- No Open TB Tests -
-		</p>
+	<% if Session.todayNeedsOne? %>
+		<center>
+			<div style='border: #FF0000 solid 2px; padding: 15px; background: #FFCCCC; width: 200px;'>
+			<%= link_to "Start Session", {:controller=>"session", :action=>"start_session"}, :class=>"big"  %>
+			</div>
+		</center>
 	<% else %>
-	<table class='list'>
-		<tr>
-			<th colspan=2>Administered</th>
-			<th colspan=3>Patient</th>
-		</tr>
-		<% counter = 0 %>
-		<% for item in @tb_tests_open.sort {|a,b| a.patient.to_label <=> b.patient.to_label } %>
-			<% counter = counter + 1 %>
-			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
-			<% overdue = item.overdue %>
-			<tr class='<%= style %>'>
-				<td width="70px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= item.given_date.strftime('%A') %></font></td>
-				<td width="110px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= Date.today - item.given_date %> days ago</font></td>
-				<td width="250px"><%= link_to "#{item.patient.last_name}, #{item.patient.first_name}", {:action => 'patient_home', :patient_id => item.patient } %></td>
-				<% if overdue %>
-					<td colspan=2><%= link_to 'Clear', {:controller => 'tb_test', :action => 'no_show', :id => item}, :class => 'list' %></td>
-				<% else %>
-					<td><%= link_to 'Read', {:controller => 'tb_test', :action => 'read', :id => item}, :class => 'list' %></td>
-					<td><%= link_to 'No-Show', {:controller => 'tb_test', :action => 'no_show', :id => item}, :confirm => "Are you sure you want to mark #{item.patient.first_name} #{item.patient.last_name} as a No-Show?", :class => 'list' %></td>
-				<% end %>
-			</tr>	
-		<% end %>
-	</table>
+		<h2>Patient Visit</h2>
+		<table class='layout'>
+			<tr>
+				<td width='150px' align=center style='border: #777777 dotted 0px; padding-left: 25px; padding-right: 25px;'>
+					<%= link_to "<div>#{image_tag '/images/new_patient.png', :width=>150, :border=>0 }<br/>New Patient</div>", {:action => 'new_patient'}, :class=>'big'  %>
+				</td>
+				<td width='150px' align=center style='border: #777777 dotted 0px; padding-left: 25px; padding-right: 25px;'>
+					<%= link_to "<div>#{image_tag '/images/existing_patient.png', :width=>150, :border=>0 }Existing Patient</div>", {:action => 'existing_patient'}, :class=>'big'  %>
+				</td>
+			</tr>
+		</table>
+		<hr />
+		<h2>TB Testing</h2>
+		<% if @tb_tests_open.length==0 %>
+			<p class="big">
+				- No Open TB Tests -
+			</p>
+		<% else %>
+		<table class='list'>
+			<tr>
+				<th colspan=2>Administered</th>
+				<th colspan=3>Patient</th>
+			</tr>
+			<% counter = 0 %>
+			<% for item in @tb_tests_open.sort {|a,b| a.patient.to_label <=> b.patient.to_label } %>
+				<% counter = counter + 1 %>
+				<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+				<% overdue = item.overdue %>
+				<tr class='<%= style %>'>
+					<td width="70px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= item.given_date.strftime('%A') %></font></td>
+					<td width="110px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= Date.today - item.given_date %> days ago</font></td>
+					<td width="250px"><%= link_to "#{item.patient.last_name}, #{item.patient.first_name}", {:action => 'patient_home', :patient_id => item.patient } %></td>
+					<% if overdue %>
+						<td colspan=2><%= link_to 'Clear', {:controller => 'tb_test', :action => 'no_show', :id => item}, :class => 'list' %></td>
+					<% else %>
+						<td><%= link_to 'Read', {:controller => 'tb_test', :action => 'read', :id => item}, :class => 'list' %></td>
+						<td><%= link_to 'No-Show', {:controller => 'tb_test', :action => 'no_show', :id => item}, :confirm => "Are you sure you want to mark #{item.patient.first_name} #{item.patient.last_name} as a No-Show?", :class => 'list' %></td>
+					<% end %>
+				</tr>	
+			<% end %>
+		</table>
+	<% end %>
 	<% end %>
 </center>

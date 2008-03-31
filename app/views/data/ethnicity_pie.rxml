@@ -22,4 +22,5 @@ xml.chart do
   xml.chart_rect("","x"=>25,"y"=>-10,"height"=>250,"width"=>250)
   xml.chart_pref("", "rotation_x"=>45)
   xml.chart_transition("", "type"=>"scale", "delay"=>0, "duration"=>0.25, "order"=>"category")
+  xml.chart_value :color=>'000000', :alpha=>'85', :font=>'arial', :bold=>'true', :size=>'12', :position=>'outside', :prefix=>'', :suffix=>'%', :decimals=>'1', :separator=>'', :as_percentage=>'true', :hide_zero => 'true'
 end

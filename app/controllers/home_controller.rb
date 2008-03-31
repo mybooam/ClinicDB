@@ -47,30 +47,17 @@ class HomeController < ApplicationController
     @dates = @dates.uniq.sort{|a, b| b <=> a}
   end
   
-  def add_patient
-    pat = Patient.new(params[:patient])
-    pat.dob = Date.parse(params[:patient][:dob], true)
-    if pat.dob>Date.today()
-      pat.dob = Date.civil(pat.dob.year-100, pat.dob.mon, pat.dob.mday)
-    end
-    pat.ethnicity = Ethnicity.find(:all, :conditions=>"name LIKE '#{params[:ethnicity][:ethnicity]}'")[0]
-    pat.history_taken = false;
-#    if pat.history_taken
-#      pat.childhood_diseases = params[:childhood_disease].delete_if {|k,v| v=='0'}.collect{|a| ChildhoodDisease.find(a[0])}
-#      pat.immunization_histories = params[:immunization_history].delete_if {|k,v| v=='0'}.collect{|a| ImmunizationHistory.find(a[0])}
-#      pat.family_histories = params[:family_history].delete_if {|k,v| v=='0'}.collect{|a| FamilyHistory.find(a[0])}
-#    end
-
-    if pat.save 
-      flash[:notice] = "#{pat.properLastName} was saved successfully"
-      redirect_to :action => :patient_history_query, :patient_id => pat
-    else
-      flash[:error] = "Saving patient failed."
-      redirect_to :action => :new_patient
-    end
-  end
-  
   def list_patients
     @patients = Patient.find(:all).sort{|a,b| a.to_label.downcase <=> b.to_label.downcase }
+  end
+
+  def turn_on_admin
+    cookies[:admin_mode] = { :value => "true", :expires => 1.hour.from_now }
+    redirect_to :back
+  end
+
+  def turn_off_admin
+    cookies[:admin_mode] = { :value => "false", :expires => 1.hour.from_now }
+    redirect_to :back
   end
 end
