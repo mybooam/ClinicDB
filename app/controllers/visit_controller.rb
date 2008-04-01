@@ -24,8 +24,11 @@ class VisitController < ApplicationController
     if params[:user][:users_id2] && params[:user][:users_id2]!=""
       visit.users << User.find(params[:user][:users_id2])
     end
-    visit.save!
     
-    redirect_to :controller => 'home', :action => 'patient_home', :patient_id => params[:visit][:patient_id]
+    if visit.save
+      redirect_to :controller => 'home', :action => 'patient_home', :patient_id => params[:visit][:patient_id]
+    else
+      redirect_to :back
+    end
   end
 end

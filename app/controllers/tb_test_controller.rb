@@ -29,10 +29,11 @@ class TbTestController < ApplicationController
     @item.readby_user = User.find(params[:tb_test][:readby_user_id])
     if @item.save
       flash[:notice] = "TB Test result saved"
+      redirect_to :controller => 'home'
     else
       flash[:error] = "Error applying TB Test result"
+      redirect_to :back
     end
-    redirect_to :controller => 'home'
   end
   
   def add_for_patient
@@ -63,10 +64,10 @@ class TbTestController < ApplicationController
     
     if test.save
       flash[:notice] = "TB Test saved"
+      redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
     else
       flash[:error] = "Error saving TB Test."
+      redirect_to :back
     end
-    
-    redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
   end
 end

@@ -8,9 +8,14 @@ class PrescriptionController < ApplicationController
   def add_for_patient
     test = Prescription.new(params[:prescription])
     test.given_date = Date.today()
-    test.save
-
-    redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
+    
+    if test.save
+      flash[:notice] = "Prescription added."
+      redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
+    else
+      flash[:error] = "Prescription could not be added."
+      redirect_to :action => 'new_for_patient', :drug_id => params[:prescription][:drug_id], :patient_id => params[:prescription][:patient_id]
+    end
   end
   
   def set_drug

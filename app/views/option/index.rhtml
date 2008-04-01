@@ -1,0 +1,44 @@
+<% @options.each do |k,v| %>
+	<h2><%= v[:label] %></h2>
+	<div align=center>
+		<table width="350px" class="list">
+			<% linked_items = v[:items].select{|a| !a.method(v[:linked_to]).call.empty? } %>
+			<% unlinked_items = v[:items].select{|a| a.method(v[:linked_to]).call.empty? } %>
+			<% linked_items = linked_items.sort{|a,b| b.method(v[:linked_to]).call.size <=> a.method(v[:linked_to]).call.size } %>
+			<% unlinked_items = unlinked_items.sort{|a,b| a.name <=> b.name } %>
+			<% counter = 1 %>
+			<% linked_items.each do |item| %>
+				<% counter = counter + 1 %>
+				<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+				<tr class='<%= style %>'>
+					<td width="200px"><%= item.name %></td>
+					<td width="75px" align=right><span class="inactive_list_link"><%= item.method(v[:linked_to]).call.size %> links</span></td>
+					<td width="75px" align=right><%= link_to "edit", {:action => "edit", :item_id => item.id, :key => k, :name => item.name }, :class => "list" %></td>
+				</tr>
+			<% end %>
+			<% first = true %>
+			<% unlinked_items.each do |item| %>
+				<% counter = counter + 1 %>
+				<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+				<tr class='<%= style %>' <%= first ? "style='border-top: #AAAADD solid thin;'" : "" %>>
+					<td width="200px"><%= item.name %></td>
+					<td width="75px" align=right><%= link_to "delete", {:action => "delete", :item_id => item.id, :key => k }, :class => "list" %></td>
+					<td width="75px" align=right><%= link_to "edit", {:action => "edit", :item_id => item.id, :key => k, :name => item.name }, :class => "list" %></td>
+				</tr>
+				<% first = false %>
+			<% end %>
+		</table>
+		<br/>
+		<% form_tag "/option/add" do %>
+			<%= hidden_field :item, :key, :value => "#{k}" %>
+			<table class="layout" valign=top style="border: #aaa solid thin">
+				<tr bgcolor=#F0F0FF>
+					<td><label>New <%= v[:label] %>:</label></td>
+					<td><%= text_field :item, :name, :size => 20 %></td>
+					<td colspan=3 align=right><%= submit_tag 'Add' %></td>
+				</tr>
+			</table>
+		<% end %>
+	</div>
+	<br>
+<% end %>

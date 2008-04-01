@@ -206,14 +206,14 @@ a.medium {
 	font-family: courier, serif;
 }
 
+a.small {
+	font-size: 10pt;
+}
+
 a.list {
 	font-size: 10pt;
 	font-family: monospace;
 	vertical-align: middle;
-}
-
-a.small {
-	font-size: 10pt;
 }
 
 a.list:before {
@@ -222,6 +222,12 @@ content: "[";
 
 a.list:after {
 	content: "]";
+}
+
+.inactive_list_link {
+	font-size: 10pt;
+	font-family: monospace;
+	vertical-align: middle;
 }
 
 a:link {

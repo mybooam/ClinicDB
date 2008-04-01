@@ -51,29 +51,27 @@
 				<br/>
 			<% if cookies[:admin_mode]=="true" %>
 				<hr/>
-				<div align=center>
-					<a href="/home" class="small">Home</a> |
+				<div align=center class="small">
+					Utilities: 
+					<a href="/report" class="small">Reports</a> |
+					<a href="/option" class="small">Options</a>
+					<br/>
+					Internal pages:
 					<a href="/patient" class="small">Patients</a> |
 					<a href="/visit" class="small">Visits</a> |
 					<a href="/tb_test" class="small">TB Tests</a> |
 					<a href="/session" class="small">Sessions</a> |
 					<a href="/attending" class="small">Attendings</a> |
-					<a href="/user" class="small">Users</a>
-					<br/>
-					<a href="/drug" class="small">Drugs</a> |
-					<a href="/immunization_drug" class="small">Immunization Drugs</a> |
-					<a href="/immunization_history" class="small">Immunization Histories</a> |
-					<a href="/family_history" class="small">Family Histories</a> |
-					<a href="/childhood_disease" class="small">Childhood Diseases</a> |
-					<a href="/ethnicity" class="small">Ethnicities</a>
+					<a href="/user" class="small">Users</a> | 
+					<a href="/drug" class="small">Drugs</a>
 				</div>
 			<% end %>
 			</div>
 			<p class="footer">Created for the <a href='http://www.lsuhsc.edu/'>New Orleans LSUHSC</a> Homeless Clinic System</p>
 			<% if cookies[:admin_mode]=="true" %>
-				<p class="footer">Admin mode: [on]|<%= link_to "[off]", {:controller => "home", :action => "turn_off_admin"} %></p>
+				<p class="footer">Admin mode: on|<%= link_to "off", {:controller => "home", :action => "turn_off_admin"} %></p>
 			<% else %>
-				<p class="footer">Admin mode: <%= link_to "[on]", {:controller => "home", :action => "turn_on_admin"} %>|[off]</p>
+				<p class="footer">Admin mode: <%= link_to "on", {:controller => "home", :action => "turn_on_admin"} %>|off</p>
 			<% end %>
 		</div>
 	</body>

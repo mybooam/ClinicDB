@@ -1,0 +1,13 @@
+<div align=center>
+	<% form_tag "/option/update" do %>
+		<%= hidden_field :item, :key, :value => "#{@key}" %>
+		<%= hidden_field :item, :item_id, :value => "#{@item_id}" %>
+		<table class="layout" valign=top style="border: #aaa solid thin">
+			<tr bgcolor=#F0F0FF>
+				<td><label><%= @label %>:</label></td>
+				<td><%= text_field :item, :name, :size => 20, :value => @name %></td>
+				<td colspan=3 align=right><%= submit_tag 'Save' %></td>
+			</tr>
+		</table>
+	<% end %>
+</div>

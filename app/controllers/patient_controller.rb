@@ -28,7 +28,7 @@ class PatientController < ApplicationController
     
     if params[:patient][:dob].match("[1-9]{1,2}[- /.][1-9]{1,2}[- /.](19|20|)[0-9]{2}").nil?
       flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
-      redirect_to :controller=>:home, :action => :new_patient
+      redirect_to :back
       return
     end
     
@@ -36,7 +36,7 @@ class PatientController < ApplicationController
       pat.dob = Date.parse(params[:patient][:dob], true)
     rescue
       flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
-      redirect_to :controller=>:home, :action => :new_patient
+      redirect_to :back
       return
     end
     
@@ -51,7 +51,8 @@ class PatientController < ApplicationController
       redirect_to :controller=>:home, :action => :patient_history_query, :patient_id => pat
     else
       flash[:error] = "Saving patient failed."
-      redirect_to :controller=>:home, :action => :new_patient
+#      redirect_to :controller=>:home, :action => :new_patient
+      redirect_to :back
     end
   end
 	
@@ -88,9 +89,13 @@ class PatientController < ApplicationController
     pat.immunization_histories = params[:immunization_history].delete_if {|k,v| v=='0'}.collect{|a| ImmunizationHistory.find(a[0])}
     pat.family_histories = params[:family_history].delete_if {|k,v| v=='0'}.collect{|a| FamilyHistory.find(a[0])}
     
-    pat.save
-    
-    redirect_to :controller => :home, :action => :patient_home, :patient_id => pat.id
+    if pat.save
+      flash[:notice] = "#{pat.propperLastName}'s history added."
+      redirect_to :controller => :home, :action => :patient_home, :patient_id => pat.id
+    else
+      flash[:error] = "#{pat.propperLastName}'s history could not be added."
+      redirect_to :back
+    end
   end
   
   def set_patient
