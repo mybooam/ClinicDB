@@ -1,15 +1,28 @@
 #!/usr/bin/env ruby
-key_file = "/Volumes/TITANIUM/security/secret.key"
+require 'lib/security_helpers.rb'
+
 pid_file = "cron.pid"
 if File.exist?(pid_file)
   `rm #{pid_file}`
 end
+
 `ps -fe | grep cron_job | head -n1 > #{pid_file}`
+
+last = false
 while File.exist?(pid_file)
-  if File.exist?(key_file)
+  key_there = securityKeyPresent?
+  if key_there
+    if !last
+      puts "ClinicDB: Security Key found at #{securityVolumeDirectory}"
+    end
     `/rails/apps/clinicdb/script/startup password`
   else
+    if last
+      puts "ClinicDB: Security Key removed.  Shutting down server and encrypting database."
+    end
     `/rails/apps/clinicdb/script/shutdown`
   end
+  
+  last = key_there
   sleep 5
 end

@@ -1,20 +1,25 @@
 #!/usr/bin/env ruby
+require 'lib/security_helpers.rb'
+
 dir = File.dirname(__FILE__) + '/../db/'
 gpg_file = dir + "production.gpg"
 sqlite_file = dir + "production.sqlite3"
-key_file = "/Volumes/TITANIUM/security/secret.key"
-fingerprint_file = "/Volumes/TITANIUM/security/secret.fingerprint"
+key_file = "#{securityVolumeDirectory}security/secret.key"
+fingerprint_file = "#{securityVolumeDirectory}security/secret.fingerprint"
 passphrase = ARGV[0]
-#`gpg --import #{key_file}`
+
 puts " - Importing secret key - \n"
 `echo #{passphrase} | gpg --passphrase-fd 0 -d #{key_file} | gpg --import`
+
 puts " - Decrypting database - \n"
 `gpg --batch -o #{sqlite_file} -d #{gpg_file}`
+
 if File.exist?(sqlite_file) 
   `rm #{gpg_file}`
 else
   puts "ERROR: GPG Decryption Failed!!!!!!\n"
 end
+
 puts " - Deleteing secret key - \n"
 fingerprint = File.new(fingerprint_file, "r").gets
 puts fingerprint + "\n"
