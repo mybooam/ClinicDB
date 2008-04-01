@@ -3,6 +3,7 @@ dir = File.dirname(__FILE__) + '/../db/'
 gpg_file = dir + "production.gpg"
 sqlite_file = dir + "production.sqlite3"
 key_file = "/Volumes/TITANIUM/security/secret.key"
+fingerprint_file = "/Volumes/TITANIUM/security/secret.fingerprint"
 passphrase = ARGV[0]
 #`gpg --import #{key_file}`
 puts " - Importing secret key - \n"
@@ -15,4 +16,6 @@ else
   puts "ERROR: GPG Decryption Failed!!!!!!\n"
 end
 puts " - Deleteing secret key - \n"
-`gpg --batch --delete-secret-key 1A1F6B227EFEAE77C33796AC29A5D6E879D68FF1`
+fingerprint = File.new(fingerprint_file, "r").gets
+puts fingerprint + "\n"
+`gpg --batch --delete-secret-key #{fingerprint}`
