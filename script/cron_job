@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+key_file = "/Volumes/TITANIUM/security/secret.key"
+pid_file = "cron.pid"
+if File.exist?(pid_file)
+  `rm #{pid_file}`
+end
+`ps -fe | grep cron_job | head -n1 > #{pid_file}`
+while File.exist?(pid_file)
+  if File.exist?(key_file)
+    `/rails/apps/clinicdb/script/startup password`
+  else
+    `/rails/apps/clinicdb/script/shutdown`
+  end
+  sleep 5
+end

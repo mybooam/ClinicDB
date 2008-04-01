@@ -1,0 +1,8 @@
+#!/usr/bin/env ruby
+require 'date.rb'
+backup_dir = File.dirname(__FILE__) + '/../db/backups/'
+latest_backup_file = backup_dir + "backup_latest.gpg"
+usb_dir = "/Volumes/TITANIUM/backups/"
+usb_file = usb_dir + "backup_#{Date.today.strftime('%Y_%m_%d') + Time.now.strftime('_%H_%M_%S')}.gpg"
+
+`cp #{latest_backup_file} #{usb_file}`

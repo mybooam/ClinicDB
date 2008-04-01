@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+dir = File.dirname(__FILE__) + '/../db/'
+gpg_file = dir + "production.gpg"
+sqlite_file = dir + "production.sqlite3"
+if File.exist?(sqlite_file)
+  `gpg -o #{gpg_file} -e -r ClinicDB #{sqlite_file}`
+  if File.exist?(gpg_file) 
+    `rm #{sqlite_file}`
+    puts " - Database encrypted successfully - \n"
+  else
+    puts "ERROR: GPG Encryption Failed!!!!!!\n"
+  end
+else
+  puts "No database file found."
+end

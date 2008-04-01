@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+unless File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid')
+  `script/xfer_backup`
+  `script/decrypt #{ARGV[0]}`
+  if(File.exist?(File.dirname(__FILE__) + '/../db/production.sqlite3'))
+    `mongrel_rails start -d -e production --port 3000`
+  end
+  puts "startup script finished"
+end

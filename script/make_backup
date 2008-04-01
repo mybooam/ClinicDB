@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require 'date.rb'
+gpg_file = File.dirname(__FILE__) + '/../db/production.gpg'
+backup_dir = File.dirname(__FILE__) + '/../db/backups/'
+backup_file = backup_dir + "backup_#{Date.today.strftime('%Y_%m_%d') + Time.now.strftime('_%H_%M_%S')}.gpg"
+latest_backup_file = backup_dir + "backup_latest.gpg"
+puts "Adding backup: #{backup_file} and #{latest_backup_file}"
+`cp #{gpg_file} #{backup_file}`
+`cp #{gpg_file} #{latest_backup_file}`
