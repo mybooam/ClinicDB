@@ -18,16 +18,38 @@ class VisitController < ApplicationController
     end
     visit.users = []
     
-    if params[:user][:users_id1] && params[:user][:users_id1]!=""
-      visit.users << User.find(params[:user][:users_id1])
+    if params[:users_id1] && params[:users_id1]!=""
+      visit.users << User.find(params[:users_id1])
     end
-    if params[:user][:users_id2] && params[:user][:users_id2]!=""
-      visit.users << User.find(params[:user][:users_id2])
+    if params[:users_id2] && params[:users_id2]!=""
+      visit.users << User.find(params[:users_id2])
     end
     
     if visit.save
       redirect_to :controller => 'home', :action => 'patient_home', :patient_id => params[:visit][:patient_id]
     else
+      redirect_to :back
+    end
+  end
+  
+  def update_visit
+    Visit.update(params[:visit_id][:visit_id], params[:visit])
+    
+    visit = Visit.find(params[:visit_id][:visit_id], :include => [:patient])
+    visit.users = []
+    
+    if params[:users_id1] && params[:users_id1]!=""
+      visit.users << User.find(params[:users_id1])
+    end
+    if params[:users_id2] && params[:users_id2]!=""
+      visit.users << User.find(params[:users_id2])
+    end
+    
+    if visit.save
+      flash[:notice] = "#{visit.patient.properLastName}'s visit on #{visit.visit_date} was successfully updated."
+      redirect_to :controller => 'home', :action => 'patient_home', :patient_id => visit.patient.id
+    else
+      flash[:notice] = "Visit update failed."
       redirect_to :back
     end
   end

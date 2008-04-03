@@ -26,7 +26,7 @@
 				<%= "#{visit.visit_date.strftime("%A, %B %e, %Y")}"%>
 			</td>
 			<td class="visit_box_editlink">
-				<%= link_to "[edit]", :controller=>'visit', :action=>'edit', :id => visit.id %>
+				<%= link_to "[edit]", :controller=>'visit', :action=>'edit_visit', :visit_id => visit.id %>
 			</td>
 		</tr>
 		<% if !hide_telem %>

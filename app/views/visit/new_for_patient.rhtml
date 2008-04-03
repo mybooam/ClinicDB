@@ -30,7 +30,7 @@
 	</tr>
 	<tr bgcolor=#F0F0FF>
 		<td><label>Seen by Students:</label></td>
-		<td><%= user_field :user, :users_id1, {:multi => :true}  %><br/><%= user_field :user, :users_id2  %></td>
+		<td><%= user_field :users_id1 %><br/><%= user_field :users_id2  %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
 		<td colspan=2 align=right><%= submit_tag 'Save' %></td>

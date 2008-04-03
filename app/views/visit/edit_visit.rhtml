@@ -1,0 +1,43 @@
+<% visit = Visit.find(params[:visit_id])%>
+<% patient = visit.patient %>
+<h2> <%= "#{patient.first_name} #{patient.last_name}" %>: Visit</h2>
+
+<% form_tag "update_visit" do %>
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label>Chief Complaint:</label></td>
+		<td><%= text_area :visit, :chief_complaint, {:cols => 16, :rows => 2, :value => visit.chief_complaint}  %></td>
+	</tr>
+	<tr>
+		<td><label>Blood Pressure:</label></td>
+		<td><%= text_field :visit, :blood_press_sys, :size => 3, :value => visit.blood_press_sys  %>/<%= text_field :visit, :blood_press_dias, :size => 3, :value => visit.blood_press_dias  %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td><label>Pulse:</label></td>
+		<td><%= text_field :visit, :pulse, :size => 6, :value => visit.pulse  %></td>
+	</tr>
+	<tr>
+		<td><label>Temperature:</label></td>
+		<td><%= text_field :visit, :temperature, :size => 6, :value => visit.temperature  %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td><label>Weight:</label></td>
+		<td><%= text_field :visit, :weight, :size => 6, :value => visit.weight  %></td>
+	</tr>
+	<tr>
+		<td><label>Referrals:</label></td>
+		<td><%= text_area :visit, :referrals, {:cols => 16, :rows => 3, :value => visit.referrals}  %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td><label>Seen by Students:</label></td>
+		<% puts "#{visit.users[0]}, #{visit.users[1]}" %>
+		<td><%= user_field :users_id1, {}, !visit.users[0].nil? ? visit.users[0] : nil %><br/><%= user_field :users_id2, {},  !visit.users[1].nil? ? visit.users[1] : nil %></td>
+	</tr>
+	<tr style="border-top: #aaa solid thin">
+		<td colspan=2 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+	<%= hidden_field :visit_id, :visit_id, :value => "#{visit.id}" %>
+</table>
+</center>
+<% end %>

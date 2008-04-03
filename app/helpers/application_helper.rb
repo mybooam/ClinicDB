@@ -1,6 +1,9 @@
 # Methods added to this helper will be available to all templates in the application.
 module ApplicationHelper
-  def user_field(object_name, method, options = {:size => 16})
-    select object_name, method, User.find(:all, :conditions => { :active => true}).sort{|a,b| a.to_label <=> b.to_label}.collect{ |a| [a.to_label, a.id] }, {:size => options[:size], :include_blank => true, :selected => nil}
+  def user_field(name, options = {:size => 16}, selected = nil)
+    puts "#{selected}"
+    # select object_name, method, User.find(:all, :conditions => { :active => true}).sort{|a,b| a.to_label <=> b.to_label}.collect{ |a| [a.to_label, a.id] }, {:size => options[:size], :include_blank => true}, :selected => (selected.nil? ? nil : selected.id)
+    options = User.find(:all, :conditions => { :active => true}).collect{|a| "<option value='#{a.id}' #{(!selected.nil? && selected==a) ? 'selected=true' : ''}>#{a.to_label}</option>"}.join("")
+    select_tag name, "<option value='' #{selected.nil? ? 'selected=true' : ''}></option>" + options
   end
 end

@@ -26,7 +26,7 @@ class TbTestController < ApplicationController
     @item.result=params[:tb_test][:result]
     @item.notes=params[:tb_test][:notes]
     @item.read_date = Date.today
-    @item.readby_user = User.find(params[:tb_test][:readby_user_id])
+    @item.readby_user = User.find(params[:readby_user_id])
     if @item.save
       flash[:notice] = "TB Test result saved"
       redirect_to :controller => 'home'
@@ -38,6 +38,7 @@ class TbTestController < ApplicationController
   
   def add_for_patient
     test = TbTest.new(params[:tb_test])
+    test.givenby_user = User.find(params[:givenby_user_id])
     test.given_date = Date.today()
     expdate = params[:other][:expiration_date]
     nums = (expdate.count(',')>0) ? expdate.split(',') : expdate.split('/')
