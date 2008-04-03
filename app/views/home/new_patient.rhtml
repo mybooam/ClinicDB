@@ -22,7 +22,7 @@
 	</tr>
 	<tr bgcolor=#F0F0FF>
 		<td><label>Ethnicity:</label></td>
-		<td colspan=2><%= select :ethnicity, :ethnicity, Ethnicity.find(:all) %></td>
+		<td colspan=2><%= select_tag :ethnicity, Ethnicity.find(:all).collect{|a| "<option value='#{a.id}'>#{a.name}</option>"} %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
 		<td colspan=3 align=right><%= submit_tag 'Save' %></td>

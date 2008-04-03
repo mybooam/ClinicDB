@@ -41,8 +41,9 @@
 	<tr style="border-top: #aaa solid thin">
 		<td valign=top><label>Smoking:</label></td>
 		<td>
-			<%= check_box :patient, :curr_smoking, :class => 'checkbox' %> Current <br />
-			<%= check_box :patient, :prev_smoking, :class => 'checkbox' %> Previous
+			<%= radio_button :history, :smoking, "Never", :class => 'radio', :checked => 'checked' %> Never <br />
+			<%= radio_button :history, :smoking, "Current", :class => 'radio' %> Current<br />
+			<%= radio_button :history, :smoking, "Previous", :class => 'radio' %> Previous
 		</td>
 		<td valign=top>
 			Pack-years: <%= text_field :patient, :smoking_py, :size => 3 %>
@@ -51,8 +52,9 @@
 	<tr bgcolor=#F0F0FF>
 		<td valign=top><label>Alcohol Use:</label></td>
 		<td>
-			<%= check_box :patient, :curr_etoh_use, :class => 'checkbox' %> Current <br />
-			<%= check_box :patient, :prev_etoh_use, :class => 'checkbox' %> Previous
+			<%= radio_button :history, :etoh_use, "Never", :class => 'radio', :checked => 'checked' %> Never <br />
+			<%= radio_button :history, :etoh_use, "Current", :class => 'radio' %> Current<br />
+			<%= radio_button :history, :etoh_use, "Previous", :class => 'radio' %> Previous
 		</td>
 		<td>
 			<%= text_area :patient, :etoh_notes, {:cols => 12, :rows => 2} %>
@@ -61,8 +63,9 @@
 	<tr>
 		<td valign=top><label>Drug Use:</label></td>
 		<td>
-			<%= check_box :patient, :curr_drug_use, :class => 'checkbox' %> Current <br />
-			<%= check_box :patient, :prev_drug_use, :class => 'checkbox' %> Previous
+			<%= radio_button :history, :drug_use, "Never", :class => 'radio', :checked => 'checked' %> Never <br />
+			<%= radio_button :history, :drug_use, "Current", :class => 'radio' %> Current<br />
+			<%= radio_button :history, :drug_use, "Previous", :class => 'radio' %> Previous
 		</td>
 		<td>
 			<%= text_area :patient, :drug_notes, {:cols => 12, :rows => 2} %>

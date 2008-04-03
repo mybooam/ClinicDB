@@ -9,7 +9,7 @@ fingerprint_file = "#{securityVolumeDirectory}security/secret.fingerprint"
 passphrase = ARGV[0]
 
 puts " - Importing secret key - \n"
-`echo #{passphrase} | gpg --passphrase-fd 0 -d #{key_file} | gpg --import`
+`echo #{passphrase} | gpg --passphrase-fd 0 -d '#{key_file}' | gpg --import`
 
 puts " - Decrypting database - \n"
 `gpg --batch -o #{sqlite_file} -d #{gpg_file}`

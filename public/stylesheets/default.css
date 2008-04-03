@@ -111,6 +111,15 @@ tr.even_row
 	background-color: #EEEEFF
 }
 
+tr.odd_form_row
+{
+}
+
+tr.even_form_row
+{
+	background-color: #F0F0FF
+}
+
 table.live_search_small
 {
 	margin-left:25px;

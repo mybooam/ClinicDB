@@ -2,13 +2,13 @@
 require 'lib/security_helpers.rb'
 
 require 'date.rb'
-backup_dir = File.dirname(__FILE__) + '/../db/backups/'
+backup_dir = '/clinicdb_backups/'
 latest_backup_file = backup_dir + "backup_latest.gpg"
 usb_dir = "#{securityVolumeDirectory}backups/"
 usb_file = usb_dir + "backup_#{Date.today.strftime('%Y_%m_%d') + Time.now.strftime('_%H_%M_%S')}.gpg"
 
 if File.exist?(usb_dir)
-  `cp #{latest_backup_file} #{usb_file}`
+  `cp '#{latest_backup_file}' '#{usb_file}'`
   puts "ClinicDB: Backup transfered to security drive."
 else
   puts "ClinicDB: Backup directory not found.  Skipping transfer."

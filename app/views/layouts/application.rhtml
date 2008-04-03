@@ -71,7 +71,7 @@
 			<% if cookies[:admin_mode]=="true" %>
 				<p class="footer">Admin mode: on|<%= link_to "off", {:controller => "home", :action => "turn_off_admin"} %></p>
 			<% else %>
-				<p class="footer">Admin mode: <%= link_to "on", {:controller => "home", :action => "turn_on_admin"} %>|off</p>
+				<p class="footer">Admin mode: <%= link_to "on", {:controller => "home", :action => "request_on_admin"} %>|off</p>
 			<% end %>
 		</div>
 	</body>

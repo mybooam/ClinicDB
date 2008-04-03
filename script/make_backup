@@ -2,7 +2,7 @@
 require 'date.rb'
 
 gpg_file = File.dirname(__FILE__) + '/../db/production.gpg'
-backup_dir = '/clnicdb_backups/'
+backup_dir = '/clinicdb_backups/'
 
 unless File.exist?(gpg_file)
   puts "ClinicDB: ERROR: Backup cannot run if encrypted db file is not present"

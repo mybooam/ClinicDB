@@ -26,7 +26,7 @@ class PatientController < ApplicationController
 	def add_patient
     pat = Patient.new(params[:patient])
     
-    if params[:patient][:dob].match("[1-9]{1,2}[- /.][1-9]{1,2}[- /.](19|20|)[0-9]{2}").nil?
+    if params[:patient][:dob].match("[0-9]{1,2}[- /.][0-9]{1,2}[- /.](19|20|)[0-9]{2}").nil?
       flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
       redirect_to :back
       return
@@ -43,8 +43,8 @@ class PatientController < ApplicationController
     if pat.dob>Date.today()
       pat.dob = Date.civil(pat.dob.year-100, pat.dob.mon, pat.dob.mday)
     end
-    pat.ethnicity = Ethnicity.find(:all, :conditions=>"name LIKE '#{params[:ethnicity][:ethnicity]}'")[0]
-    pat.history_taken = false;
+    pat.ethnicity = Ethnicity.find(params[:ethnicity])
+    pat.history_taken = false
 
     if pat.save 
       flash[:notice] = "#{pat.properLastName} was saved successfully"
@@ -52,6 +52,132 @@ class PatientController < ApplicationController
     else
       flash[:error] = "Saving patient failed."
 #      redirect_to :controller=>:home, :action => :new_patient
+      redirect_to :back
+    end
+  end
+  
+  def add_history
+    Patient.update(params[:patient_id][:patient_id], params[:patient])
+    
+    pat = Patient.find(params[:patient_id][:patient_id])
+    pat.history_taken = true
+    
+    if params[:history][:smoking] == 'Current'
+        pat.prev_smoking = true
+        pat.curr_smoking = true
+      elsif params[:history][:smoking] == 'Previous'
+        pat.prev_smoking = true
+        pat.curr_smoking = false
+      else
+        pat.prev_smoking = false
+        pat.curr_smoking = false
+      end
+      
+      if params[:history][:drug_use] == 'Current'
+        pat.prev_drug_use = true
+        pat.curr_drug_use = true
+      elsif params[:history][:drug_use] == 'Previous'
+        pat.prev_drug_use = true
+        pat.curr_drug_use = false
+      else
+        pat.prev_drug_use = false
+        pat.curr_drug_use = false
+      end
+      
+      if params[:history][:etoh_use] == 'Current'
+        pat.prev_etoh_use = true
+        pat.curr_etoh_use = true
+      elsif params[:history][:etoh_use] == 'Previous'
+        pat.prev_etoh_use = true
+        pat.curr_etoh_use = false
+      else
+        pat.prev_etoh_use = false
+        pat.curr_etoh_use = false
+      end
+    
+    pat.childhood_diseases = params[:childhood_disease].delete_if {|k,v| v=='0'}.collect{|a| ChildhoodDisease.find(a[0])}
+    pat.immunization_histories = params[:immunization_history].delete_if {|k,v| v=='0'}.collect{|a| ImmunizationHistory.find(a[0])}
+    pat.family_histories = params[:family_history].delete_if {|k,v| v=='0'}.collect{|a| FamilyHistory.find(a[0])}
+    
+    if pat.save
+      flash[:notice] = "#{pat.properLastName}'s history added."
+      redirect_to :controller => :home, :action => :patient_home, :patient_id => pat.id
+    else
+      flash[:error] = "#{pat.properLastName}'s history could not be added."
+      redirect_to :back
+    end
+  end
+	
+	def update_patient
+	  Patient.update(params[:patient_id][:patient_id], params[:literal_update])
+    
+    pat = Patient.find(params[:patient_id][:patient_id])
+    
+    puts "Patient date of birth: #{params[:patient][:dob]}"
+   
+   if params[:patient][:dob].match("[0-9]{1,2}[- /.][0-9]{1,2}[- /.](19|20|)[0-9]{2}").nil?
+      flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
+      redirect_to :back
+      return
+    end
+    
+    begin
+      pat.dob = Date.parse(params[:patient][:dob], true)
+    rescue
+      flash[:error] = "Invalid date exception.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
+      redirect_to :back
+      return
+    end
+    
+    if pat.dob>Date.today()
+      pat.dob = Date.civil(pat.dob.year-100, pat.dob.mon, pat.dob.mday)
+    end
+    pat.ethnicity = Ethnicity.find(params[:ethnicity])
+   
+    if pat.history_taken
+      if params[:patient][:smoking] == 'Current'
+        pat.prev_smoking = true
+        pat.curr_smoking = true
+      elsif params[:patient][:smoking] == 'Previous'
+        pat.prev_smoking = true
+        pat.curr_smoking = false
+      else
+        pat.prev_smoking = false
+        pat.curr_smoking = false
+      end
+      
+      if params[:patient][:drug_use] == 'Current'
+        pat.prev_drug_use = true
+        pat.curr_drug_use = true
+      elsif params[:patient][:drug_use] == 'Previous'
+        pat.prev_drug_use = true
+        pat.curr_drug_use = false
+      else
+        pat.prev_drug_use = false
+        pat.curr_drug_use = false
+      end
+      
+      if params[:patient][:etoh_use] == 'Current'
+        pat.prev_etoh_use = true
+        pat.curr_etoh_use = true
+      elsif params[:patient][:etoh_use] == 'Previous'
+        pat.prev_etoh_use = true
+        pat.curr_etoh_use = false
+      else
+        pat.prev_etoh_use = false
+        pat.curr_etoh_use = false
+      end
+      
+      pat.childhood_diseases = params[:childhood_disease].delete_if {|k,v| v=='0'}.collect{|a| ChildhoodDisease.find(a[0])}
+      pat.immunization_histories = params[:immunization_history].delete_if {|k,v| v=='0'}.collect{|a| ImmunizationHistory.find(a[0])}
+      pat.family_histories = params[:family_history].delete_if {|k,v| v=='0'}.collect{|a| FamilyHistory.find(a[0])}
+    end
+
+    if pat.save
+      flash[:notice] = "#{pat.properLastName} updated."
+      redirect_to :controller => :home, :action => :patient_home, :patient_id => pat.id
+    else
+      flash[:error] = "#{pat.properLastName}could not be updated."
       redirect_to :back
     end
   end
@@ -77,25 +203,6 @@ class PatientController < ApplicationController
       end  
 
       render(:layout => false)
-  end
-  
-  def add_history
-    Patient.update(params[:patient_id][:patient_id], params[:patient])
-    
-    pat = Patient.find(params[:patient_id][:patient_id])
-    pat.history_taken = true;
-    
-    pat.childhood_diseases = params[:childhood_disease].delete_if {|k,v| v=='0'}.collect{|a| ChildhoodDisease.find(a[0])}
-    pat.immunization_histories = params[:immunization_history].delete_if {|k,v| v=='0'}.collect{|a| ImmunizationHistory.find(a[0])}
-    pat.family_histories = params[:family_history].delete_if {|k,v| v=='0'}.collect{|a| FamilyHistory.find(a[0])}
-    
-    if pat.save
-      flash[:notice] = "#{pat.propperLastName}'s history added."
-      redirect_to :controller => :home, :action => :patient_home, :patient_id => pat.id
-    else
-      flash[:error] = "#{pat.propperLastName}'s history could not be added."
-      redirect_to :back
-    end
   end
   
   def set_patient

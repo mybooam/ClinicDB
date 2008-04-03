@@ -13,6 +13,7 @@ if File.exist?(pid_file)
 end
 
 `ps -fe | grep keymond | head -n1 > #{pid_file}`
+puts "Key Monitor Daemon started"
 
 last = false
 while File.exist?(pid_file)

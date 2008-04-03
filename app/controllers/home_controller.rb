@@ -50,12 +50,20 @@ class HomeController < ApplicationController
   end
 
   def turn_on_admin
+    unless params[:admin][:pass] == 'password'
+      flash[:error] = "Incorrect password."
+      redirect_to :back
+      return
+    end
+    
     cookies[:admin_mode] = { :value => "true", :expires => 1.hour.from_now }
-    redirect_to :back
+    flash[:warning] = "Administration mode activated.  Proceed with caution."
+    redirect_to :action => :index
   end
 
   def turn_off_admin
     cookies[:admin_mode] = { :value => "false", :expires => 1.hour.from_now }
+    flash[:notice] = "Logged out of Administration mode."
     redirect_to :back
   end
 end

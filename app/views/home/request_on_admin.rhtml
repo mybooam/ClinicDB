@@ -1,0 +1,13 @@
+<% form_tag "turn_on_admin" do %>
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label>Administrator Password:</label></td>
+		<td><%= password_field :admin, :pass, :size => 20 %></td>
+	</tr>
+	<tr style="border-top: #aaa solid thin">
+		<td colspan=2 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+</table>
+</center>
+<% end %>

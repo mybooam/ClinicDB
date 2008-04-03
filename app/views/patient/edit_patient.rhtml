@@ -1,0 +1,167 @@
+<% patient = Patient.find(params[:patient_id]) %>
+
+<% form_tag "/patient/update_patient" do %>
+<% counter = 1 %>
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<% counter = counter + 1 %>
+	<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+		<td><label>First Name:</label></td>
+		<td colspan=2><%= text_field :literal_update, :first_name, :size => 20, :value => patient.first_name %></td>
+	</tr>
+	<% counter = counter + 1 %>
+	<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+		<td><label>Last Name:</label></td>
+		<td colspan=2><%= text_field :literal_update, :last_name, :size => 20, :value => patient.last_name %></td>
+	</tr>
+	<% counter = counter + 1 %>
+	<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+		<td><label>Date of Birth (<i>mm/dd/yy</i>):</label></td>
+		<td colspan=2><%= text_field :patient, :dob, :size => 10, :value => '%02d/%02d/%02d' % [patient.dob.mon, patient.dob.mday, patient.dob.year] %></td>
+	</tr>
+	<% counter = counter + 1 %>
+	<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+		<td><label>Sex:</label></td>
+		<td valign="top"><%= radio_button :literal_update, :sex, "Male", :checked=>patient.isMale?, :class => 'radio' %> Male</td>
+		<td valign="top"><%= radio_button :literal_update, :sex, "Female", :checked=>!patient.isMale?, :class => 'radio' %> Female</td>
+	</tr>
+	<% counter = counter + 1 %>
+	<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+		<td><label>Ethnicity:</label></td>
+		<td colspan=2><%= select_tag :ethnicity, Ethnicity.find(:all).collect{|a| "<option value='#{a.id}' #{patient.ethnicity==a ? 'selected=true' : ''}>#{a.name}</option>"} %></td>
+	</tr>
+	
+	<% if patient.history_taken %>
+		<% counter = counter + 1 %>
+		<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>' style="border-top: #aaa solid thin">
+			<td valign=top><label>Adult Illness:</label></td>
+			<td colspan=2>
+				<%= text_area :literal_update, :adult_illness, {:cols => 20, :rows => 2, :value => patient.adult_illness} %>
+			</td>
+		</tr>
+		<% counter = counter + 1 %>
+		<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+			<td valign=top><label>Surgeries:</label></td>
+			<td colspan=2>
+				<%= text_area :literal_update, :surgeries, {:cols => 20, :rows => 2, :value => patient.surgeries} %>
+			</td>
+		</tr>
+		<tr bgcolor=#F0F0FF>
+			<td valign=top><label>Allergies:</label></td>
+			<td colspan=2>
+				<%= text_area :literal_update, :allergies, {:cols => 20, :rows => 2, :value => patient.allergies} %>
+			</td>
+		</tr>
+		<% counter = counter + 1 %>
+		<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>' style="border-top: #aaa solid thin">
+			<td valign=top><label>Smoking:</label></td>
+			<td>
+				<%= radio_button :patient, :smoking, "Never", :class => 'radio', :checked => (!patient.curr_smoking && !patient.prev_smoking) ? 'checked' : '' %> Never <br />
+				<%= radio_button :patient, :smoking, "Current", :class => 'radio', :checked => patient.curr_smoking ? 'checked' : '' %> Current<br />
+				<%= radio_button :patient, :smoking, "Previous", :class => 'radio', :checked => (!patient.curr_smoking && patient.prev_smoking) ? 'checked' : '' %> Previous
+			</td>
+			<td valign=top>
+				Pack-years: <%= text_field :literal_update, :smoking_py, :size => 3, :value => patient.smoking_py %>
+			</td>
+		</tr>
+		<% counter = counter + 1 %>
+		<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+			<td valign=top><label>Alcohol Use:</label></td>
+			<td>
+				<%= radio_button :patient, :etoh_use, "Never", :class => 'radio', :checked => (!patient.curr_etoh_use && !patient.prev_etoh_use) ? 'checked' : '' %> Never <br />
+				<%= radio_button :patient, :etoh_use, "Current", :class => 'radio', :checked => patient.curr_etoh_use ? 'checked' : '' %> Current<br />
+				<%= radio_button :patient, :etoh_use, "Previous", :class => 'radio', :checked => (!patient.curr_etoh_use && patient.prev_etoh_use) ? 'checked' : '' %> Previous
+			</td>
+			<td>
+				<%= text_area :literal_update, :etoh_notes, {:cols => 12, :rows => 2, :value => patient.etoh_notes} %>
+			</td>
+		</tr>
+		<% counter = counter + 1 %>
+		<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+			<td valign=top><label>Drug Use:</label></td>
+			<td>
+				<%= radio_button :patient, :drug_use, "Never", :class => 'radio', :checked => (!patient.curr_drug_use && !patient.prev_drug_use) ? 'checked' : '' %> Never <br />
+				<%= radio_button :patient, :drug_use, "Current", :class => 'radio', :checked => patient.curr_drug_use ? 'checked' : '' %> Current<br />
+				<%= radio_button :patient, :drug_use, "Previous", :class => 'radio', :checked => (!patient.curr_drug_use && patient.prev_drug_use) ? 'checked' : '' %> Previous
+			</td>
+			<td>
+				<%= text_area :literal_update, :drug_notes, {:cols => 12, :rows => 2, :value => patient.drug_notes} %>
+			</td>
+		</tr>
+		<% counter = counter + 1 %>
+		<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>' style="border-top: #aaa solid thin">
+			<td valign=top><label>Childhood Diseases:</label></td>
+			<td valign=top>
+				<% count = 0 %>
+				<% for disease in ChildhoodDisease.find(:all) do %>
+					<% count=count+1 %>
+					<% if count.modulo(2).nonzero? %>
+						<%= check_box :childhood_disease, "#{disease.id}", :class => 'checkbox', :checked => patient.childhood_diseases.include?(disease) ? 'checked' : '' %> <%= "#{disease.name}" %><br />
+					<% end %>
+				<% end %>
+			</td>
+			<td valign=top>
+				<% count = 1 %>
+				<% for disease in ChildhoodDisease.find(:all) do %>
+					<% count=count+1 %>
+					<% if count.modulo(2).nonzero? %>
+						<%= check_box :childhood_disease, "#{disease.id}", :class => 'checkbox', :checked => patient.childhood_diseases.include?(disease) ? 'checked' : '' %> <%= "#{disease.name}" %><br />
+					<% end %>
+				<% end %>
+			</td>
+		</tr>
+		<% counter = counter + 1 %>
+		<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+			<td valign=top><label>Immunizations:</label></td>
+			<td valign=top>
+				<% count = 0 %>
+				<% for disease in ImmunizationHistory.find(:all) do %>
+					<% count=count+1 %>
+					<% if count.modulo(2).nonzero? %>
+						<%= check_box :immunization_history, "#{disease.id}", :class => 'checkbox', :checked => patient.immunization_histories.include?(disease) ? 'checked' : '' %> <%= "#{disease.name}" %><br />
+					<% end %>
+				<% end %>
+			</td>
+			<td valign=top>
+				<% count = 1 %>
+				<% for disease in ImmunizationHistory.find(:all) do %>
+					<% count=count+1 %>
+					<% if count.modulo(2).nonzero? %>
+						<%= check_box :immunization_history, "#{disease.id}", :class => 'checkbox', :checked => patient.immunization_histories.include?(disease) ? 'checked' : '' %> <%= "#{disease.name}" %><br />
+					<% end %>
+				<% end %>
+			</td>
+		</tr>
+		<% counter = counter + 1 %>
+		<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>'>
+			<td valign=top><label>Family History:</label></td>
+			<td valign=top>
+				<% count = 0 %>
+				<% for disease in FamilyHistory.find(:all) do %>
+					<% count=count+1 %>
+					<% if count.modulo(2).nonzero? %>
+						<%= check_box :family_history, "#{disease.id}", :class => 'checkbox', :checked => patient.family_histories.include?(disease) ? 'checked' : '' %> <%= "#{disease.name}" %><br />
+					<% end %>
+				<% end %>
+			</td>
+			<td valign=top>
+				<% count = 1 %>
+				<% for disease in FamilyHistory.find(:all) do %>
+					<% count=count+1 %>
+					<% if count.modulo(2).nonzero? %>
+						<%= check_box :family_history, "#{disease.id}", :class => 'checkbox', :checked => patient.family_histories.include?(disease) ? 'checked' : '' %> <%= "#{disease.name}" %><br />
+					<% end %>
+				<% end %>
+			</td>
+		</tr>
+	<% end %>
+	
+	<% counter = counter + 1 %>
+	<tr class='<%= counter.modulo(2).nonzero? ? 'odd_form_row' : 'even_form_row' %>' style="border-top: #aaa solid thin">
+		<td colspan=3 align=right><%= submit_tag 'Save' %></td>
+	</tr>
+	
+	<%= hidden_field :patient_id, :patient_id, :value => "#{patient.id}" %>
+</table>
+</center>
+<% end %>
