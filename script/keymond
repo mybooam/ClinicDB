@@ -1,12 +1,18 @@
 #!/usr/bin/env ruby
+
+unless Dir.new(Dir.pwd).entries.include?("script") && Dir.new(Dir.pwd).entries.include?("lib")
+  puts "ClinicDB: ERROR: Key monitor daemon must be run from the ClinicDB directory"
+  exit
+end
+
 require 'lib/security_helpers.rb'
 
-pid_file = "cron.pid"
+pid_file = "keymond.pid"
 if File.exist?(pid_file)
   `rm #{pid_file}`
 end
 
-`ps -fe | grep cron_job | head -n1 > #{pid_file}`
+`ps -fe | grep keymond | head -n1 > #{pid_file}`
 
 last = false
 while File.exist?(pid_file)
@@ -15,12 +21,12 @@ while File.exist?(pid_file)
     if !last
       puts "ClinicDB: Security Key found at #{securityVolumeDirectory}"
     end
-    `/rails/apps/clinicdb/script/startup password`
+    `script/startup password`
   else
     if last
       puts "ClinicDB: Security Key removed.  Shutting down server and encrypting database."
     end
-    `/rails/apps/clinicdb/script/shutdown`
+    `script/shutdown`
   end
   
   last = key_there
