@@ -1,0 +1,6 @@
+<% test = TbTest.find(params[:tb_test_id]) %>
+
+<h2>Patient: <%= link_to test.patient.name, :controller => "home", :action => "patient_home", :patient_id => test.patient.id %></h2>
+<div align=center>
+	<%= render :partial => "tb_test/card", :locals => {:tb_test => test} %>
+</div>

@@ -9,7 +9,7 @@ class OptionController < ApplicationController
     option = get_options[key]
     
     case key
-    when "childhood_disease" then
+    when "childhood_diseases" then
       item = ChildhoodDisease.new(:name => name)
     when "ethnicities" then
       item = Ethnicity.new(:name => name)
@@ -54,7 +54,7 @@ class OptionController < ApplicationController
     end
     
     case key
-    when "childhood_disease" then
+    when "childhood_diseases" then
       result = ChildhoodDisease.update(item_id, :name => name)
     when "ethnicities" then
       result = Ethnicity.update(item_id, :name => name)
@@ -85,7 +85,7 @@ class OptionController < ApplicationController
     option = get_options[key]
     
     case key
-    when "childhood_disease" then
+    when "childhood_diseases" then
       name = ChildhoodDisease.find(item_id).name
       result = ChildhoodDisease.delete(item_id)
     when "ethnicities" then

@@ -28,6 +28,10 @@ class Patient < ActiveRecord::Base
     Date.today().year - dob.year - ((dob.mon*100+dob.mday >  Date.today().mon*100+Date.today().mday) ? 1 : 0)
   end
   
+  def name
+    "#{last_name}, #{first_name}"
+  end
+  
   def properLastName
     "#{isMale? ? 'Mr.' : 'Ms.'} #{last_name}"
   end

@@ -1,0 +1,29 @@
+<% user = User.find(params[:user_id]) %>
+
+<% if !user.visits.empty? %>
+	<h2>Visits</h2>
+	<ul>
+	<% for visit in user.visits %>
+		<li><%= link_to "#{visit.patient.name} on #{visit.visit_date}", :controller => :visit, :action => :show_visit, :visit_id => visit.id %>
+	<% end %>
+	</ul>
+<% end %>
+
+<% tests = (user.tb_tests_given + user.tb_tests_read).uniq %>
+<% if !tests.empty? %>
+	<h2>TB Tests</h2>
+	<ul>
+	<% for test in tests %>
+		<li><%= link_to "#{test.patient.name} on #{test.given_date}", :controller => :tb_test, :action => :show_tb_test, :tb_test_id => test.id %>
+	<% end %>
+	</ul>
+<% end %>
+
+<% if !user.immunizations_given.empty? %>
+	<h2>Immunizations</h2>
+	<ul>
+	<% for immu in user.immunizations_given %>
+		<li><%= link_to "#{immu.immunization_drug.name} given to #{immu.patient.name} on #{immu.given_date}", :controller => :immunization, :action => :show_immu, :immu_id => immu.id %>
+	<% end %>
+	</ul>
+<% end %>

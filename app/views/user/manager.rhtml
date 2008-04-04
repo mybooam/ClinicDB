@@ -1,0 +1,83 @@
+<% users = User.find(:all) %>
+
+<%
+if params[:sort_by]
+	sort_by = params[:sort_by]
+else
+	sort_by = "first_name_fwd"
+end
+
+case sort_by
+when "first_name_fwd" then
+	users.sort!{|a,b| "#{a.first_name}#{a.last_name}" <=> "#{b.first_name}#{b.last_name}"}
+when "first_name_back" then
+	users.sort!{|a,b| "#{b.first_name}#{b.last_name}" <=> "#{a.first_name}#{a.last_name}"}
+when "last_name_fwd" then
+	users.sort!{|a,b| "#{a.last_name}#{a.first_name}" <=> "#{b.last_name}#{b.first_name}"}
+when "last_name_back" then
+	users.sort!{|a,b| "#{b.last_name}#{b.first_name}" <=> "#{a.last_name}#{a.first_name}"}
+when "active_fwd" then
+	users.sort!{|a,b| a.to_label <=> b.to_label}
+	users.sort!{|a,b| "#{a.active}#{a.active}" <=> "#{b.active}#{b.active}"}
+when "active_back" then
+	users.sort!{|a,b| a.to_label <=> b.to_label}
+	users.sort!{|a,b| "#{b.active}#{b.active}" <=> "#{a.active}#{a.active}"}
+end
+
+%>
+
+<div align=center>
+	<% form_tag "/user/add_user" do %>
+		<table class="layout" valign=top style="border: #aaa solid thin">
+			<tr bgcolor=#F0F0FF>
+				<td><label>First Name:</label></td>
+				<td><%= text_field :user, :first_name, :size => 20 %></td>
+			</tr>
+			<tr>
+				<td><label>Last Name:</label></td>
+				<td><%= text_field :user, :last_name, :size => 20 %></td>
+			</tr>
+			<tr bgcolor=#F0F0FF>
+				<td><label>Email (optional):</label></td>
+				<td><%= text_field :user, :email, :size => 20 %></td>
+			</tr>
+			<%= hidden_field :user, :active, :value=>true %>
+			<tr>
+				<td colspan=2 align=right><%= submit_tag 'Add' %></td>
+			</tr>
+		</table>
+	<% end %>
+	
+	<br/>
+	
+	<table width="590px" class="list">
+		<tr>
+			<th width="15px" align=center><%= link_to '+/-', :action => :manager, :sort_by => (sort_by=="active_fwd" ? "active_back" : "active_fwd") %></th>
+			<th width="125px"><%= link_to 'First Name', :action => :manager, :sort_by => (sort_by=="first_name_fwd" ? "first_name_back" : "first_name_fwd") %></th>
+			<th width="125px"><%= link_to 'Last Name', :action => :manager, :sort_by => (sort_by=="last_name_fwd" ? "last_name_back" : "last_name_fwd") %></th>
+			<th width="175px">Email</th>
+			<th width="75px"></th>
+			<th width="75px"></th>
+		</tr>
+		
+		<% counter = 1 %>
+		<% for user in users %>
+			<% counter = counter + 1 %>
+			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+			<tr class='<%= style %>'>
+				<td align=center><%= user.active ? "+" : "" %></td>
+				<td><%= link_to user.first_name, {:action => "links", :user_id => user.id } %></td>
+				<td><%= link_to user.last_name, {:action => "links", :user_id => user.id } %></td>
+				<td><%= user.email %></td>
+				<td align=right><%= link_to "edit", {:action => "edit_user", :user_id => user.id }, :class => "list" %></td>
+				<% if user.isLinked? %>
+					<td align=right> </td>
+				<% else %>
+					<td align=right><%= link_to "delete", {:action => "delete_user", :user_id => user.id }, :confirm => "Are you sure you want to delete user #{user.to_label}?", :class => "list" %></td>
+				<% end %>
+			</tr>
+			<% first = false %>
+		<% end %>
+	</table>
+	<br/>
+</div>

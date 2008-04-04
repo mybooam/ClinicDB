@@ -1,0 +1,6 @@
+<% immu = Immunization.find(params[:immu_id]) %>
+
+<h2>Patient: <%= link_to immu.patient.name, :controller => "home", :action => "patient_home", :patient_id => immu.patient.id %></h2>
+<div align=center>
+	<%= render :partial => 'immunization/card', :locals => {:immu => immu} %>
+</div>

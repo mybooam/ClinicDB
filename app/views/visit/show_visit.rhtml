@@ -1,0 +1,6 @@
+<% visit = Visit.find(params[:visit_id]) %>
+
+<h2>Patient: <%= link_to visit.patient.name, :controller => "home", :action => "patient_home", :patient_id => visit.patient.id %></h2>
+<div align=center>
+	<%= render :partial => "visit/card", :locals => {:visit => visit} %>
+</div>
