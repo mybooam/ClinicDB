@@ -1,0 +1,16 @@
+<table class="immunization_box" width=200px>
+	<tr>
+		<td class="immunization_box_top">Immunization: <span class="immunization_box_text"><%= "#{immu.immunization_drug}" %></span></td>
+	</tr>
+	<% if immu.notes.strip != '' %>
+		<tr>
+			<td class="immunization_box_middle">Notes: <span class="immunization_box_text"><%= "#{immu.notes}" %></span></td>
+		</tr>
+	<% end %>
+	<tr>
+		<td class="immunization_box_middle">Given By: <span class="immunization_box_text"><%= immu.givenby_user.to_label %></span></td>
+	</tr>
+	<tr>
+		<td class="immunization_box_bottom"><span class="immunization_box_text_lot"><%= "Lot# #{immu.lot_number} | Exp:#{immu.expiration_date}" %></span></td>
+	</tr>
+</table>

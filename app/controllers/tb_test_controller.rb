@@ -41,7 +41,7 @@ class TbTestController < ApplicationController
     test.givenby_user = User.find(params[:givenby_user_id])
     test.given_date = Date.today()
     expdate = params[:other][:expiration_date]
-    nums = (expdate.count(',')>0) ? expdate.split(',') : expdate.split('/')
+    nums = (expdate.count('-')>0) ? expdate.split('-') : expdate.split('/')
     
     if nums.size==3
       month = nums[0].to_i

@@ -1,6 +1,4 @@
 <% patient=Patient.find(params[:patient_id]) %>
-<% drug = Drug.find(params[:drug_id]) %>
-<% attending = lastSession.attending %>
 
 <h2> <%= "#{patient.first_name} #{patient.last_name}" %>: Prescription</h2>
 

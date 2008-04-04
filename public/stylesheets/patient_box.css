@@ -200,3 +200,50 @@ td.tb_test_box_title {
 
 .tb_test_box_bottom {
 }
+
+.immunization_box {
+	background-color: #efe;
+	border: #aad solid thin;
+}
+
+td.immunization_box {
+	border: #aad solid thin;
+}
+
+.immunization_box_text {
+	color: #000000;
+	font-size: 10pt;
+	font-family: monospace;
+	margin-left: 0px;
+	padding-left: 3px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.prescription_box_title_text {
+	color: #000000;
+	font-size: 12pt;
+	font-family: monospace;
+	margin-left: 0px;
+	padding-left: 3px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.immunization_box_top {
+	border-bottom: #aad solid thin;
+}
+
+.immunization_box_middle {
+	border-bottom: #aad solid thin;
+}
+
+.immunization_box_text_lot {
+	color: #000000;
+	font-size: 8pt;
+	font-family: monospace;
+	margin-left: 0px;
+	padding-left: 3px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
