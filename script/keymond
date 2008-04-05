@@ -7,6 +7,10 @@ end
 
 require 'lib/security_helpers.rb'
 
+db_dir = File.dirname(__FILE__) + '/../db/'
+gpg_file = db_dir + "production.gpg"
+sqlite_file = db_dir + "production.sqlite3"
+
 pid_file = "keymond.pid"
 if File.exist?(pid_file)
   `rm #{pid_file}`
@@ -17,19 +21,17 @@ puts "Key Monitor Daemon started"
 
 last = false
 while File.exist?(pid_file)
-  key_there = securityKeyPresent?
-  if key_there
-    if !last
+  if securityKeyPresent?
+    if File.exist?(gpg_file) || !File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid')
       puts "ClinicDB: Security Key found at #{securityVolumeDirectory}"
+      `script/startup password`
     end
-    `script/startup password`
-  else
-    if last
-      puts "ClinicDB: Security Key removed.  Shutting down server and encrypting database."
-    end
+  elsif File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid')
+    puts "ClinicDB: Security Key removed.  Shutting down server and encrypting database."
     `script/shutdown`
+  elsif File.exist?(sqlite_file)
+    `script/encrypt`
   end
   
-  last = key_there
   sleep 5
 end
