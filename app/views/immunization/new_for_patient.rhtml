@@ -4,15 +4,15 @@
 <center>
 <table class="layout" valign=top style="border: #aaa solid thin">
 	<tr bgcolor=#F0F0FF>
-		<td><label>Immunization:</label></td>
+		<td><label class=req>Immunization:</label></td>
 		<td><%= select :immunization, :immunization_drug_id, ImmunizationDrug.find(:all).sort{|a, b| a.name <=> b.name}.collect{|a| [a, a.id]}, {:size => 16, :include_blank => true}  %></td>
 	</tr>
 	<tr>
-		<td><label>Lot #:</label></td>
+		<td><label class=req>Lot #:</label></td>
 		<td><%= text_field :immunization, :lot_number, :size => 16  %></td>
 	</tr>
 	<tr bgcolor=#F0F0FF>
-		<td><label>Expiration Date:<br/>(<i>m/d/y</i> or <i>m/y</i>)</label></td>
+		<td><label class=req>Expiration Date:<br/>(<i>m/d/y</i> or <i>m/y</i>)</label></td>
 		<td><%= text_field :other, :expiration_date, :size => 10  %></td>
 	</tr>
 	<tr>
@@ -21,7 +21,7 @@
 	</tr>
 	
 	<tr bgcolor=#F0F0FF>
-		<td><label>Given by:</label></td>
+		<td><label class=req>Given by:</label></td>
 		<td><%= user_field :givenby_user_id %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">

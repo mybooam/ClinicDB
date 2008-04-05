@@ -1,11 +1,13 @@
 <% patient=Patient.find(params[:patient_id]) %>
 <h2> <%= "#{patient.first_name} #{patient.last_name}" %>: Visit</h2>
 
+<div class=instructions>Enter information gathered on this visit.  Only "Chief Complaint" and "Students" are required.</div>
+
 <% form_tag "add_for_patient" do %>
 <center>
 <table class="layout" valign=top style="border: #aaa solid thin">
 	<tr bgcolor=#F0F0FF>
-		<td><label>Chief Complaint:</label></td>
+		<td><label class=req>Chief Complaint:</label></td>
 		<td><%= text_area :visit, :chief_complaint, :cols => 16, :rows => 2  %></td>
 	</tr>
 	<tr>
@@ -29,7 +31,7 @@
 		<td><%= text_area :visit, :referrals, :cols => 16, :rows => 3  %></td>
 	</tr>
 	<tr bgcolor=#F0F0FF>
-		<td><label>Seen by Students:</label></td>
+		<td><label class=req>Seen by Students:</label></td>
 		<td><%= user_field :users_id1 %><br/><%= user_field :users_id2  %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">

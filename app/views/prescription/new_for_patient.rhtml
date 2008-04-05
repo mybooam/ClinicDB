@@ -1,6 +1,9 @@
 <% patient=Patient.find(params[:patient_id]) %>
+<% drug = Drug.find(params[:drug_id])%>
 
 <h2> <%= "#{patient.first_name} #{patient.last_name}" %>: Prescription</h2>
+
+<div class=instructions>Enter pill count, frequency, and other patient instructions in the "Orders" field, and make sure that the prescription is signed by today's attending.</div>
 
 <% form_tag "add_for_patient" do %>
 <center>
@@ -24,8 +27,13 @@
 		<td><%= text_area :prescription, :notes, :cols => 15, :rows => 3 %></td>
 	</tr>
 	<tr>
-		<td><label>Signed:</label></td>
-		<td><%= text_field :prescription, :signed, :value => "#{attending.first_name} #{attending.last_name}", :size => 16 %></td>
+		<td><label class=req>Signed:</label></td>
+		<% session = Session.getToday %>
+		<% if session.nil? %>
+			<td><%= text_field :prescription, :signed, :size => 16 %></td>
+		<% else %>
+			<td><%= text_field :prescription, :signed, :value => "#{session.attending.first_name} #{session.attending.last_name}", :size => 16 %></td>
+		<% end %>
 	</tr>
 	<tr style="border-top: #aaa solid thin" bgcolor=#F0F0FF>
 		<td colspan=2 align=right><%= submit_tag 'Save' %></td>

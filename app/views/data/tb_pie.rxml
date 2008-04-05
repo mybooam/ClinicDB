@@ -1,0 +1,26 @@
+patients = Patient.find(:all, :include => [:ethnicity])
+tests = TbTest.find(:all)
+
+xml.chart do
+  xml.chart_type("3d pie")
+  xml.chart_data do
+    xml.row do
+      xml.string("Result")
+      xml.string("Positive")
+      xml.string("Negative")
+      xml.string("No-Show")
+    end
+    xml.row do
+      xml.string("Number")
+      xml.number(tests.select{|a| a.positive? }.size)
+      xml.number(tests.select{|a| a.negative? }.size)
+      xml.number(tests.select{|a| a.noshow? }.size)
+    end
+  end
+  
+  xml.legend_rect("","x"=>320,"width"=>150, "fill_color"=>"ccccff", "fill_alpha"=>"100", "line_color"=>"888888", "line_thickness"=>1, "line_alpha"=>100)
+  xml.chart_rect("","x"=>25,"y"=>-10,"height"=>250,"width"=>250)
+  xml.chart_pref("", "rotation_x"=>45)
+  xml.chart_transition("", "type"=>"scale", "delay"=>0, "duration"=>0.25, "order"=>"category")
+  xml.chart_value :color=>'000000', :alpha=>'85', :font=>'arial', :bold=>'true', :size=>'12', :position=>'outside', :prefix=>'', :suffix=>'%', :decimals=>'1', :separator=>'', :as_percentage=>'true', :hide_zero => 'true'
+end
