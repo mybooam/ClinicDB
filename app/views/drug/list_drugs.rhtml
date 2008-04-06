@@ -1,0 +1,14 @@
+<% drugs = Drug.find(:all).sort{|a,b| a.to_label <=> b.to_label}%>
+
+<div align=center>
+	<table width="300px" class="list">
+		<% counter = 1 %>
+		<% for drug in drugs %>
+			<% counter = counter + 1 %>
+			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+			<tr class='<%= style %>'>
+				<td><%= link_to drug.to_label, {:controller => "prescription", :action => :set_drug, :drug_id => drug.id, :patient_id => params[:patient_id] } %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>

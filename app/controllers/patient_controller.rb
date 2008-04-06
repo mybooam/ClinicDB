@@ -46,6 +46,12 @@ class PatientController < ApplicationController
     pat.ethnicity = Ethnicity.find(params[:ethnicity])
     pat.history_taken = false
 
+    if !Patient.find(:all).select{|a| a.to_label == pat.to_label }.empty?
+      flash[:error] = "Patient already exists."
+      redirect_to :back
+      return
+    end
+
     if pat.save 
       flash[:notice] = "#{pat.properLastName} was saved successfully"
       redirect_to :controller=>:home, :action => :patient_history_query, :patient_id => pat

@@ -1,5 +1,7 @@
 <% user = User.find(params[:user_id]) %>
 
+<h2><%= user.to_label %> Links</h2>
+
 <% if !user.visits.empty? %>
 	<h2>Visits</h2>
 	<ul>

@@ -1,16 +1,55 @@
+<% patients = Patient.find(:all).sort{|a,b| "#{a.last_name}#{a.first_name}" <=> "#{b.last_name}#{b.first_name}"}
+
+if params[:sort_by]
+	sort_by = params[:sort_by]
+else
+	sort_by = "name_fwd"
+end
+
+case sort_by
+when "name_back" then
+	patients.sort!{|b,a| "#{a.last_name}#{a.first_name}" <=> "#{b.last_name}#{b.first_name}"}
+when "dob_fwd" then
+	patients.sort!{|a,b| a.dob <=> b.dob}
+when "dob_back" then
+	patients.sort!{|b,a| a.dob <=> b.dob}
+when "ethnicity_fwd" then
+	patients.sort!{|a,b| a.ethnicity.name <=> b.ethnicity.name}
+when "ethnicity_back" then
+	patients.sort!{|b,a| a.ethnicity.name <=> b.ethnicity.name}
+when "sex_fwd" then
+	patients.sort!{|a,b| a.sex <=> b.sex}
+when "sex_back" then
+	patients.sort!{|b,a| a.sex <=> b.sex}
+when "history_fwd" then
+	patients.sort!{|a,b| a.history_taken.to_s <=> b.history_taken.to_s}
+when "history_back" then
+	patients.sort!{|b,a| a.history_taken.to_s <=> b.history_taken.to_s}
+when "visits_fwd" then
+	patients.sort!{|a,b| a.visits.size <=> b.visits.size}
+when "visits_back" then
+	patients.sort!{|b,a| a.visits.size <=> b.visits.size}
+end
+
+%>
+
 <center>
 <table class="list">
 	<tr>
-		<th>Name</th>
-		<th>Birthdate</th>
-		<th>Ethnicity</th>
-		<th>Sex</th>
+		<th><%= link_to 'Name', :action => :list_patients, :sort_by => (sort_by=="name_fwd" ? "name_back" : "name_fwd") %></th>
+		<th><%= link_to 'Birthdate', :action => :list_patients, :sort_by => (sort_by=="dob_fwd" ? "dob_back" : "dob_fwd") %></th>
+		<th><%= link_to 'Ethnicity', :action => :list_patients, :sort_by => (sort_by=="ethnicity_fwd" ? "ethnicity_back" : "ethnicity_fwd") %></th>
+		<th><%= link_to 'Sex', :action => :list_patients, :sort_by => (sort_by=="sex_fwd" ? "sex_back" : "sex_fwd") %></th>
+		<% if adminMode? %>
+			<th><%= link_to 'Hist', :action => :list_patients, :sort_by => (sort_by=="history_fwd" ? "history_back" : "history_fwd") %></th>
+			<th><%= link_to 'Visits', :action => :list_patients, :sort_by => (sort_by=="visits_fwd" ? "visits_back" : "visits_fwd") %></th>
+		<% end %>
 	</tr>
 	<tr class="odd_row">
 		<td colspan=4 align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
 	</tr>
 <% counter=1 %>
-<% for patient in @patients %>
+<% for patient in patients %>
 	<% counter = counter + 1 %>
 	<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
 	<tr class="<%= style %>">
@@ -26,6 +65,14 @@
 		<td>
 			<%= patient.isMale? ? 'Male' : 'Female' %>
 		</td>
+		<% if adminMode? %>
+			<td align=center>
+				<%= patient.history_taken ? 'Y' : '' %>
+			</td>
+			<td align=center>
+				<%= patient.visits.empty? ? '' : "#{patient.visits.size}" %>
+			</td>
+		<% end %>
 	</tr>
 <% end %>
 	<tr class="<%= (counter+1).modulo(2).nonzero? ? 'odd_row' : 'even_row' %>">

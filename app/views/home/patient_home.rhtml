@@ -11,6 +11,12 @@ setTimeout("directHome()", 90000)
 	<%= render :partial => 'patient/card', :locals => {:patient => @patient} %>
 </center>
 
+<div align=right style="margin-left: auto; margin-right: 30px; margin-bottom: 30px;">
+	<% form_tag "index" do %>
+		<%= submit_tag 'Done' %>
+	<% end %>
+</div>
+
 <center>
 <div class="patient_action_box">
 	<table class=layout align=center>
@@ -74,4 +80,10 @@ setTimeout("directHome()", 90000)
 		</tr>	
 	</table>
 <% end %>
+
+<div align=right style="margin-left: auto; margin-right: 30px; margin-bottom: 30px;">
+	<% form_tag "index" do %>
+		<%= submit_tag 'Done' %>
+	<% end %>
+</div>
 </center>
