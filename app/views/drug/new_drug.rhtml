@@ -1,16 +1,24 @@
+<div class=instructions>
+	Complete the information below and click "Add" to create the new drug.
+	You will then be presented with the "New Prescription" form to complete for this visit.
+</div>
+
 <% form_tag "add_drug" do %>
 <center>
 <table class="layout" valign=top style="border: #aaa solid thin">
 	<tr bgcolor=#F0F0FF>
-		<td><label>Drug Name:</label></td>
+		<td><label class=req>Drug Name:</label></td>
 		<td><%= text_field :drug, :name, :size => 20, :value => @drug_name %></td>
 	</tr>
 	<tr>
 		<td><label>Dosage:</label></td>
-		<td colspan=2><%= text_field :drug, :dosage, :size => 10, :value => @dose_unit %></td>
+		<td colspan=2 rowspan=2><%= text_field :drug, :dosage, :size => 10, :value => @dose_unit %></td>
+	</tr>
+	<tr>
+		<td class="form_instructions">(ie. 50mg, 1%)</td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
-		<td colspan=3 align=right><%= submit_tag 'Save' %></td>
+		<td colspan=3 align=right><%= submit_tag 'Add' %></td>
 	</tr>
 </table>
 </center>

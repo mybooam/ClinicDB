@@ -1,0 +1,31 @@
+xml.clinicdb do
+  xml.patients do
+    for p in Patient.find(:all)
+      xml.patient(p.attributes)
+    end
+  end
+  
+  xml.visits do
+    for v in Visit.find(:all)
+      xml.visit(v.attributes)
+    end 
+  end
+  
+  xml.prescriptions do
+    for r in Prescription.find(:all)
+      xml.prescription(r.attributes)
+    end 
+  end
+  
+  xml.tb_tests do
+    for t in TbTest.find(:all)
+      xml.tb_test(t.attributes)
+    end 
+  end
+
+  xml.drugs do 
+    for drug in Drug.find(:all)
+      xml.drug(drug.attributes)
+    end 
+  end
+end

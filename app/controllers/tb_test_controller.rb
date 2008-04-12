@@ -26,6 +26,13 @@ class TbTestController < ApplicationController
     @item.result=params[:tb_test][:result]
     @item.notes=params[:tb_test][:notes]
     @item.read_date = Date.today
+    
+    if params[:readby_user_id] == ""
+      flash[:notice] = "Read by user must be selected."
+      redirect_to :back
+      return
+    end
+    
     @item.readby_user = User.find(params[:readby_user_id])
     if @item.save
       flash[:notice] = "TB Test result saved"

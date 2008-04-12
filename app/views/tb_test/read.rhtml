@@ -1,4 +1,4 @@
-<h1>PPD: <%= "#{@item.patient.first_name} #{@item.patient.last_name} - #{@item.given_arm} Arm" %></h1>
+<h2>PPD: <%= "#{@item.patient.properLastName} - #{@item.given_arm} Arm" %></h2>
 
 <% form_tag :action => 'set_result' do -%>
 	<table class="layout">
@@ -8,7 +8,7 @@
 		</tr>
 		<tr>
 			<td><label for='notes'>Notes:</label></td>
-			<td><%= text_area :tb_test, :notes, :value => @item.notes, :cols => 15, :rows => 3 %></td>
+			<td><%= text_area :tb_test, :notes, :value => @item.notes, :cols => 17, :rows => 3 %></td>
 		</tr>
 		<tr bgcolor=#F0F0FF>
 			<td><label>Read by:</label></td>

@@ -350,7 +350,6 @@ select {
 }
 
 .instructions {
-	align: center;
 	padding-left:10px;
 	padding-right:10px;
 	padding-top:4px;
@@ -359,14 +358,19 @@ select {
 	margin-bottom: 20px;
 	margin-left: auto;
 	margin-right: auto;
-	border: solid 1px #8888ff;
-	background: #ffe;
+	border: solid 1px #888888;
+	background: #eee;
 	font-size:10pt;
 	font-style: italic;
 	width: 75%;
+	color: #333;
 }
 
-.form_instructions {
+td.form_instructions {
 	font-size:10pt;
 	font-style: italic;
+	margin: 0px;
+	padding: 2px;
+	padding-top: 0px;
+	padding-left: 25px;
 }

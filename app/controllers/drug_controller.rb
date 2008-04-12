@@ -23,6 +23,13 @@ class DrugController < ApplicationController
   def add_drug
     s = "#{params[:drug][:name]}|#{params[:drug][:dosage]}"
     d = Drug.from_user_string(s)
+    
+    if !Drug.find(:all).select{|a| a.to_label == d.to_label }.empty?
+      flash[:error] = "Drug already exists."
+      redirect_to :back
+      return
+    end
+    
     if d.save
       flash[:notice] = "New drug added: #{d.to_label}"
       redirect_to :controller => 'prescription', :action => 'new_for_patient', :drug_id => d.id, :patient_id => params[:patient_id]
