@@ -33,5 +33,5 @@ while File.exist?(pid_file)
     `script/encrypt`
   end
   
-  sleep 5
+  sleep 3
 end

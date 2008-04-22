@@ -35,11 +35,19 @@
 				<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
 				<% overdue = item.overdue %>
 				<tr class='<%= style %>'>
-					<td width="70px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= item.given_date.strftime('%A') %></font></td>
-					<td width="110px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= Date.today - item.given_date %> days ago</font></td>
+					<% if Date.today == item.given_date %>
+						<td width="180px" colspan=2>Today</font></td>
+					<% elsif Date.today - item.given_date == 1 %>
+						<td width="180px" colspan=2>Yesterday</font></td>
+					<% else %>
+						<td width="70px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= item.given_date.strftime('%A') %></font></td>
+						<td width="110px"><font color='<%= overdue ? '#FF0000' : '#000088'%>'><%= "#{Date.today - item.given_date} days ago" %></font></td>
+					<% end %>
 					<td width="250px"><%= link_to "#{item.patient.last_name}, #{item.patient.first_name}", {:action => 'patient_home', :patient_id => item.patient } %></td>
 					<% if overdue %>
 						<td colspan=2><%= link_to 'Clear', {:controller => 'tb_test', :action => 'no_show', :id => item}, :class => 'list' %></td>
+					<% elsif item.coming_due? %>
+						<td colspan=2>Due: <%= "#{item.due_date_min.strftime('%a')} - #{item.due_date_max.strftime('%a')}" %></td>
 					<% else %>
 						<td><%= link_to 'Read', {:controller => 'tb_test', :action => 'read', :id => item}, :class => 'list' %></td>
 						<td><%= link_to 'No-Show', {:controller => 'tb_test', :action => 'no_show', :id => item}, :confirm => "Are you sure you want to mark #{item.patient.first_name} #{item.patient.last_name} as a No-Show?", :class => 'list' %></td>

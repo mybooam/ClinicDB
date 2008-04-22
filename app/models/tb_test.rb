@@ -31,8 +31,12 @@ class TbTest < ActiveRecord::Base
     Date.today > due_date_max && !read
   end
   
+  def coming_due?
+    Date.today < due_date_min
+  end
+  
   def open
-    ready_to_be_read || overdue
+    ready_to_be_read || overdue || coming_due?
   end
   
   def positive?

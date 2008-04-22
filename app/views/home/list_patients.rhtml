@@ -46,7 +46,7 @@ end
 		<% end %>
 	</tr>
 	<tr class="odd_row">
-		<td colspan=4 align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
+		<td colspan=<%= adminMode? ? "6" : "4" %> align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
 	</tr>
 <% counter=1 %>
 <% for patient in patients %>

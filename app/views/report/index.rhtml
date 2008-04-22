@@ -1,0 +1,25 @@
+<% for category in @stats%>
+<table align=center width="350px" class="list">	
+	<tr>
+		<th colspan=2><%= category[:name] %></th>
+	</tr>
+	<% counter = 1 %>
+	<% for stat in category[:stats] %>
+		<% counter = counter + 1 %>
+		<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+		<tr class='<%= style %>'>
+			<td width=250px><%= stat[:name] %></td>
+			<td width=100px align=right><%= stat[:value] %></td>
+		</tr>
+		<% first = false %>
+	<% end %>
+</table>
+<br/>
+<% end %>
+
+<h1>Detailed Stats and Charts</h1>
+<ul>
+	<li><%= link_to "Patient Charts", :action => :patient_profile %>
+	<li><%= link_to "Patients seen each session", :action => :patients_by_session %>
+	<li><%= link_to "TB Test Charts", :action => :tb_test %>
+</ul>

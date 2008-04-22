@@ -46,10 +46,14 @@ class PatientController < ApplicationController
     pat.ethnicity = Ethnicity.find(params[:ethnicity])
     pat.history_taken = false
 
-    if !Patient.find(:all).select{|a| a.to_label == pat.to_label }.empty?
+    if !Patient.find(:all).select{|a| a.to_label.downcase == pat.to_label.downcase }.empty?
       flash[:error] = "Patient already exists."
       redirect_to :back
       return
+    end
+
+    if !Patient.find(:all).select{|a| a.name.downcase == pat.name.downcase }.empty?
+      flash[:warning] = "Patient may already exists.  Check for repeated patient."
     end
 
     if pat.save 

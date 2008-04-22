@@ -14,4 +14,8 @@ class User < ActiveRecord::Base
 	def isLinked?
 	  !(visits.empty? && tb_tests_given.empty? && tb_tests_read.empty? && immunizations_given.empty?)
   end
+  
+  def tb_tests
+    (tb_tests_given + tb_tests_read).uniq
+  end
 end

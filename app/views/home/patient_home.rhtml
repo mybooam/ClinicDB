@@ -7,6 +7,8 @@ setTimeout("directHome()", 90000)
 //-->
 </script>
 
+	
+
 <center>
 	<%= render :partial => 'patient/card', :locals => {:patient => @patient} %>
 </center>
@@ -36,6 +38,10 @@ setTimeout("directHome()", 90000)
 		</tr>
 	</table>
 </div>
+
+
+<p class="footer">Created on: <%= @patient.created_at %></p>
+<p class="footer">Updated on: <%= @patient.updated_at %></p>
 
 <% for date in @dates%>
 	<hr />

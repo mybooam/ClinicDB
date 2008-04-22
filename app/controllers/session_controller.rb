@@ -6,6 +6,11 @@ class SessionController < ApplicationController
 	end
 	
 	def start_session
+	  if !Session.todayNeedsOne?
+	    flash[:notice] = "Session already in progress."
+	    redirect_to :controller => :home, :action => :index
+    end
+    
 	  @attendings = Attending.find(:all).sort{|a,b| a.to_label <=> b.to_label}
   end
   
