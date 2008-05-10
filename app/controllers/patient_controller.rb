@@ -123,7 +123,7 @@ class PatientController < ApplicationController
     
     pat = Patient.find(params[:patient_id][:patient_id])
     
-    puts "Patient date of birth: #{params[:patient][:dob]}"
+#    puts "Patient date of birth: #{params[:patient][:dob]}"
    
    if params[:patient][:dob].match("[0-9]{1,2}[- /.][0-9]{1,2}[- /.](19|20|)[0-9]{2}").nil?
       flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
