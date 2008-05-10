@@ -12,7 +12,7 @@ class ReportController < ApplicationController
     pts_with_visits = patients.select{|a| !a.visits.empty? }.size
     ptstats << {:name => "Patients with visits", :value => pts_with_visits}
     pts_with_tb_tests = patients.select{|a| !a.tb_tests.empty? }.size
-    ptstats << {:name => "Patients with visits", :value => pts_with_tb_tests}
+    ptstats << {:name => "Patients with TB Tests", :value => pts_with_tb_tests}
     
     @stats << {:name=>"Patients", :stats => ptstats}
     
@@ -39,7 +39,7 @@ class ReportController < ApplicationController
     userstats << {:name => "Active users", :value => users.select{|a| a.active }.size}
     users_with_visits = users.select{|a| !a.visits.empty? }.size
     users_with_tb_tests = users.select{|a| !a.tb_tests.empty? }.size
-    userstats << {:name => "Users that have done Visits", :value => users_with_visits}
+    userstats << {:name => "Users that have done visits", :value => users_with_visits}
     userstats << {:name => "Visits per user", :value => "%.2f" % (visits.size.to_f/users_with_visits.to_f)}
     userstats << {:name => "Users that have done TB Tests", :value => users_with_tb_tests}
     userstats << {:name => "TB Tests per user", :value => "%.2f" % (tb_tests.size.to_f/users_with_tb_tests.to_f)}
