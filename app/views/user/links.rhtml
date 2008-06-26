@@ -1,6 +1,19 @@
 <% user = User.find(params[:user_id]) %>
 
-<h2><%= user.to_label %> Links</h2>
+<h2><%= user.to_label %></h2>
+
+<div style="margin-left:50px">
+	<table width="250px" class="list">
+			<tr class='odd_row'>
+				<td width=100px>ID</td>
+				<td width=150px align=right><%= user.id %></td>
+			</tr>
+			<tr class='even_row'>
+				<td width=100px>E-mail</td>
+				<td width=150px align=right><%= user.email %></td>
+			</tr>
+	</table>
+</div>
 
 <% if !user.visits.empty? %>
 	<h2>Visits</h2>

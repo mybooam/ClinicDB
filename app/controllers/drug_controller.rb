@@ -45,19 +45,15 @@ class DrugController < ApplicationController
     @search_string = post_sections.keys.join(' ')
     if(@search_string.size>0)
       phrases = @search_string.split(' ')
-    
-      query_any = phrases.collect { |a|
-        "(name LIKE '%#{a}%')"
-      }.join(" OR ")
       
       query_all = phrases.collect { |a|
         "(name LIKE '%#{a}%')"
       }.join(" AND ")
     
+      @results_start = Drug.find(:all, :conditions => "name LIKE '#{@search_string}%'").sort{|a, b| a.name <=> b.name}
       @results_all = Drug.find(:all, :conditions => query_all).sort{|a, b| a.name <=> b.name}
-      @results_any = Drug.find(:all, :conditions => query_any).sort{|a, b| a.name <=> b.name}
       
-      @results = (@results_all + @results_any).uniq
+      @results = (@results_start + @results_all).uniq
     end
     
     render(:layout => false)
