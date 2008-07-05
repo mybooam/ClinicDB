@@ -27,6 +27,22 @@
 		<td><%= text_field :visit, :weight, :size => 6  %></td>
 	</tr>
 	<tr>
+		<td><label>Subjective:</label></td>
+		<td><%= text_area :visit, :subjective_note, {:cols => 16, :rows => 3 }  %></td>
+	</tr>
+	<tr>
+		<td><label>Objective:</label></td>
+		<td><%= text_area :visit, :objective_note, {:cols => 16, :rows => 3 }  %></td>
+	</tr>
+	<tr>
+		<td><label>Assessment:</label></td>
+		<td><%= text_area :visit, :assessment_note, {:cols => 16, :rows => 3 }  %></td>
+	</tr>
+	<tr>
+		<td><label>Plan:</label></td>
+		<td><%= text_area :visit, :plan_note, {:cols => 16, :rows => 3 }  %></td>
+	</tr>
+	<tr>
 		<td><label>Referrals:</label></td>
 		<td><%= text_area :visit, :referrals, :cols => 16, :rows => 3  %></td>
 	</tr>
