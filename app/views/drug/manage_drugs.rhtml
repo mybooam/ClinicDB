@@ -1,0 +1,24 @@
+<% drugs = Drug.find(:all).sort{|a,b| a.to_label <=> b.to_label}%>
+
+<div align=center style="margin: 5px">
+	<%= link_to "[New Drug]", {:action=> "new_drug_from_manager"}, :class => "big"%>
+</div>
+
+<div align=center>
+	<table width="500px" class="list">
+		<% counter = 1 %>
+		<% for drug in drugs %>
+			<% counter = counter + 1 %>
+			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+			<tr class='<%= style %>'>
+				<td width="350px"><%= drug.to_label %></td>
+				<% if drug.prescriptions.empty? %>
+					<td width="75px" align=right><%= link_to "delete", {:action => :delete_drug, :drug_id => drug.id }, :confirm => "Are you sure you want to delete #{drug.to_label}?", :class => "list" %></td>
+				<% else %>
+					<td width="75px" align=right><%= drug.prescriptions.size %> links</td>
+				<% end %>
+				<td width="75px" align=right><%= link_to "edit", {:action => :edit_drug, :drug_id => drug.id }, :class => "list" %></td>
+			</tr>
+		<% end %>
+	</table>
+</div>

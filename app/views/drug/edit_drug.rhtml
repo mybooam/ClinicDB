@@ -1,0 +1,20 @@
+<% drug = Drug.find(params[:drug_id]) %>
+
+<div align=center>
+	<% form_tag "update_drug" do %>
+		<%= hidden_field :drug, :drug_id, :value => "#{drug.id}" %>
+		<table class="layout" valign=top style="border: #aaa solid thin">
+			<tr bgcolor=#F0F0FF>
+				<td><label>Name:</label></td>
+				<td><%= text_field :drug, :drug_name, :size => 20, :value => drug.drug_name %></td>
+			</tr>
+			<tr bgcolor=#FFFFFF>
+				<td><label>Dose:</label></td>
+				<td><%= text_field :drug, :dose_unit, :size => 20, :value => drug.dose_unit %></td>
+			</tr>
+			<tr bgcolor=#F0F0FF>
+				<td colspan=2><%= submit_tag 'Cancel' %> <%= submit_tag 'Save', :name => 'save' %></td>
+			</tr>
+		</table>
+	<% end %>
+</div>

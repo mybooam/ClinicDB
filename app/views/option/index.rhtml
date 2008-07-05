@@ -22,7 +22,7 @@
 				<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
 				<tr class='<%= style %>' <%= first ? "style='border-top: #AAAADD solid thin;'" : "" %>>
 					<td width="200px"><%= item.name %></td>
-					<td width="75px" align=right><%= link_to "delete", {:action => "delete", :item_id => item.id, :key => k }, :class => "list" %></td>
+					<td width="75px" align=right><%= link_to "delete", {:action => "delete", :item_id => item.id, :key => k }, :confirm => "Are you sure you want to delete #{item.name}?", :class => "list" %></td>
 					<td width="75px" align=right><%= link_to "edit", {:action => "edit", :item_id => item.id, :key => k, :name => item.name }, :class => "list" %></td>
 				</tr>
 				<% first = false %>

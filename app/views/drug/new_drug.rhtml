@@ -1,6 +1,9 @@
 <div class=instructions>
-	Complete the information below and click "Add" to create the new drug.
-	You will then be presented with the "New Prescription" form to complete for this visit.
+	<p>Add a drug to the database.  This drug will be available for selection by any user.</p>
+	<p>Remember that you are adding a <em>drug option</em>, not a prescription.  The drug you add here will be
+	available when you or anyone else enters a prescription in the future.</p>
+	<p>As an example, if you wanted to add the 200mg formulation of Asprin, you would enter "Asprin" as
+		the drug name, and "200mg" as the dosage.</p>
 </div>
 
 <% form_tag "add_drug" do %>
@@ -15,7 +18,7 @@
 		<td colspan=2 rowspan=2><%= text_field :drug, :dosage, :size => 10, :value => @dose_unit %></td>
 	</tr>
 	<tr>
-		<td class="form_instructions">(ie. 50mg, 1%)</td>
+		<td class="form_instructions">(ie. 50mg, 0.3%)</td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
 		<td colspan=3 align=right><%= submit_tag 'Add' %></td>

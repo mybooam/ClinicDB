@@ -1,0 +1,28 @@
+<div class=instructions>
+	<p>Add a drug to the database.  This drug will be available for selection by any user.</p>
+	<p>Remember that you are adding a <em>drug option</em>, not a prescription.  The drug you add here will be
+	available when you or anyone else enters a prescription in the future.</p>
+	<p>As an example, if you wanted to add the 200mg formulation of Asprin, you would enter "Asprin" as
+		the drug name, and "200mg" as the dosage.</p>
+</div>
+
+<% form_tag "add_drug_from_manager" do %>
+	<center>
+	<table class="layout" valign=top style="border: #aaa solid thin">
+		<tr bgcolor=#F0F0FF>
+			<td><label class=req>Drug Name:</label></td>
+			<td><%= text_field :drug, :name, :size => 20 %></td>
+		</tr>
+		<tr>
+			<td><label>Dosage:</label></td>
+			<td colspan=2 rowspan=2><%= text_field :drug, :dosage, :size => 10 %></td>
+		</tr>
+		<tr>
+			<td class="form_instructions">(ie. 50mg, 0.3%)</td>
+		</tr>
+		<tr style="border-top: #aaa solid thin">
+			<td colspan=3 align=right><%= submit_tag 'Add' %> <%= submit_tag "Cancel" %></td>
+		</tr>
+	</table>
+	</center>
+<% end %>

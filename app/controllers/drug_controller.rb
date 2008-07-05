@@ -39,6 +39,77 @@ class DrugController < ApplicationController
     end
   end
   
+  def add_drug_from_manager
+    if params['commit'] == "Cancel"
+      redirect_to :action => :manage_drugs
+      return
+    end
+    
+    drug_name = params[:drug][:name]
+    dose_unit = params[:drug][:dosage]
+    
+    if(dose_unit.strip.length>0)
+      s = "#{drug_name}|#{dose_unit}"
+    else
+      s = drug_name
+    end
+    
+    d = Drug.new(:name => s.strip)
+    
+    if !Drug.find(:all).select{|a| a.to_label == d.to_label }.empty?
+      flash[:error] = "Drug already exists."
+      redirect_to :back
+      return
+    end
+    
+    if d.save
+      flash[:notice] = "New drug added: #{d.to_label}"
+      redirect_to :action => :manage_drugs
+    else
+      flash[:error] = "Could not add drug #{d.to_label}"
+      redirect_to :back
+    end
+  end
+  
+  def update_drug
+    if params['commit'] == "Cancel"
+      redirect_to :action => :manage_drugs
+      return
+    end
+    
+    d = Drug.find(params[:drug][:drug_id])
+    
+    drug_name = params[:drug][:drug_name]
+    dose_unit = params[:drug][:dose_unit]
+    
+    if drug_name.size == 0
+      flash[:error] = "Cannot have blank name."
+      redirect_to :back
+      return
+    end
+    
+    if d.save
+      flash[:notice] = "Drug updated: #{d.to_label}"
+      redirect_to :action => "manage_drugs"
+    else
+      flash[:error] = "Could not save drug"
+      redirect_to :back
+    end
+  end
+  
+  def delete_drug
+    d = Drug.find(params[:drug_id])
+    name = d.to_label
+    if d.prescriptions.empty?
+      Drug.delete(d.id)
+      flash[:notice] = "Drug #{name} deleted."
+    else
+      flash[:error] = "Drug #{name} could not be deleted"
+    end
+    
+    redirect_to :back
+  end
+  
   def live_search
     @patient = Patient.find(request.parameters[:patient_id])
     post_sections = request.parameters.delete_if{ |k,v| k=="patient_id" || k=="authenticity_token" || k=="action" || k=="controller" }
