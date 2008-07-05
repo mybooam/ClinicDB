@@ -18,10 +18,10 @@ class VisitController < ApplicationController
     end
     visit.users = []
     
-    if params[:users_id1] && params[:users_id1]!=""
+    if params[:users_id1] && params[:users_id1] != ""
       visit.users << User.find(params[:users_id1])
     end
-    if params[:users_id2] && params[:users_id2]!=""
+    if params[:users_id2] && params[:users_id2] != ""
       visit.users << User.find(params[:users_id2])
     end
     
