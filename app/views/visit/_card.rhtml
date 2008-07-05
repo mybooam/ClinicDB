@@ -112,7 +112,7 @@
 						Seen By:
 					</div>	
 					<div class="visit_box_text">
-						<%= visit.users.collect{|a| a.to_label }.join(", ") %>
+						<%= visit.users.collect{|a| link_to a.to_label, :controller => :user, :action => :user_info, :user_id => a.id }.join(", ") %>
 					</div>
 				</div>
 			</td>

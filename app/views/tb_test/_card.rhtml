@@ -29,11 +29,11 @@
 		<td class="tb_test_box_middle">Notes: <span class="tb_test_box_text"><%= "#{tb_test.notes}" %></span></td>
 	</tr>
 	<tr>
-		<td class="tb_test_box_middle">Given By: <span class="tb_test_box_text"><%= tb_test.givenby_user.to_label %></span></td>
+		<td class="tb_test_box_middle">Given By: <span class="tb_test_box_text"><%= link_to tb_test.givenby_user.to_label, :controller => :user, :action => :user_info, :user_id => tb_test.givenby_user.id %></span></td>
 	</tr>
 	<% if tb_test.read&&!tb_test.noshow? %>
 		<tr>
-			<td class="tb_test_box_middle">Read By: <span class="tb_test_box_text"><%= "#{tb_test.readby_user.to_label}" %></span></td>
+			<td class="tb_test_box_middle">Read By: <span class="tb_test_box_text"><%= link_to tb_test.readby_user.to_label, :controller => :user, :action => :user_info, :user_id => tb_test.readby_user.id %></span></td>
 		</tr>
 	<% end %>
 	
