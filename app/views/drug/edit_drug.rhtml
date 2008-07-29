@@ -9,11 +9,11 @@
 				<td><%= text_field :drug, :drug_name, :size => 20, :value => drug.drug_name %></td>
 			</tr>
 			<tr bgcolor=#FFFFFF>
-				<td><label>Dose:</label></td>
-				<td><%= text_field :drug, :dose_unit, :size => 20, :value => drug.dose_unit %></td>
+				<td><label>Strength/Formulation:</label></td>
+				<td><%= text_field :drug, :strength, :size => 20, :value => drug.strength %></td>
 			</tr>
 			<tr bgcolor=#F0F0FF>
-				<td colspan=2><%= submit_tag 'Cancel' %> <%= submit_tag 'Save', :name => 'save' %></td>
+				<td colspan=2> <%= submit_tag 'Save', :name => 'save' %> <%= submit_tag 'Cancel' %></td>
 			</tr>
 		</table>
 	<% end %>

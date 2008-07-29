@@ -13,8 +13,8 @@ class PrescriptionController < ApplicationController
       flash[:notice] = "Prescription added."
       redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
     else
-      flash[:error] = "Prescription could not be added."
-      redirect_to :action => 'new_for_patient', :drug_id => params[:prescription][:drug_id], :patient_id => params[:prescription][:patient_id]
+      flash[:error] = "Prescription could not be added.  Make sure that a signature is included."
+      redirect_to :back
     end
   end
   

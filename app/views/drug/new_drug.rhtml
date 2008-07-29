@@ -3,7 +3,7 @@
 	<p>Remember that you are adding a <em>drug option</em>, not a prescription.  The drug you add here will be
 	available when you or anyone else enters a prescription in the future.</p>
 	<p>As an example, if you wanted to add the 200mg formulation of Asprin, you would enter "Asprin" as
-		the drug name, and "200mg" as the dosage.</p>
+		the drug name, and "200mg" as the strength.</p>
 </div>
 
 <% form_tag "add_drug" do %>
@@ -14,8 +14,8 @@
 		<td><%= text_field :drug, :name, :size => 20, :value => @drug_name %></td>
 	</tr>
 	<tr>
-		<td><label>Dosage:</label></td>
-		<td colspan=2 rowspan=2><%= text_field :drug, :dosage, :size => 10, :value => @dose_unit %></td>
+		<td><label>Strength/Formulation:</label></td>
+		<td colspan=2 rowspan=2><%= text_field :drug, :strength, :size => 10, :value => @strength %></td>
 	</tr>
 	<tr>
 		<td class="form_instructions">(ie. 50mg, 0.3%)</td>

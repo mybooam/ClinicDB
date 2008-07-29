@@ -12,16 +12,16 @@ class DrugController < ApplicationController
   
   def new_drug
     @drug_name = ""
-    @dose_unit = ""
+    @strength = ""
     if(params[:drug_name] && params[:drug_name].size>0)
       d = Drug.from_user_string(params[:drug_name])
       @drug_name = d.drug_name
-      @dose_unit = d.dose_unit
+      @strength = d.strength
     end
   end
   
   def add_drug
-    s = "#{params[:drug][:name]}|#{params[:drug][:dosage]}"
+    s = "#{params[:drug][:name]}|#{params[:drug][:strength]}"
     d = Drug.from_user_string(s)
     
     if !Drug.find(:all).select{|a| a.to_label == d.to_label }.empty?
@@ -46,10 +46,10 @@ class DrugController < ApplicationController
     end
     
     drug_name = params[:drug][:name]
-    dose_unit = params[:drug][:dosage]
+    strength = params[:drug][:dosage]
     
-    if(dose_unit.strip.length>0)
-      s = "#{drug_name}|#{dose_unit}"
+    if(strength.strip.length>0)
+      s = "#{drug_name}|#{strength}"
     else
       s = drug_name
     end
@@ -80,13 +80,15 @@ class DrugController < ApplicationController
     d = Drug.find(params[:drug][:drug_id])
     
     drug_name = params[:drug][:drug_name]
-    dose_unit = params[:drug][:dose_unit]
+    strength = params[:drug][:strength]
     
     if drug_name.size == 0
       flash[:error] = "Cannot have blank name."
       redirect_to :back
       return
     end
+    
+    d.name = "#{drug_name}|#{strength}"
     
     if d.save
       flash[:notice] = "Drug updated: #{d.to_label}"

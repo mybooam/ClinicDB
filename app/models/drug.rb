@@ -5,8 +5,8 @@ class Drug < ActiveRecord::Base
 	validates_uniqueness_of :name
 	
 	def to_label
-	  if has_dose_unit
-		  "#{drug_name} - #{dose_unit}"
+	  if has_strength
+		  "#{drug_name} - #{strength}"
 	  else
 	    drug_name
     end
@@ -20,17 +20,18 @@ class Drug < ActiveRecord::Base
   #i am sure there is a better way to handle this
   
   def drug_name
-    has_dose_unit ? name.split("|")[0].strip : name
+    name.split("|")[0].strip
   end
   
-  def dose_unit
-    has_dose_unit ? name.split("|")[1].strip : ""
+  def strength
+    has_strength ? name.split("|")[1].strip : ""
   end
   
-  def has_dose_unit
+  def has_strength
     if name.count("|") == 0
       false
     end
+    puts "#{name} => #{name.split("|").join(":")} [] #{name.split("|").select{|a| a.strip != ""}.length}"
     
     name.split("|").select{|a| a.strip != ""}.length>1
   end
