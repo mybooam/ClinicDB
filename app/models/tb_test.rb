@@ -7,6 +7,11 @@ class TbTest < ActiveRecord::Base
 	validates_presence_of :givenby_user
 	validates_presence_of :given_date
 	
+	before_save      EncryptionWrapper.new(["lot_number","given_arm","result"])
+  after_save       EncryptionWrapper.new(["lot_number","given_arm","result"])
+  after_find       EncryptionWrapper.new(["lot_number","given_arm","result"])
+  after_initialize EncryptionWrapper.new(["lot_number","given_arm","result"])
+	
 	def to_label
 		"#{patient.to_label} TB Test"
 	end

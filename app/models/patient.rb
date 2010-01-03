@@ -15,9 +15,17 @@ class Patient < ActiveRecord::Base
 	validates_presence_of :dob
   validates_presence_of :sex
   validates_presence_of :ethnicity_id
+  
+  before_save      EncryptionWrapper.new(["last_name", "first_name", "adult_illness", "surgeries", "allergies", "drug_notes", "etoh_notes"])
+  after_save       EncryptionWrapper.new(["last_name", "first_name", "adult_illness", "surgeries", "allergies", "drug_notes", "etoh_notes"])
+  after_find       EncryptionWrapper.new(["last_name", "first_name", "adult_illness", "surgeries", "allergies", "drug_notes", "etoh_notes"])
+  after_initialize EncryptionWrapper.new(["last_name", "first_name", "adult_illness", "surgeries", "allergies", "drug_notes", "etoh_notes"])
+  
+  def after_find
+  end
 	
 	def to_label
-		"#{last_name}, #{first_name} (#{dob_str})"
+	  "#{last_name}, #{first_name} (#{dob_str})"
 	end
 	
 	def dob_str
@@ -29,7 +37,7 @@ class Patient < ActiveRecord::Base
   end
   
   def name
-    "#{last_name}, #{first_name}"
+	  "#{last_name}, #{first_name}"
   end
   
   def properLastName

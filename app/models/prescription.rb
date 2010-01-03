@@ -6,6 +6,11 @@ class Prescription < ActiveRecord::Base
 	validates_presence_of :signed
 	validates_presence_of :patient_id
 	
+	before_save      EncryptionWrapper.new(["orders","signed","notes"])
+  after_save       EncryptionWrapper.new(["orders","signed","notes"])
+  after_find       EncryptionWrapper.new(["orders","signed","notes"])
+  after_initialize EncryptionWrapper.new(["orders","signed","notes"])
+	
 	def to_label
 		"#{drug.name} - #{orders}"
 	end

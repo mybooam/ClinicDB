@@ -31,7 +31,7 @@ class Drug < ActiveRecord::Base
     if name.count("|") == 0
       false
     end
-    puts "#{name} => #{name.split("|").join(":")} [] #{name.split("|").select{|a| a.strip != ""}.length}"
+    # puts "#{name} => #{name.split("|").join(":")} [] #{name.split("|").select{|a| a.strip != ""}.length}"
     
     name.split("|").select{|a| a.strip != ""}.length>1
   end

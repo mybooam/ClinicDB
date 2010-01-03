@@ -19,4 +19,22 @@ class UtilController < ApplicationController
     
     redirect_to :controller =>'home', :action => 'list_patients'
   end
+  
+  def encrypt_all
+    if RAILS_ENV != 'production'
+      Patient.find(:all).each{|a| a.save}
+      Visit.find(:all).each{|a| a.save}
+      Attending.find(:all).each{|a| a.save}
+      User.find(:all).each{|a| a.save}
+      TbTest.find(:all).each{|a| a.save}
+      TbTest.find(:all).each{|a| a.save}
+      Prescription.find(:all).each{|a| a.save}
+      
+      flash[:notice] = "Database encrypted"
+    else  
+      flash[:error] = "Cannot randomize names in Production mode"
+    end
+    
+    redirect_to :controller =>'home', :action => 'list_patients'
+  end
 end
