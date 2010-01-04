@@ -1,3 +1,5 @@
+require 'lib/security_helpers'
+
 class HomeController < ApplicationController
   def index
     @all_tb_tests = TbTest.find(:all)
@@ -50,7 +52,8 @@ class HomeController < ApplicationController
   end
 
   def turn_on_admin
-    unless params[:admin][:pass] == 'password'
+    pass_hash = hash_password(params[:admin][:pass])
+    unless pass_hash == Setting.getValue("admin_password")
       flash[:error] = "Incorrect password."
       redirect_to :back
       return

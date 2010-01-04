@@ -30,6 +30,11 @@ def decrypt_string(value)
   decrypt_with_key(value, getKey)
 end
 
+def hash_password(pword) 
+  salt = getFingerprintString(Digest::SHA256.digest(pword))
+  hex_array2str(Digest::SHA256.digest(pword+salt))
+end
+
 private
 
 def loadPasswordFromFile
@@ -57,9 +62,18 @@ def getKey
       pword="0"
     end
     $key = pword2key(pword)
+    fp = getFingerprintString($key)
     puts "Password reloaded"
   end
   $key
+end
+
+def getFingerprintString(key_c) 
+  key_str = hex_array2str(key_c)
+  len = [key_str.length/8,8].max-1
+  sub_str = hex_array2str(key_c)[0..len]
+  tr=hex_array2str(Digest::SHA256.digest(sub_str*8))[0..len]
+  tr
 end
 
 def pword2key(pword)
