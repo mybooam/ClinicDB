@@ -12,7 +12,7 @@ class WordController < ApplicationController
           found = @words.find{ |a| a[:word_str]==word }
           if found == nil
             puts "#{word} not found"
-            @words << {:word_str => word, :count => 1, patinets}
+            @words << {:word_str => word, :count => 1}
           else
             puts "#{word} found"
             found[:count] = found[:count] + 1

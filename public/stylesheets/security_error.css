@@ -1,0 +1,9 @@
+.security_box {
+	padding: 0px;
+	margin: 5px;
+	width: 550px;
+	margin-bottom: 15px;
+	border-left: #aad solid thin;
+	border-bottom: #aad solid thin;
+	background-color: #fdd;
+}

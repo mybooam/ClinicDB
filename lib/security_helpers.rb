@@ -57,7 +57,7 @@ def getKey
       pword="0"
     end
     $key = pword2key(pword)
-    puts
+    puts "Password reloaded"
   end
   $key
 end
