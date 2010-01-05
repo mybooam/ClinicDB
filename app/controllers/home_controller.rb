@@ -71,7 +71,6 @@ class HomeController < ApplicationController
   end
   
   def update_admin_password
-    puts params[:admin][:old_pass]
     old_pass_hash = hash_password(params[:admin][:old_pass])
     if old_pass_hash != Setting.get("admin_password")
       flash[:error] = "Old admin password is incorrect."
