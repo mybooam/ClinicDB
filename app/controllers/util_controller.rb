@@ -32,8 +32,42 @@ class UtilController < ApplicationController
       
       flash[:notice] = "Database encrypted"
     else  
-      flash[:error] = "Cannot randomize names in Production mode"
+      flash[:error] = "Cannot encrypt in Production mode"
     end
+    
+    redirect_to :controller =>'home', :action => 'list_patients'
+  end
+  
+  def generate_new_key
+    key = OpenSSL::Cipher::Cipher.new("aes-256-cbc").random_key
+#    key_file = "#{securityVolumeDirectory}security/secret.key_123"
+#    f = File.new(key_file, "w")
+#    puts f.write(key)
+#    f.close
+    $new_key = hex_array2str(key)
+  end
+  
+  def reset_encryption_key
+    new_key = OpenSSL::Cipher::Cipher.new("aes-256-cbc").random_key
+    write_old_and_new_key_files(new_key)
+    
+    $security_helper_in_reset_mode = true
+    $security_helper_reset_mode_new_key = new_key
+    
+    Patient.find(:all).each{|a| a.save}
+    Visit.find(:all).each{|a| a.save}
+    Attending.find(:all).each{|a| a.save}
+    User.find(:all).each{|a| a.save}
+    TbTest.find(:all).each{|a| a.save}
+    TbTest.find(:all).each{|a| a.save}
+    Prescription.find(:all).each{|a| a.save}
+    
+    $security_helper_reset_mode_new_key = nil
+    $security_helper_in_reset_mode = false
+    
+    set_security_key(new_key)
+    
+    flash[:notice] = "Key changed"
     
     redirect_to :controller =>'home', :action => 'list_patients'
   end

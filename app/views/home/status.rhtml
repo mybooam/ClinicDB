@@ -1,0 +1,9 @@
+<center>
+<table class="list">
+	<tr class="even_row"><td>Security Unlocked:</td><td><%= security_unlocked? %></td></tr>
+	<tr class="odd_row"><td>Security Key Present:</td><td><%= securityKeyPresent? %></td></tr>
+	<tr class="even_row"><td>Security Key Location:</td><td><%= securityVolumeDirectory %></td></tr>
+	<tr class="odd_row"><td>Current Security Key Fingerprint:</td><td><%= getKey !=nil ? getFingerprintString(getKey) : "nil" %></td></tr>
+	<tr class="even_row"><td>Stored Security Key Fingerprint:</td><td><%= Setting.get("key_fingerprint") %></td></tr>
+</table>
+</center>

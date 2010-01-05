@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'c237eedfa42e563fc603e33178c792ac'
   
-  before_filter :check_security, :unless => proc { |c| c.params[:controller] == "home" && c.params[:action] == 'security_error' }
+  before_filter :check_security, :unless => proc { |c| c.params[:controller] == "home" && (c.params[:action] == 'security_error'||c.params[:action] == "status") }
   
   $render_start_time = Time.new
   
