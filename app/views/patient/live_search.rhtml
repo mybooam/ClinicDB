@@ -3,7 +3,7 @@
 		<center><div class="big">- No Matching Patients -</div></center>
 	<% else %>
 		<% if(@results.length>7)	
-			@results_trimmed = @results[1..7]
+			@results_trimmed = @results[0..6]
 		else
 			@results_trimmed = @results
 		end

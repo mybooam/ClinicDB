@@ -59,11 +59,20 @@ def getKey
     $last_key_check=Time.now
     unless(pword)
       #todo: throw exception
-      pword="0"
+      puts "Decrypt key not found"
+      $key = nil
+    else
+      $key = pword2key(pword)
+      fp = getFingerprintString($key)
+#      puts "Decrypt key reloaded => #{fp}"
+      actual_fp = Setting.get("key_fingerprint")
+      if(actual_fp==fp)
+#        puts "Fingerprint matched"
+      else
+        puts "Fingerprint not matched! Found: #{fp}, Should be: #{actual_fp}"
+        $key = nil
+      end
     end
-    $key = pword2key(pword)
-    fp = getFingerprintString($key)
-    puts "Password reloaded"
   end
   $key
 end

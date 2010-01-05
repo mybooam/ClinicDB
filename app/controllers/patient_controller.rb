@@ -196,20 +196,31 @@ class PatientController < ApplicationController
 	    max_listing = 15
       post_sections = request.raw_post.split('&')
       if(post_sections.length>1)
-        phrases = post_sections[0].split('%20')
+        phrases = post_sections[0].upcase.split('%20')
       
-        query_any = phrases.collect { |a|
-          "(first_name LIKE '%#{a}%' OR last_name LIKE '%#{a}%' OR dob LIKE '%#{a}%')"
-        }.join(" OR ")
+#        query_any = phrases.collect { |a|
+#          "(first_name LIKE '%#{a}%' OR last_name LIKE '%#{a}%' OR dob LIKE '%#{a}%')"
+#        }.join(" OR ")
+#        
+#        query_all = phrases.collect { |a|
+#          "(first_name LIKE '%#{a}%' OR last_name LIKE '%#{a}%' OR dob LIKE '%#{a}%')"
+#        }.join(" AND ")
+#
+#        @results_all = Patient.find(:all, :conditions => query_all).sort{|a, b| a.to_label <=> b.to_label}
+#        @results_any = Patient.find(:all, :conditions => query_any).sort{|a, b| a.to_label <=> b.to_label}
+
+        patients = Patient.find(:all)
         
-        query_all = phrases.collect { |a|
-          "(first_name LIKE '%#{a}%' OR last_name LIKE '%#{a}%' OR dob LIKE '%#{a}%')"
-        }.join(" AND ")
+        res = []
       
-        @results_all = Patient.find(:all, :conditions => query_all).sort{|a, b| a.to_label <=> b.to_label}
-        @results_any = Patient.find(:all, :conditions => query_any).sort{|a, b| a.to_label <=> b.to_label}
-        
-        @results = (@results_all + @results_any).uniq
+        for p in patients do
+          matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)||p.dob_str.upcase.include?(s)}
+          res << {:p => p, :score => matches.length} if matches.length>0
+        end
+        res = res.sort{|a,b| b[:score]<=>a[:score]}
+        @results = res.collect{|a| a[:p]}
+#        res.each{|a| puts "#{a[:p].to_label} - #{a[:score]}"}
+       
       end  
 
       render(:layout => false)

@@ -53,7 +53,7 @@ class HomeController < ApplicationController
 
   def turn_on_admin
     pass_hash = hash_password(params[:admin][:pass])
-    unless pass_hash == Setting.getValue("admin_password")
+    unless pass_hash == Setting.get("admin_password")
       flash[:error] = "Incorrect password."
       redirect_to :back
       return
@@ -68,5 +68,25 @@ class HomeController < ApplicationController
     cookies[:admin_mode] = { :value => "false", :expires => 1.hour.from_now }
     flash[:notice] = "Logged out of Administration mode."
     redirect_to :back
+  end
+  
+  def update_admin_password
+    puts params[:admin][:old_pass]
+    old_pass_hash = hash_password(params[:admin][:old_pass])
+    if old_pass_hash != Setting.get("admin_password")
+      flash[:error] = "Old admin password is incorrect."
+      redirect_to :back
+    else  
+      new_pass_hash = hash_password(params[:admin][:new_pass_1])
+      
+      if(new_pass_hash!=hash_password(params[:admin][:new_pass_2]))
+        flash[:error] = "New passwords do not match."
+        redirect_to :back
+      else   
+        Setting.set("admin_password", new_pass_hash)
+        flash[:notice] = "Admin password has been changed."
+        redirect_to :action => :index
+      end
+    end
   end
 end

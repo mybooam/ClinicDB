@@ -1,15 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<%  unless security_unlocked?
-		redirect_to :controller =>'home', :action => 'security_error'
-	end
-	%>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="/stylesheets/default.css" type="text/css" />
 		<link rel="stylesheet" href="/stylesheets/patient_box.css" type="text/css" />
 		<link rel="stylesheet" href="/stylesheets/visit_box.css" type="text/css" />
+		<link rel="stylesheet" href="/stylesheets/security_error.css" type="text/css" />
 		<title>
 			ClinicDB::<%= controller.controller_name.sub("_", " ").capitalize %>::<%= controller.action_name.sub("_", " ").capitalize %>
 			<% if RAILS_ENV != 'production' %>
@@ -69,6 +66,8 @@
 					<a href="/tb_test" class="small">TB Tests</a> |
 					<a href="/session" class="small">Sessions</a> |
 					<a href="/attending" class="small">Attendings</a>
+					<br/>
+					<a href="/home/change_admin_password" class="small">Change Admin Password</a>
 				</div>
 			<% end %>
 			</div>
