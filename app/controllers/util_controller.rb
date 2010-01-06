@@ -27,7 +27,6 @@ class UtilController < ApplicationController
       Attending.find(:all).each{|a| a.save}
       User.find(:all).each{|a| a.save}
       TbTest.find(:all).each{|a| a.save}
-      TbTest.find(:all).each{|a| a.save}
       Prescription.find(:all).each{|a| a.save}
       
       flash[:notice] = "Database encrypted"
@@ -49,7 +48,7 @@ class UtilController < ApplicationController
   
   def reset_encryption_key
     new_key = OpenSSL::Cipher::Cipher.new("aes-256-cbc").random_key
-    write_old_and_new_key_files(new_key)
+   	write_old_and_new_key_files(new_key)
     
     $security_helper_in_reset_mode = true
     $security_helper_reset_mode_new_key = new_key
@@ -58,7 +57,6 @@ class UtilController < ApplicationController
     Visit.find(:all).each{|a| a.save}
     Attending.find(:all).each{|a| a.save}
     User.find(:all).each{|a| a.save}
-    TbTest.find(:all).each{|a| a.save}
     TbTest.find(:all).each{|a| a.save}
     Prescription.find(:all).each{|a| a.save}
     

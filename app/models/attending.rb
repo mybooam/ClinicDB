@@ -9,6 +9,9 @@ class Attending < ActiveRecord::Base
   after_find       EncryptionWrapper.new(["first_name","last_name","email"])
   after_initialize EncryptionWrapper.new(["first_name","last_name","email"])
 	
+  def after_find
+  end
+  
 	def to_label
 		"#{last_name}, #{first_name}"
 	end

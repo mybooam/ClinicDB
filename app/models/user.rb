@@ -11,8 +11,11 @@ class User < ActiveRecord::Base
   after_save       EncryptionWrapper.new(["first_name","last_name","email"])
   after_find       EncryptionWrapper.new(["first_name","last_name","email"])
   after_initialize EncryptionWrapper.new(["first_name","last_name","email"])
+  
+  def after_find
+  end
 	
-	def to_label
+	def to_label 
 		"#{first_name} #{last_name}"
 	end
 	

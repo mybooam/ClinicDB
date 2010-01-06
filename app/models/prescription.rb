@@ -10,7 +10,11 @@ class Prescription < ActiveRecord::Base
   after_save       EncryptionWrapper.new(["orders","signed","notes"])
   after_find       EncryptionWrapper.new(["orders","signed","notes"])
   after_initialize EncryptionWrapper.new(["orders","signed","notes"])
-	
+
+  def after_find
+    
+  end
+  
 	def to_label
 		"#{drug.name} - #{orders}"
 	end

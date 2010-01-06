@@ -11,7 +11,11 @@ class TbTest < ActiveRecord::Base
   after_save       EncryptionWrapper.new(["lot_number","given_arm","result"])
   after_find       EncryptionWrapper.new(["lot_number","given_arm","result"])
   after_initialize EncryptionWrapper.new(["lot_number","given_arm","result"])
-	
+  
+  def after_find
+    
+  end
+  
 	def to_label
 		"#{patient.to_label} TB Test"
 	end

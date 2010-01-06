@@ -7,7 +7,11 @@ class Immunization < ActiveRecord::Base
 	validates_presence_of :given_date
 	validates_presence_of :patient_id
 	validates_presence_of :givenby_user
-	
+
+  def after_find
+    
+  end
+  
 	def to_label
 		"#{immunization_drug.name} #{given_date}"
 	end
