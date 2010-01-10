@@ -1,0 +1,30 @@
+<center>
+<% form_tag :controller => 'user', :action => 'do_login' do -%>
+	<%= password_field_tag :access_code_input, '', {:maxlength => 4, :class => "login_form"} %>
+	<%= hidden_field_tag :access_code %>
+
+	<%= observe_field("access_code_input", :frequency => 0.1, :function => "checkForm()") %>
+	
+	<script type="text/javascript" language="JavaScript">
+		obj = document.getElementById("access_code_input");
+		
+		obj.focus();
+		obj.select();
+		obj.value = "";
+		obj.disabled = false;
+		
+		function checkForm() {
+			obj = document.getElementById("access_code_input");
+			userInput = new String();
+			userInput = obj.value;
+			
+		 	if (userInput.length >= 4) {
+				document.getElementById("access_code").value = userInput;
+				obj.readOnly = true;
+				obj.disabled = true;
+				obj.form.submit();
+			}
+		}
+	</script>
+<% end %>
+</center>

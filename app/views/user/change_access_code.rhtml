@@ -1,0 +1,20 @@
+<% user = User.find(params[:user_id]) %>
+
+<div align=center>
+	<% form_tag "/user/set_code" do %>
+		<table class="layout" valign=top style="border: #aaa solid thin">
+			<tr bgcolor=#F0F0FF>
+				<td><label>Access Code:</label></td>
+				<td><%= password_field :user, :access_code_1, :size => 4, :maxlength => 4 %></td>
+			</tr>
+			<tr>
+				<td><label>Repeat Access Code:</label></td>
+				<td><%= password_field :user, :access_code_2, :size => 4, :maxlength => 4 %></td>
+			</tr>
+			<%= hidden_field :user_id, :user_id, :value => user.id %>
+			<tr>
+				<td colspan=2 align=right><%= submit_tag 'Update' %></td>
+			</tr>
+		</table>
+	<% end %>
+</div>

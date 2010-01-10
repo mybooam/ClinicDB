@@ -374,3 +374,12 @@ td.form_instructions {
 	padding-top: 0px;
 	padding-left: 25px;
 }
+
+.login_form {
+	font-family: Arial, Sans-Serif;
+    font-size: 60px;
+	width: 100px;
+	text-align: center;
+	border:solid 1px #000;
+	padding:15px;
+}

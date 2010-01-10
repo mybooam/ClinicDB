@@ -54,13 +54,14 @@ end
 	
 	<br/>
 	
-	<table width="615px" class="list">
+	<table width="690px" class="list">
 		<tr>
 			<th width="15px" align=center><%= link_to '+/-', :action => :manager, :sort_by => (sort_by=="active_fwd" ? "active_back" : "active_fwd") %></th>
 			<th width="50px"><%= link_to 'ID', :action => :manager, :sort_by => (sort_by=="id_fwd" ? "id_back" : "id_fwd") %></th>
 			<th width="125px"><%= link_to 'First Name', :action => :manager, :sort_by => (sort_by=="first_name_fwd" ? "first_name_back" : "first_name_fwd") %></th>
 			<th width="125px"><%= link_to 'Last Name', :action => :manager, :sort_by => (sort_by=="last_name_fwd" ? "last_name_back" : "last_name_fwd") %></th>
 			<th width="125px">Email</th>
+			<th width="75px">Access Code</th>
 			<th width="75px"></th>
 			<th width="75px"></th>
 		</tr>
@@ -75,6 +76,7 @@ end
 				<td><%= link_to user.first_name, {:action => "user_info", :user_id => user.id } %></td>
 				<td><%= link_to user.last_name, {:action => "user_info", :user_id => user.id } %></td>
 				<td><%= user.email %></td>
+				<td><%= link_to (user.access_hash ? "Change" : "+"), {:action => "change_access_code", :user_id => user.id }, :class => "list" %></td>
 				<td align=right><%= link_to "edit", {:action => "edit_user", :user_id => user.id }, :class => "list" %></td>
 				<% if user.isLinked? %>
 					<td align=right> </td>

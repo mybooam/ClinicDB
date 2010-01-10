@@ -6,19 +6,11 @@ class EncryptionWrapper
    end
 
    def before_save(record)
-      @attribute.each{|a| record.send("#{a}=", encrypt(record.send("#{a}"))) }
+     @attribute.each{|a| record.send("#{a}=", encrypt(record.send("#{a}"))) }
    end
 
    def after_save(record)
      @attribute.each{|a| record.send("#{a}=", decrypt(record.send("#{a}"))) }
-   end
-   
-   def after_find(record)
-     after_save(record)
-   end
-   
-   def after_initialize(record)
-     after_save(record)
    end
 
    alias_method :after_find, :after_save
