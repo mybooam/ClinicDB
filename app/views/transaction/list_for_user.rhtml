@@ -1,0 +1,5 @@
+<ul>
+<% for xation in @transactions %>
+	<li> <%= xation.created_on %> - <% User.find(xation.user_id).to_label %> [<%= xation.type %>]
+<% end %>
+</ul>

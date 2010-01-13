@@ -10,7 +10,8 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'c237eedfa42e563fc603e33178c792ac'
   
-  before_filter :check_security, :unless => proc { |c| c.params[:controller] == "home" && (c.params[:action] == 'security_error'||c.params[:action] == "status") }
+  before_filter :check_security, :unless => proc { |c| %w(home:status home:security_error).include? "#{c.params[:controller]}:#{c.params[:action]}" }
+  before_filter :check_login, :unless => proc { |c| %w(user:login user:do_login home:security_error home:status).include? "#{c.params[:controller]}:#{c.params[:action]}" }
   
   $render_start_time = Time.new
   
@@ -21,5 +22,14 @@ class ApplicationController < ActionController::Base
     else
 #      puts "Security is unlocked"
     end
+  end
+  
+  def check_login
+    unless session[:user] != nil
+      puts "not logged in"
+      redirect_to :controller => 'user', :action => 'login'
+      return
+    end
+    puts "logged in as #{session[:user].to_label}"
   end
 end

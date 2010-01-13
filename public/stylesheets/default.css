@@ -183,6 +183,17 @@ table.live_search>tr.spacer {
 	vertical-align: middle;
 }
 
+.user_box
+{
+	font-size: 9pt;
+	font-family: monospace;
+	color: #333333;
+	padding: 1px;
+	padding-top: 2px;
+	margin: 1pt;
+	text-align: right;
+}
+
 .small
 {
 	font-size: 10pt;

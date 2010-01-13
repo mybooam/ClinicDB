@@ -30,16 +30,27 @@
 		<div id="frame1">
 			<div id="frame2">
 				<% if flash[:error] -%>
-			    	<div class=error_flash><%= flash[:error] %></div>
+			    	<div class=error_flash>Error: <%= flash[:error] %></div>
 			    <% end -%>
 		
 				<% if flash[:warning] -%>
-			    	<div class=warning_flash><%= flash[:warning] %></div>
+			    	<div class=warning_flash>Warning: <%= flash[:warning] %></div>
 			    <% end -%>
 		
 				<% if flash[:notice] -%>
-			    	<div class=notice_flash><%= flash[:notice] %></div>
+			    	<div class=notice_flash>Notice: <%= flash[:notice] %></div>
 			    <% end -%>
+				
+				<% unless %w(user:login).include? "#{params[:controller]}:#{params[:action]}"%>
+					<div class=user_box>
+						<% if session[:user]!=nil%>
+							<%= link_to session[:user].to_label, {:controller=> "user", :action => "user_info", :user_id => session[:user].id } %> | <%= link_to "logout", :controller => "user", :action => "logout" %>
+						<% else %>
+							<%= link_to 'Log in', :controller => :user, :action => :login %>
+						<% end %>
+					</div>
+				<% end %>
+				
 				<% ctrl_link = controller.controller_name.sub("_", " ").capitalize %>
 				<% if ctrl_link != "Home" %>
 					<h1><a href="/">ClinicDB</a>:<%= ctrl_link %></h1>
