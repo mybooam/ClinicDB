@@ -82,13 +82,11 @@ class UserController < ApplicationController
     user = User.by_access_code(params[:access_code])
     if(user==nil) 
       flash[:error] = "Incorrect access code"
-      puts "Incorrect access code"
       session[:user] = nil
       redirect_to :controller => :user, :action => :login
       return
     end
     
-    puts "User #{user.to_label} logged in."
     flash[:notice] = "User #{user.to_label} logged in."
     session[:user] = user
     redirect_to :controller => :home, :action => :index

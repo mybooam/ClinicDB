@@ -26,10 +26,8 @@ class ApplicationController < ActionController::Base
   
   def check_login
     unless session[:user] != nil
-      puts "not logged in"
       redirect_to :controller => 'user', :action => 'login'
       return
     end
-    puts "logged in as #{session[:user].to_label}"
   end
 end
