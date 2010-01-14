@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery # :secret => 'c237eedfa42e563fc603e33178c792ac'
   
   before_filter :check_security, :unless => proc { |c| %w(home:status home:security_error).include? "#{c.params[:controller]}:#{c.params[:action]}" }
-  before_filter :check_login, :unless => proc { |c| %w(user:login user:do_login home:security_error home:status).include? "#{c.params[:controller]}:#{c.params[:action]}" }
+  before_filter :check_login, :unless => proc { |c| %w(user:login user:do_login user:logout home:security_error home:status).include? "#{c.params[:controller]}:#{c.params[:action]}" }
   
   $render_start_time = Time.new
   
@@ -25,9 +25,11 @@ class ApplicationController < ActionController::Base
   end
   
   def check_login
-    unless session[:user] != nil
-      redirect_to :controller => 'user', :action => 'login'
+    if session[:user] == nil || session[:last_action] == nil || session[:last_action] < Setting.get_i("user_timeout_sec", 300).seconds.ago
+      redirect_to :controller => 'user', :action => 'logout'
       return
+    else
+      session[:last_action] = Time.now
     end
   end
 end

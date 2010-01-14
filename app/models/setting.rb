@@ -11,7 +11,20 @@ class Setting < ActiveRecord::Base
       return res[0].value
     else
       #puts "could not find setting: #{key}"
-      return ""
+      return nil
+    end
+  end
+  
+  def self.get_i(key, default = 0)
+    begin
+      v = get(key)
+      if v != nil
+        v.to_i
+      else
+        default
+      end
+    rescue
+      default
     end
   end
   

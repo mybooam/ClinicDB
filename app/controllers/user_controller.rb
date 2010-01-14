@@ -89,11 +89,13 @@ class UserController < ApplicationController
     
     flash[:notice] = "User #{user.to_label} logged in."
     session[:user] = user
+    session[:last_action] = Time.now
     redirect_to :controller => :home, :action => :index
   end
   
   def logout
+    flash[:warning] = "You have been logged out"
     reset_session
-    redirect_to :controller => :home, :action => :index
+    redirect_to :controller => :user, :action => :login
   end
 end
