@@ -30,15 +30,15 @@
 		<div id="frame1">
 			<div id="frame2">
 				<% if flash[:error] -%>
-			    	<div class=error_flash>Error: <%= flash[:error] %></div>
+			    	<div class=error_flash><img src="/images/error_32.png" class="flash"> <b>Error</b>: <%= flash[:error] %></div>
 			    <% end -%>
 		
 				<% if flash[:warning] -%>
-			    	<div class=warning_flash>Warning: <%= flash[:warning] %></div>
+			    	<div class=warning_flash><img src="/images/warning_32.png" class="flash"> <b>Warning</b>: <%= flash[:warning] %></div>
 			    <% end -%>
 		
 				<% if flash[:notice] -%>
-			    	<div class=notice_flash>Notice: <%= flash[:notice] %></div>
+			    	<div class=notice_flash><img src="/images/info_32.png"class="flash" > <b>Notice</b>: <%= flash[:notice] %></div>
 			    <% end -%>
 				
 				<% unless %w(user:login).include? "#{params[:controller]}:#{params[:action]}"%>
@@ -83,10 +83,12 @@
 			<% end %>
 			</div>
 			<p class="footer">Created for the <a href='http://www.lsuhsc.edu/'>New Orleans LSUHSC</a> Homeless Clinic System</p>
-			<% if session[:admin_mode] %>
-				<p class="footer">Admin mode: on|<%= link_to "off", {:controller => "home", :action => "turn_off_admin"} %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]</p>
-			<% else %>
-				<p class="footer">Admin mode: <%= link_to "on", {:controller => "home", :action => "request_on_admin"} %>|off|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]</p>
+			<% if session[:user] && session[:user].can_be_admin %>
+				<% if session[:admin_mode] %>
+					<p class="footer">Admin mode: on|<%= link_to "off", {:controller => "home", :action => "turn_off_admin"} %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]</p>
+				<% else %>
+					<p class="footer">Admin mode: <%= link_to "on", {:controller => "home", :action => "request_on_admin"} %>|off|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]</p>
+				<% end %>
 			<% end %>
 		</div>
 	</body>

@@ -153,10 +153,8 @@ table.live_search>tr.spacer {
 {
 	background:#FFFFAA;
 	border:1px solid black;
-	padding-left: 5pt;
-	padding-right: 5pt;
-	padding-top: 5pt;
-	padding-bottom: 3pt;
+	padding:0px;
+	padding-right:5px;
 	margin-bottom: 5pt;
 }
 
@@ -164,10 +162,8 @@ table.live_search>tr.spacer {
 {
 	background:#FF8888;
 	border:1px solid black;
-	padding-left: 5pt;
-	padding-right: 5pt;
-	padding-top: 5pt;
-	padding-bottom: 3pt;
+	padding:0px;
+	padding-right:5px;
 	margin-bottom: 5pt;
 }
 
@@ -175,12 +171,17 @@ table.live_search>tr.spacer {
 {
 	background:#AAAAFF;
 	border:1px solid black;
-	padding-left: 5pt;
-	padding-right: 5pt;
-	padding-top: 5pt;
-	padding-bottom: 3pt;
+	padding:0px;
+	padding-right:5px;
 	margin-bottom: 5pt;
-	vertical-align: middle;
+}
+
+img.flash {
+	vertical-align:middle;
+	border-right:solid thin black;
+	background:#ffffff;
+	padding:5px;
+	margin-right:5px;
 }
 
 .user_box
