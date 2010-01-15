@@ -12,26 +12,29 @@ class UserController < ApplicationController
   end
   
   def add_user
-    if params[:access_code][:ac1].length!=4 || params[:access_code][:ac2].length!=4
-      flash[:error] = "Access codes must be four characters long"
-      redirect_to :back
-      return
-    end
+    ac1 = params[:access_code][:ac1]
+    ac2 = params[:access_code][:ac2]
     
-    if params[:access_code][:ac1]!=params[:access_code][:ac1]
+    unless ac1==ac2
       flash[:error] = "Access codes do not match"
       redirect_to :back
       return
     end
     
-    if User.by_access_code(params[:access_code][:ac1]) != nil
+    unless /\A[a-zA-Z0-9]{4}\Z/ =~ ac1 && /\A[a-zA-Z0-9]{4}\Z/ =~ ac2
+      flash[:error] = "Access codes must be four alpha-numeric characters long"
+      redirect_to :back
+      return
+    end
+    
+    if User.by_access_code(ac1) != nil
       flash[:error] = "Access code already in use"
       redirect_to :back
       return
     end
     
     user = User.new(params[:user])
-    user.access_hash = User.hash_access_code(params[:access_code][:ac1])
+    user.access_hash = User.hash_access_code(ac1)
     
     unless User.find(:all).select{|a| a.first_name==user.first_name && a.last_name==user.last_name }.empty?
       flash[:error] = "User #{user.to_label} already exists."
@@ -72,26 +75,29 @@ class UserController < ApplicationController
   def set_code
     user = User.find(params[:user_id][:user_id])
     
-    if params[:access_code][:ac1].length!=4 || params[:access_code][:ac2].length!=4
-      flash[:error] = "Access codes must be four characters long"
-      redirect_to :back
-      return
-    end
+    ac1 = params[:user][:access_code_1]
+    ac2 = params[:user][:access_code_2]
     
-    unless(params[:user][:access_code_1]==params[:user][:access_code_2])
+    unless ac1==ac2
       flash[:error] = "Access codes do not match"
       redirect_to :back
       return
     end
     
-    other = User.by_access_code(params[:user][:access_code_1])
+    unless /\A[a-zA-Z0-9]{4}\Z/ =~ ac1 && /\A[a-zA-Z0-9]{4}\Z/ =~ ac2
+      flash[:error] = "Access codes must be four alpha-numeric characters long"
+      redirect_to :back
+      return
+    end
+    
+    other = User.by_access_code(ac1)
     if (other != nil) && (other.id != user.id)
       flash[:error] = "Access code already in use"
       redirect_to :back
       return
     end
     
-    user.access_hash = User.hash_access_code(params[:user][:access_code_1])
+    user.access_hash = User.hash_access_code(ac1)
     
     unless(user.save)
       flash[:error] = "Error saving user"
@@ -104,6 +110,13 @@ class UserController < ApplicationController
   end
   
   def do_login
+    unless /\A[a-zA-Z0-9]{4}\Z/ =~ params[:access_code]
+      flash[:error] = "Incorrect access code"
+      session[:user] = nil
+      redirect_to :controller => :user, :action => :login
+      return
+    end
+    
     user = User.by_access_code(params[:access_code])
     if(user==nil) 
       flash[:error] = "Incorrect access code"
