@@ -26,6 +26,8 @@ when "active_fwd" then
 when "active_back" then
 	users.sort!{|a,b| a.to_label <=> b.to_label}
 	users.sort!{|a,b| "#{b.active}#{b.active}" <=> "#{a.active}#{a.active}"}
+when "admin" then
+	users.sort!{|a,b| (a.can_be_admin ? "a" : "b") <=> (b.can_be_admin ? "a" : "b")}
 end
 
 %>
@@ -69,6 +71,7 @@ end
 			<th width="125px"><%= link_to 'First Name', :action => :manager, :sort_by => (sort_by=="first_name_fwd" ? "first_name_back" : "first_name_fwd") %></th>
 			<th width="125px"><%= link_to 'Last Name', :action => :manager, :sort_by => (sort_by=="last_name_fwd" ? "last_name_back" : "last_name_fwd") %></th>
 			<th width="125px">Email</th>
+			<th width="125px"><%= link_to 'Admin', :action => :manager, :sort_by => "admin" %></th>
 			<th width="75px">Access Code</th>
 			<th width="75px"></th>
 			<th width="75px"></th>
@@ -84,6 +87,7 @@ end
 				<td><%= link_to user.first_name, {:action => "user_info", :user_id => user.id } %></td>
 				<td><%= link_to user.last_name, {:action => "user_info", :user_id => user.id } %></td>
 				<td><%= user.email %></td>
+				<td align=center><%= user.can_be_admin ? "Y" : "" %></td>
 				<td><%= link_to (user.access_hash ? "Change" : "+"), {:action => "change_access_code", :user_id => user.id }, :class => "list" %></td>
 				<td align=right><%= link_to "edit", {:action => "edit_user", :user_id => user.id }, :class => "list" %></td>
 				<% if user.isLinked? %>

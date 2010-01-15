@@ -17,7 +17,11 @@
 			</tr>
 			<tr bgcolor=#F0F0FF>
 				<td><label>Active:</label></td>
-				<td><%= check_box :user, :active, {:size => 20, :checked => ( user.active ? "checked" : "")} %> Active</td>
+				<td><%= check_box :user, :active, {:size => 20, :checked => ( user.active ? "checked" : "")} %></td>
+			</tr>
+			<tr bgcolor=#F0F0FF>
+				<td><label>Admin:</label></td>
+				<td><%= check_box :user, :can_be_admin, {:size => 20, :checked => ( user.can_be_admin ? "checked" : "")} %></td>
 			</tr>
 			<%= hidden_field :user_id, :user_id, :value => user.id %>
 			<tr>

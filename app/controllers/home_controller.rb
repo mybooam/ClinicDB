@@ -51,7 +51,33 @@ class HomeController < ApplicationController
     @patients = Patient.find(:all).sort{|a,b| a.to_label.downcase <=> b.to_label.downcase }
   end
 
+  def request_on_admin
+    if session[:user] == nil
+      flash[:error] = "Must be logged in to admin user to activate Admin Mode."
+      redirect_to :back
+      return
+    end
+    
+    unless session[:user].can_be_admin
+      flash[:error] = "Must be logged in to admin user to activate Admin Mode."
+      redirect_to :back
+      return
+    end
+  end
+
   def turn_on_admin
+    if session[:user] == nil
+      flash[:error] = "Must be logged in to admin user to activate Admin Mode."
+      redirect_to :back
+      return
+    end
+    
+    unless session[:user].can_be_admin
+      flash[:error] = "Must be logged in to admin user to activate Admin Mode."
+      redirect_to :back
+      return
+    end
+    
     pass_hash = hash_password(params[:admin][:pass])
     unless pass_hash == Setting.get("admin_password")
       flash[:error] = "Incorrect password."
@@ -59,13 +85,13 @@ class HomeController < ApplicationController
       return
     end
     
-    cookies[:admin_mode] = { :value => "true", :expires => 1.hour.from_now }
+    session[:admin_mode] = true
     flash[:warning] = "Administration mode activated.  Proceed with caution."
     redirect_to :action => :index
   end
 
   def turn_off_admin
-    cookies[:admin_mode] = { :value => "false", :expires => 1.hour.from_now }
+    session[:admin_mode] = false
     flash[:notice] = "Logged out of Administration mode."
     redirect_to :back
   end
