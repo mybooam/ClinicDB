@@ -4,21 +4,21 @@ class Setting < ActiveRecord::Base
   
   validates_uniqueness_of :key
   
-  def self.get(key)
+  def self.get(key, default = nil)
     res = Setting.find(:all, :conditions => "key == '#{key}'")
     if(res.length==1)
       #puts "found setting: #{res[0].key} => #{res[0].value}"
       return res[0].value
     else
       #puts "could not find setting: #{key}"
-      return nil
+      return default
     end
   end
   
   def self.get_i(key, default = 0)
     begin
-      v = get(key)
-      if v != nil
+      v = get(key, default.to_s)
+      if /\A-?\d+\Z/ =~ v
         v.to_i
       else
         default
