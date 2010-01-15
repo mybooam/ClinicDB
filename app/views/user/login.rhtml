@@ -5,6 +5,25 @@
 
 	<%= observe_field("access_code_input", :frequency => 0.1, :function => "checkForm()") %>
 	
+	<br/>
+	<table width=120px class="layout">
+		<tr height=20px>
+			<td colspan=4></td>
+		</tr>
+		<tr height=20px>
+			<td id="box_1" width=25% style="background-color:#f00;border:solid 1px #000;"> </td>
+			<td id="box_2" width=25% style="background-color:#f00;border:solid 1px #000;"> </td>
+			<td id="box_3" width=25% style="background-color:#f00;border:solid 1px #000;"> </td>
+			<td id="box_4" width=25% style="background-color:#f00;border:solid 1px #000;"> </td>
+		</tr>
+		<tr height=20px>
+			<td colspan=4></td>
+		</tr>
+		
+	</table>
+	
+	<%= submit_tag 'Login', :id => 'commit' %>
+	
 	<script type="text/javascript" language="JavaScript">
 		obj = document.getElementById("access_code_input");
 		
@@ -14,15 +33,40 @@
 		obj.disabled = false;
 		
 		function checkForm() {
-			obj = document.getElementById("access_code_input");
+			aci = document.getElementById("access_code_input");
 			userInput = new String();
-			userInput = obj.value;
+			userInput = aci.value;
 			
 		 	if (userInput.length >= 4) {
 				document.getElementById("access_code").value = userInput;
-				obj.readOnly = true;
-				obj.disabled = true;
-				obj.form.submit();
+				document.getElementById("box_1").style.backgroundColor = "#aaa";
+				document.getElementById("box_2").style.backgroundColor = "#aaa";
+				document.getElementById("box_3").style.backgroundColor = "#aaa";
+				document.getElementById("box_4").style.backgroundColor = "#aaa";
+				aci.readOnly = true;
+				aci.disabled = true;
+				document.getElementById("commit").disabled = true;
+				aci.form.submit();
+			} else if(userInput.length==0){
+				document.getElementById("box_1").style.backgroundColor = "#f00";
+				document.getElementById("box_2").style.backgroundColor = "#f00";
+				document.getElementById("box_3").style.backgroundColor = "#f00";
+				document.getElementById("box_4").style.backgroundColor = "#f00";
+			} else if(userInput.length==1){
+				document.getElementById("box_1").style.backgroundColor = "#0f0";
+				document.getElementById("box_2").style.backgroundColor = "#f00";
+				document.getElementById("box_3").style.backgroundColor = "#f00";
+				document.getElementById("box_4").style.backgroundColor = "#f00";
+			} else if(userInput.length==2){
+				document.getElementById("box_1").style.backgroundColor = "#0f0";
+				document.getElementById("box_2").style.backgroundColor = "#0f0";
+				document.getElementById("box_3").style.backgroundColor = "#f00";
+				document.getElementById("box_4").style.backgroundColor = "#f00";
+			} else if(userInput.length==3){
+				document.getElementById("box_1").style.backgroundColor = "#0f0";
+				document.getElementById("box_2").style.backgroundColor = "#0f0";
+				document.getElementById("box_3").style.backgroundColor = "#0f0";
+				document.getElementById("box_4").style.backgroundColor = "#f00";
 			}
 		}
 	</script>

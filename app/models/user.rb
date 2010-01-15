@@ -30,12 +30,12 @@ class User < ActiveRecord::Base
   end
   
   def self.hash_access_code(code)
-    hex_array2str(Digest::SHA256.digest(code))
+    hex_array2str(Digest::SHA256.digest(code.downcase))
   end
   
   def self.by_access_code(code)
     tr = nil
-    res = User.find(:all, :conditions => "access_hash = '#{hash_access_code(code)}' OR access_hash = '#_#{encrypt_string(hash_access_code(code))}'")
+    res = User.find(:all, :conditions => "access_hash = '#{hash_access_code(code.downcase)}' OR access_hash = '#_#{encrypt_string(hash_access_code(code.downcase))}'")
     if(res.length>0)
       tr = res[0]
     end

@@ -45,6 +45,14 @@ end
 				<td><label>Email (optional):</label></td>
 				<td><%= text_field :user, :email, :size => 20 %></td>
 			</tr>
+			<tr bgcolor=#F0F0FF>
+				<td><label>Access Code:</label></td>
+				<td><%= password_field :access_code, :ac1, {:size => 20, :maxlength => 4} %></td>
+			</tr>
+			<tr bgcolor=#F0F0FF>
+				<td><label>Repeat Access Code:</label></td>
+				<td><%= password_field :access_code, :ac2, {:size => 20, :maxlength => 4} %></td>
+			</tr>
 			<%= hidden_field :user, :active, :value=>true %>
 			<tr>
 				<td colspan=2 align=right><%= submit_tag 'Add' %></td>
