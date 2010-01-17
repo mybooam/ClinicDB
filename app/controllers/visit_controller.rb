@@ -26,6 +26,7 @@ class VisitController < ApplicationController
     end
     
     if visit.save
+      Transaction.log_edit_patient(session[:user].id, params[:visit][:patient_id])
       redirect_to :controller => 'home', :action => 'patient_home', :patient_id => params[:visit][:patient_id]
     else
       redirect_to :back
@@ -47,6 +48,7 @@ class VisitController < ApplicationController
     
     if visit.save
       flash[:notice] = "#{visit.patient.properLastName}'s visit on #{visit.visit_date} was successfully updated."
+      Transaction.log_edit_patient(session[:user].id, visit.patient.id)
       redirect_to :controller => 'home', :action => 'patient_home', :patient_id => visit.patient.id
     else
       flash[:notice] = "Visit update failed."

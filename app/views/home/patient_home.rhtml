@@ -87,6 +87,8 @@ setTimeout("directHome()", 120000)
 	</table>
 <% end %>
 
+<%= link_to "Audit Trail", :controller => :transaction, :action => :list_for_patient, :patient_id => @patient.id if session[:admin_mode] %>
+
 <div align=right style="margin-left: auto; margin-right: 30px; margin-bottom: 30px;">
 	<% form_tag "index" do %>
 		<%= submit_tag 'Done' %>

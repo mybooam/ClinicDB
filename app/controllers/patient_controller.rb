@@ -58,6 +58,7 @@ class PatientController < ApplicationController
 
     if pat.save 
       flash[:notice] = "#{pat.properLastName} was saved successfully"
+      Transaction.log_create_patient(session[:user].id, pat.id)
       redirect_to :controller=>:home, :action => :patient_history_query, :patient_id => pat
     else
       flash[:error] = "Saving patient failed."
@@ -111,6 +112,7 @@ class PatientController < ApplicationController
     
     if pat.save
       flash[:notice] = "#{pat.properLastName}'s history added."
+      Transaction.log_edit_patient(session[:user].id, pat.id)
       redirect_to :controller => :home, :action => :patient_home, :patient_id => pat.id
     else
       flash[:error] = "#{pat.properLastName}'s history could not be added."
@@ -185,6 +187,7 @@ class PatientController < ApplicationController
 
     if pat.save
       flash[:notice] = "#{pat.properLastName} updated."
+      Transaction.log_edit_patient(session[:user].id, pat.id)
       redirect_to :controller => :home, :action => :patient_home, :patient_id => pat.id
     else
       flash[:error] = "#{pat.properLastName}could not be updated."
@@ -197,17 +200,6 @@ class PatientController < ApplicationController
       post_sections = request.raw_post.split('&')
       if(post_sections.length>1)
         phrases = post_sections[0].upcase.split('%20')
-      
-#        query_any = phrases.collect { |a|
-#          "(first_name LIKE '%#{a}%' OR last_name LIKE '%#{a}%' OR dob LIKE '%#{a}%')"
-#        }.join(" OR ")
-#        
-#        query_all = phrases.collect { |a|
-#          "(first_name LIKE '%#{a}%' OR last_name LIKE '%#{a}%' OR dob LIKE '%#{a}%')"
-#        }.join(" AND ")
-#
-#        @results_all = Patient.find(:all, :conditions => query_all).sort{|a, b| a.to_label <=> b.to_label}
-#        @results_any = Patient.find(:all, :conditions => query_any).sort{|a, b| a.to_label <=> b.to_label}
 
         patients = Patient.find(:all)
         

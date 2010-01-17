@@ -11,6 +11,7 @@ class TbTestController < ApplicationController
     @item.read_date = Date.today
     if @item.save
       flash[:notice] = "TB Test result saved"
+      Transaction.log_edit_patient(session[:user].id, @item.patient_id)
     else
       flash[:error] = "Error applying TB Test result"
     end
@@ -36,6 +37,7 @@ class TbTestController < ApplicationController
     @item.readby_user = User.find(params[:readby_user_id])
     if @item.save
       flash[:notice] = "TB Test result saved"
+      Transaction.log_edit_patient(session[:user].id, @item.patient_id)
       redirect_to :controller => 'home'
     else
       flash[:error] = "Error applying TB Test result"
@@ -72,6 +74,7 @@ class TbTestController < ApplicationController
     
     if test.save
       flash[:notice] = "TB Test saved"
+      Transaction.log_edit_patient(session[:user].id, test.patient_id)
       redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
     else
       flash[:error] = "Error saving TB Test."

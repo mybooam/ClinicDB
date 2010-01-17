@@ -28,27 +28,27 @@
 	</tr>
 	<tr>
 		<td><label>Subjective:</label></td>
-		<td><%= text_area :visit, :subjective_note, {:cols => 16, :rows => 3 }  %></td>
+		<td><%= text_area :visit, :subjective_note, {:cols => 40, :rows => 3 }  %></td>
 	</tr>
-	<tr>
+	<tr bgcolor=#F0F0FF>
 		<td><label>Objective:</label></td>
-		<td><%= text_area :visit, :objective_note, {:cols => 16, :rows => 3 }  %></td>
+		<td><%= text_area :visit, :objective_note, {:cols => 40, :rows => 3 }  %></td>
 	</tr>
 	<tr>
 		<td><label>Assessment:</label></td>
-		<td><%= text_area :visit, :assessment_note, {:cols => 16, :rows => 3 }  %></td>
+		<td><%= text_area :visit, :assessment_note, {:cols => 40, :rows => 3 }  %></td>
 	</tr>
-	<tr>
+	<tr bgcolor=#F0F0FF>
 		<td><label>Plan:</label></td>
-		<td><%= text_area :visit, :plan_note, {:cols => 16, :rows => 3 }  %></td>
+		<td><%= text_area :visit, :plan_note, {:cols => 40, :rows => 3 }  %></td>
 	</tr>
 	<tr>
 		<td><label>Referrals:</label></td>
-		<td><%= text_area :visit, :referrals, :cols => 16, :rows => 3  %></td>
+		<td><%= text_area :visit, :referrals, :cols => 40, :rows => 1  %></td>
 	</tr>
 	<tr bgcolor=#F0F0FF>
 		<td><label class=req>Seen by Students:</label></td>
-		<td><%= user_field :users_id1 %><br/><%= user_field :users_id2  %></td>
+		<td><%= user_field :users_id1, {}, session[:user] %><br/><%= user_field :users_id2  %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
 		<td colspan=2 align=right><%= submit_tag 'Save' %></td>

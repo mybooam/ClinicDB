@@ -31,6 +31,7 @@ class ImmunizationController < ApplicationController
     
     if immu.save
       flash[:notice] = "Immunization saved"
+      Transaction.log_edit_patient(session[:user].id, immu.patient_id)
       redirect_to :controller => 'home', :action => 'patient_home', :patient_id => immu.patient_id
     else
       flash[:error] = "Error saving immunization."

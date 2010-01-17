@@ -1,5 +1,51 @@
-<ul>
-<% for xation in @transactions %>
-	<li> <%= xation.created_on %> - <% User.find(xation.user_id).to_label %> [<%= xation.type %>]
-<% end %>
-</ul>
+<%
+
+@transactions.sort!{|a,b| a.created_at <=> b.created_at}
+
+if params[:sort_by]
+	sort_by = params[:sort_by]
+else
+	sort_by = "created_at_fwd"
+end
+
+case sort_by
+when "created_at_fwd" then
+	@transactions.sort!{|a,b| a.created_at <=> b.created_at}
+when "created_at_back" then
+	@transactions.sort!{|a,b| b.created_at <=> a.created_at}
+when "type_fwd" then
+	@transactions.sort!{|a,b| a.transaction_type <=> b.transaction_type}
+when "type_back" then
+	@transactions.sort!{|a,b| b.transaction_type <=> a.transaction_type}
+when "patient_fwd" then
+	@transactions.sort!{|a,b| Patient.find(a.patient_id).to_label <=> Patient.find(b.patient_id).to_label}
+when "patient_back" then
+	@transactions.sort!{|a,b| Patient.find(b.patient_id).to_label <=> Patient.find(a.patient_id).to_label}
+end
+%>
+
+<h3>Transactions for user <%= link_to @user.to_label, :controller=>:user, :action=>:user_info, :user_id => @user.id %></h3>
+
+<div align=center>
+	<table class="list">
+		<tr>
+			<th width=175px><%= link_to 'Date/Time', :action => :list_for_user, :user_id => @user.id, :sort_by => (sort_by=="created_at_fwd" ? "created_at_back" : "created_at_fwd") %></th>
+			<th width=50px><%= link_to 'Type', :action => :list_for_user, :user_id => @user.id, :sort_by => (sort_by=="type_fwd" ? "type_back" : "type_fwd") %></th>
+			<th width=250px><%= link_to 'Patient', :action => :list_for_user, :user_id => @user.id, :sort_by => (sort_by=="patient_fwd" ? "patient_back" : "patient_fwd") %></th>
+		</tr>
+		
+		<% counter = 1 %>
+		<% for xaction in @transactions %>
+			<% user = User.find(xaction.user_id) %>
+			<% patient = Patient.find(xaction.patient_id) %>
+			<% counter = counter + 1 %>
+			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
+			<tr class='<%= style %>'>
+				<td><%= xaction.created_at.strftime("%m-%e-%Y %H:%M:%S") %></td>
+				<td>[<%= xaction.transaction_type %>]</td>
+				<td><%= link_to patient.to_label, :controller=>:home, :action=>:patient_home, :patient_id => patient.id %></td>
+			</tr>
+			<% first = false %>
+		<% end %>
+	</table>
+</div>

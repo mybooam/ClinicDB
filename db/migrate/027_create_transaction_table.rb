@@ -1,6 +1,6 @@
 class CreateTransactionTable < ActiveRecord::Migration
   def self.up
-    create_table :transaction, :engine => :InnoDB do |t|
+    create_table :transactions, :engine => :InnoDB do |t|
       t.column :user_id, :integer, :null => false
       t.column :type, :string, :null => false
       t.column :record_type, :string, :null => false
@@ -10,6 +10,6 @@ class CreateTransactionTable < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :transaction
+    drop_table :transactions
   end
 end

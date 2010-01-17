@@ -11,6 +11,7 @@ class PrescriptionController < ApplicationController
     
     if test.save
       flash[:notice] = "Prescription added."
+      Transaction.log_edit_patient(session[:user].id, test.patient_id)
       redirect_to :controller => 'home', :action => 'patient_home', :patient_id => test.patient_id
     else
       flash[:error] = "Prescription could not be added.  Make sure that a signature is included."

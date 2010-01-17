@@ -9,6 +9,8 @@ class HomeController < ApplicationController
   def patient_home
     @patient = Patient.find(params['patient_id'], :include=> [:visits, :tb_tests, :immunizations, :prescriptions] )
     
+    Transaction.log_view_patient(session[:user].id, @patient.id)
+    
     @cards = {}
     @dates = []
     
