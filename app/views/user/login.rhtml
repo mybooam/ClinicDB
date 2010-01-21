@@ -1,25 +1,26 @@
 <center>
+	<div id="login_instructions">
+		<ol>
+			<li>Please type your four-character access code.</li>
+			<li>Once all four characters are entered, you will be automatically logged in and will be directed to the home page.</li>
+			<li>If this does not happen, please click the "Login" button below the entry box.</li>
+		</ol>
+	</div>
+	
 <% form_tag :controller => 'user', :action => 'do_login' do -%>
-	<%= password_field_tag :access_code_input, '', {:maxlength => 4, :class => "login_form"} %>
+	<%= password_field_tag :access_code_input, '', {:maxlength => 4, :onBlur => "this.focus();"} %>
 	<%= hidden_field_tag :access_code %>
 
 	<%= observe_field("access_code_input", :frequency => 0.1, :function => "checkForm()") %>
 	
 	<br/>
-	<table width=120px class="layout">
-		<tr height=20px>
-			<td colspan=4></td>
+	<table id="login_status">
+		<tr>
+			<td id="box_1" class="login_status_empty"> </td>
+			<td id="box_2" class="login_status_empty"> </td>
+			<td id="box_3" class="login_status_empty"> </td>
+			<td id="box_4" class="login_status_empty"> </td>
 		</tr>
-		<tr height=20px>
-			<td id="box_1" width=25% style="background-color:#f00;border:solid 1px #000;"> </td>
-			<td id="box_2" width=25% style="background-color:#f00;border:solid 1px #000;"> </td>
-			<td id="box_3" width=25% style="background-color:#f00;border:solid 1px #000;"> </td>
-			<td id="box_4" width=25% style="background-color:#f00;border:solid 1px #000;"> </td>
-		</tr>
-		<tr height=20px>
-			<td colspan=4></td>
-		</tr>
-		
 	</table>
 	
 	<%= submit_tag 'Login', :id => 'commit' %>
@@ -34,39 +35,20 @@
 		
 		function checkForm() {
 			aci = document.getElementById("access_code_input");
+			aci.focus();
 			userInput = new String();
 			userInput = aci.value;
 			
+			for(i=1; i<= 4; i++) {
+				document.getElementById("box_"+i).setAttribute("class", i > userInput.length ? "login_status_empty" : "login_status_filled"); 
+			}
+			
 		 	if (userInput.length >= 4) {
 				document.getElementById("access_code").value = userInput;
-				document.getElementById("box_1").style.backgroundColor = "#aaa";
-				document.getElementById("box_2").style.backgroundColor = "#aaa";
-				document.getElementById("box_3").style.backgroundColor = "#aaa";
-				document.getElementById("box_4").style.backgroundColor = "#aaa";
 				aci.readOnly = true;
 				aci.disabled = true;
 				document.getElementById("commit").disabled = true;
 				aci.form.submit();
-			} else if(userInput.length==0){
-				document.getElementById("box_1").style.backgroundColor = "#f00";
-				document.getElementById("box_2").style.backgroundColor = "#f00";
-				document.getElementById("box_3").style.backgroundColor = "#f00";
-				document.getElementById("box_4").style.backgroundColor = "#f00";
-			} else if(userInput.length==1){
-				document.getElementById("box_1").style.backgroundColor = "#0f0";
-				document.getElementById("box_2").style.backgroundColor = "#f00";
-				document.getElementById("box_3").style.backgroundColor = "#f00";
-				document.getElementById("box_4").style.backgroundColor = "#f00";
-			} else if(userInput.length==2){
-				document.getElementById("box_1").style.backgroundColor = "#0f0";
-				document.getElementById("box_2").style.backgroundColor = "#0f0";
-				document.getElementById("box_3").style.backgroundColor = "#f00";
-				document.getElementById("box_4").style.backgroundColor = "#f00";
-			} else if(userInput.length==3){
-				document.getElementById("box_1").style.backgroundColor = "#0f0";
-				document.getElementById("box_2").style.backgroundColor = "#0f0";
-				document.getElementById("box_3").style.backgroundColor = "#0f0";
-				document.getElementById("box_4").style.backgroundColor = "#f00";
 			}
 		}
 	</script>

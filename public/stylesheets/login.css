@@ -1,0 +1,136 @@
+body.login
+{
+	text-align: center;
+	color: #000000;
+	background-color: #666;
+	padding: 0px;
+}
+
+#login_top_frame
+{
+	width: 650px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 50px;
+	padding-top: 10px;
+	padding-bottom: 5px;
+	padding-left: 30px;
+	padding-right: 30px;
+	text-align: left;
+	border: solid 2px #000000;
+	border-bottom: none;
+	background-color: #dddddd;
+	color: #000000;
+	font-size: 32pt;
+}
+
+#login_frame
+{
+	width: 650px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 0px;
+	padding: 30px;
+	padding-top: 10px;
+	text-align: center;
+	border: solid 2px #000000;
+	background-color: #ff9999;
+}
+
+#login_instructions {
+	width: 550px;
+	border: solid thin black;
+	background-color: #99ff99;
+	padding: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	margin-top: 20px;
+	margin-bottom: 25px;
+	text-align: left;
+	font-size: 14pt;
+	color: #000000;
+}
+
+#login_instructions li{
+	padding:5px;
+}
+
+#access_code_input {
+	font-family: Arial, Sans-Serif;
+    font-size: 50pt;
+	width: 110px;
+	text-align: center;
+	border:solid 2px #000;
+}
+
+#login_status{
+	border-collapse: collapse;
+	border: none;
+	height: 40px;
+	width: 200px;
+	margin-top: 25px;
+	margin-bottom: 25px;
+}
+
+#login_status td {
+	width: 25%;
+	border: solid 2px #000;
+}
+
+.login_status_empty {
+	background-color: #666;
+}
+
+.login_status_filled {
+	background-color: #0f0;
+}
+
+.login_warning_flash
+{
+	width: 650px;
+	background:#FFFFAA;
+	border:1px solid black;
+	padding:0px;
+	padding-right:5px;
+	margin: auto;
+	margin-bottom: 0pt;
+	margin-top: 5pt;
+	font-size: 14pt;
+	text-align: left;
+}
+
+.login_error_flash
+{
+	width: 650px;
+	background:#FF6666;
+	border:1px solid black;
+	padding:0px;
+	padding-right:5px;
+	margin: auto;
+	margin-bottom: 0pt;
+	margin-top: 5pt;
+	font-size: 14pt;
+	text-align: left;
+}
+
+.login_notice_flash
+{
+	width: 650px;
+	background:#AAAAFF;
+	border:1px solid black;
+	padding:0px;
+	padding-right:5px;
+	margin: auto;
+	margin-bottom: 0pt;
+	margin-top: 5pt;
+	font-size: 14pt;
+	text-align: left;
+}
+
+img.login_flash {
+	vertical-align:middle;
+	border-right:solid thin black;
+	background:#ffffff;
+	padding:5px;
+	margin-right:5px;
+}

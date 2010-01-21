@@ -109,6 +109,10 @@ class UserController < ApplicationController
     redirect_to :controller => :user, :action => :manager
   end
   
+  def login
+    render :layout => "login_layout"
+  end
+  
   def do_login
     unless /\A[a-zA-Z0-9]{4}\Z/ =~ params[:access_code]
       flash[:error] = "Incorrect access code"
