@@ -25,8 +25,7 @@
 		</SCRIPT>
 	</head>
 	<body class="main">
-		<div id="frame1">
-			<div id="main_content">
+		<div id="main_content">
 				<% if flash[:error] -%>
 			    	<div class=error_flash><img src="/images/error_32.png" class="flash"> <b>Error</b>: <%= flash[:error] %></div>
 			    <% end -%>
@@ -82,10 +81,11 @@
 				</div>
 			<% end %>
 			</div>
-			<p class="footer">Created for the <a href='http://www.lsuhsc.edu/'>New Orleans LSUHSC</a> Homeless Clinic System</p>
-			<% if session[:user] && session[:user].can_be_admin %>
-				<p class="footer">Admin mode: <%= adminMode? ? "on|" + (link_to "off", {:controller => "home", :action => "turn_off_admin"}) : (link_to "on", {:controller => "home", :action => "request_on_admin"} )+"|off" %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]</p>
-			<% end %>
-		</div>
+			<div id="footer">
+				Created for the <a href='http://www.lsuhsc.edu/'>New Orleans LSUHSC</a> Homeless Clinic System <br/>
+				<% if session[:user] && session[:user].can_be_admin %>
+					Admin mode: <%= adminMode? ? "on|" + (link_to "off", {:controller => "home", :action => "turn_off_admin"}) : (link_to "on", {:controller => "home", :action => "request_on_admin"} )+"|off" %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]
+				<% end %>
+			</div>
 	</body>
 </html>
