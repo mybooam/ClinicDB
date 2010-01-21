@@ -87,13 +87,13 @@ class HomeController < ApplicationController
       return
     end
     
-    session[:admin_mode] = true
+    setAdminModeOn
     flash[:warning] = "Administration mode activated.  Proceed with caution."
     redirect_to :action => :index
   end
 
   def turn_off_admin
-    session[:admin_mode] = false
+    setAdminModeOff
     flash[:notice] = "Logged out of Administration mode."
     redirect_to :back
   end

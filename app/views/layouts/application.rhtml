@@ -9,9 +9,7 @@
 		<link rel="stylesheet" href="/stylesheets/security_error.css" type="text/css" />
 		<title>
 			ClinicDB::<%= controller.controller_name.sub("_", " ").capitalize %>::<%= controller.action_name.sub("_", " ").capitalize %>
-			<% if RAILS_ENV != 'production' %>
-				<%= " - #{RAILS_ENV.capitalize}" %>
-			<% end %>
+			<%= " - #{RAILS_ENV.capitalize}" if RAILS_ENV != 'production' %>
 		</title>
 		<%= javascript_include_tag :defaults %>
 		<%= active_scaffold_includes %>
@@ -26,7 +24,7 @@
 		//-->
 		</SCRIPT>
 	</head>
-	<body>
+	<body class="main">
 		<div id="frame1">
 			<div id="frame2">
 				<% if flash[:error] -%>
@@ -61,7 +59,7 @@
 				<%= yield %>
 			
 				<br/>
-			<% if session[:admin_mode] %>
+			<% if adminMode? %>
 				<hr/>
 				<div align=center class="small">
 					Utilities: 
@@ -86,7 +84,7 @@
 			</div>
 			<p class="footer">Created for the <a href='http://www.lsuhsc.edu/'>New Orleans LSUHSC</a> Homeless Clinic System</p>
 			<% if session[:user] && session[:user].can_be_admin %>
-				<% if session[:admin_mode] %>
+				<% if adminMode? %>
 					<p class="footer">Admin mode: on|<%= link_to "off", {:controller => "home", :action => "turn_off_admin"} %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]</p>
 				<% else %>
 					<p class="footer">Admin mode: <%= link_to "on", {:controller => "home", :action => "request_on_admin"} %>|off|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]</p>
