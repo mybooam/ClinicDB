@@ -9,12 +9,4 @@ module ApplicationHelper
   def adminMode?
     session[:admin_mode]
   end
-  
-  def setAdminModeOn
-    session[:admin_mode] = true
-  end
-  
-  def setAdminModeOff
-    session[:admin_mode] = false
-  end
 end
