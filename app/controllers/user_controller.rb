@@ -129,6 +129,13 @@ class UserController < ApplicationController
       return
     end
     
+    unless user.active?
+      flash[:error] = "User is no longer active.  Please contact the administrator."
+      session[:user] = nil
+      redirect_to :controller => :user, :action => :login
+      return
+    end
+    
     flash[:notice] = "User #{user.to_label} logged in."
     session[:user] = user
     session[:last_action] = Time.now
