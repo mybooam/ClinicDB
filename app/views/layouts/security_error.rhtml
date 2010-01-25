@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="/stylesheets/security_error.css" type="text/css" />
+		<title>
+			ClinicDB::Login<%= " - #{RAILS_ENV.capitalize}" if RAILS_ENV != 'production' %>
+		</title>
+		<%= javascript_include_tag :defaults %>
+		<%= active_scaffold_includes %>
+		
+		<SCRIPT LANGUAGE="JAVASCRIPT">
+		<!--
+
+		function setImage(img_name1, img_src1) {
+		   document[img_name1].src = img_src1;
+		}
+
+		//-->
+		</SCRIPT>
+	</head>
+	<body class="security_error">
+		<div id="security_error_frame">
+			<% if flash[:error] -%>
+		    	<div class=error_flash><img src="/images/error_32.png" class="flash"> <b>Error</b>: <%= flash[:error] %></div>
+		    <% end -%>
+	
+			<% if flash[:warning] -%>
+		    	<div class=warning_flash><img src="/images/warning_32.png" class="flash"> <b>Warning</b>: <%= flash[:warning] %></div>
+		    <% end -%>
+	
+			<% if flash[:notice] -%>
+		    	<div class=notice_flash><img src="/images/info_32.png" class="flash" > <b>Notice</b>: <%= flash[:notice] %></div>
+		    <% end -%>
+			
+			<%= yield %>
+		</div>
+	</body>
+</html>

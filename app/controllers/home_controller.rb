@@ -119,6 +119,6 @@ class HomeController < ApplicationController
   
   def security_error
     reset_session
-    render :layout => nil
+    render :layout => "security_error"
   end
 end
