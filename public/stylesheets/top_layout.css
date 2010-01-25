@@ -1,0 +1,39 @@
+body {
+	text-align: center;
+	background-image: url('/images/Caduceus.png');
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	color: #000088;
+}
+
+#wrap {
+	width:660px;
+	margin-right:auto;
+	margin-left:145px;
+	margin-top:5px;
+	margin-bottom:0px;
+}
+
+
+#main_content
+{
+	background-color: #F8F8FF;
+	width: 650px;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	border: #AAAAAA solid thin;
+}
+
+#footer {
+	width: 660px;
+	padding: 0px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	font-size: 9pt;
+	font-family: monospace;
+	color: #AAAAAA;
+	text-align: right;
+}

@@ -23,7 +23,7 @@
 		</tr>
 	</table>
 	
-	<%= submit_tag 'Login', :id => 'commit' %>
+	<%= submit_tag 'Login', :id => 'login_button' %>
 	
 	<script type="text/javascript" language="JavaScript">
 		obj = document.getElementById("access_code_input");
@@ -47,7 +47,7 @@
 				document.getElementById("access_code").value = userInput;
 				aci.readOnly = true;
 				aci.disabled = true;
-				document.getElementById("commit").disabled = true;
+				document.getElementById("login_button").disabled = true;
 				aci.form.submit();
 			}
 		}

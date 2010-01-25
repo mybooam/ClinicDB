@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="/stylesheets/top_layout.css" type="text/css" />
 		<link rel="stylesheet" href="/stylesheets/default.css" type="text/css" />
 		<link rel="stylesheet" href="/stylesheets/patient_box.css" type="text/css" />
 		<link rel="stylesheet" href="/stylesheets/visit_box.css" type="text/css" />
-		<link rel="stylesheet" href="/stylesheets/security_error.css" type="text/css" />
 		<title>
 			ClinicDB::<%= controller.controller_name.sub("_", " ").capitalize %>::<%= controller.action_name.sub("_", " ").capitalize %>
 			<%= " - #{RAILS_ENV.capitalize}" if RAILS_ENV != 'production' %>
@@ -24,8 +24,9 @@
 		//-->
 		</SCRIPT>
 	</head>
-	<body class="main">
-		<div id="main_content">
+	<body>
+		<div id="wrap">
+			<div id="main_content">
 				<% if flash[:error] -%>
 			    	<div class=error_flash><img src="/images/error_32.png" class="flash"> <b>Error</b>: <%= flash[:error] %></div>
 			    <% end -%>
@@ -87,5 +88,6 @@
 					Admin mode: <%= adminMode? ? "on|" + (link_to "off", {:controller => "home", :action => "turn_off_admin"}) : (link_to "on", {:controller => "home", :action => "request_on_admin"} )+"|off" %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]
 				<% end %>
 			</div>
+		</div>
 	</body>
 </html>

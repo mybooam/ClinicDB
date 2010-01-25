@@ -74,7 +74,7 @@ body.login
 
 #login_status td {
 	width: 25%;
-	border: solid 2px #000;
+	border: solid 1px #000;
 }
 
 .login_status_empty {
@@ -83,6 +83,14 @@ body.login
 
 .login_status_filled {
 	background-color: #0f0;
+}
+
+#login_button {
+	padding: 3px;
+	font-size: 18pt;
+	font-family: serif;
+	border:solid 2px #000;
+	color: #000088;
 }
 
 .login_warning_flash

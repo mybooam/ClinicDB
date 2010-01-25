@@ -116,4 +116,9 @@ class HomeController < ApplicationController
       end
     end
   end
+  
+  def security_error
+    reset_session
+    render :layout => nil
+  end
 end
