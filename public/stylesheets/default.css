@@ -94,7 +94,7 @@ table.live_search_small
 	margin-top:10px;
 	border-collapse: collapse;
 	font-size: 12pt;
-	font-color: #2222AA;
+	color: #2222AA;
 }
 
 table.live_search_small>tr.result {
@@ -107,7 +107,7 @@ table.live_search
 	margin-top:15px;
 	border-collapse: collapse;
 	font-size: 16pt;
-	font-color: #2222AA;
+	color: #2222AA;
 }
 
 table.live_search>tr.patient {
@@ -344,4 +344,15 @@ td.form_instructions {
 	padding: 2px;
 	padding-top: 0px;
 	padding-left: 25px;
+}
+
+p.footer_text {
+	margin: 0px;
+	padding: 0px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	font-size: 9pt;
+	font-family: monospace;
+	color: #AAAAAA;
+	text-align: right;
 }
