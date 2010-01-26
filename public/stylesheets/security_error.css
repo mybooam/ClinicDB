@@ -1,17 +1,36 @@
+body.security_error
+{
+	text-align: center;
+	color: #000000;
+	background-color: #666;
+	padding: 0px;
+}
+
+#security_error_frame
+{
+	border: none;
+	background-color: none;
+}
+
 .security_box {
 	padding: 0px;
 	margin: 5px;
-	width: 550px;
+	margin-top: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 600px;
 	border:1px solid black;
 	background-color: #ff8888;
+	align: center;
 }
 
 h1.security_error{
 	margin:0px;
-	padding-left:5px;
-	padding-right:5px;
+	padding: 5px;
+	padding-left:10px;
+	padding-right:10px;
 	font-family: courier, serif;
-	border:1px solid black;
+	border-bottom:1px solid black;
 	color: #FFFFFF;
 	background-color: #ff0000;
 	text-align: left;
@@ -27,12 +46,64 @@ p.security_error{
 .security_box_button {
 	align: center;
 	text-align:center;
-	padding: 0px;
+	padding: 3px;
+	padding-top: 5px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top:15px;
 	margin-bottom:15px;
 	width: 150px;
+	font-size: 16pt;
 	border:1px solid black;
 	background-color: #ffffff;
+}
+
+.warning_flash
+{
+	width: 650px;
+	background:#FFFFAA;
+	border:1px solid black;
+	padding:0px;
+	padding-right:5px;
+	margin: auto;
+	margin-bottom: 0pt;
+	margin-top: 5pt;
+	font-size: 14pt;
+	text-align: left;
+}
+
+.error_flash
+{
+	width: 650px;
+	background:#FF6666;
+	border:1px solid black;
+	padding:0px;
+	padding-right:5px;
+	margin: auto;
+	margin-bottom: 0pt;
+	margin-top: 5pt;
+	font-size: 14pt;
+	text-align: left;
+}
+
+.notice_flash
+{
+	width: 650px;
+	background:#AAAAFF;
+	border:1px solid black;
+	padding:0px;
+	padding-right:5px;
+	margin: auto;
+	margin-bottom: 0pt;
+	margin-top: 5pt;
+	font-size: 14pt;
+	text-align: left;
+}
+
+img.flash {
+	vertical-align:middle;
+	border-right:solid thin black;
+	background:#ffffff;
+	padding:5px;
+	margin-right:5px;
 }
