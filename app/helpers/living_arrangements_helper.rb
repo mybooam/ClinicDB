@@ -1,0 +1,2 @@
+module LivingArrangementsHelper
+end

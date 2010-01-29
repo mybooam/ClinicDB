@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 if File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid') 
   `mongrel_rails stop`
-  `script/encrypt`
   `script/make_backup`
   log_file = File.dirname(__FILE__) + '/../log/production.log'
   `rm #{log_file}`

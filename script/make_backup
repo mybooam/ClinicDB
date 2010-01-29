@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 require 'date.rb'
 
-gpg_file = File.dirname(__FILE__) + '/../db/production.gpg'
+gpg_file = File.dirname(__FILE__) + '/../db/production.sqlite3'
 backup_dir = '/clinicdb_backups/'
 
 unless File.exist?(gpg_file)
@@ -10,8 +10,8 @@ unless File.exist?(gpg_file)
 end
 
 if File.exist?(backup_dir)
-  backup_file = backup_dir + "backup_#{Date.today.strftime('%Y_%m_%d') + Time.now.strftime('_%H_%M_%S')}.gpg"
-  latest_backup_file = backup_dir + "backup_latest.gpg"
+  backup_file = backup_dir + "backup_#{Date.today.strftime('%Y_%m_%d') + Time.now.strftime('_%H_%M_%S')}.sqlite3"
+  latest_backup_file = backup_dir + "backup_latest.sqlite"
   puts "ClinicDB: Adding backup: #{backup_file}"
 
   `cp #{gpg_file} #{backup_file}`

@@ -5,12 +5,6 @@ class ChangeVisitToHpiAuto < ActiveRecord::Migration
       
       t.text :hpi
       
-      t.text :sochx_marital_status
-      t.text :sochx_living_arrangement
-      t.text :sochx_education_status
-      t.text :sochx_employment
-      t.text :sochx_disability
-      
       t.text :ros_general_constitutional
       t.text :ros_HEENT_and_mouth
       t.text :ros_cardiovascular
@@ -40,6 +34,13 @@ class ChangeVisitToHpiAuto < ActiveRecord::Migration
       t.text :pe_psychiatric
       t.text :pe_neurological
       
+      t.integer :marital_status_id
+      t.integer :living_arrangement_id
+      t.integer :education_level_id
+      t.integer :pharmacy_id
+      
+      t.text :disability
+      
       t.text :assessment_and_plan
     end
   end
@@ -49,12 +50,6 @@ class ChangeVisitToHpiAuto < ActiveRecord::Migration
       t.change_default :version, "soap"
       
       t.remove :hpi
-      
-      t.remove :sochx_marital_status
-      t.remove :sochx_living_arrangement
-      t.remove :sochx_education_status
-      t.remove :sochx_employment
-      t.remove :sochx_disability
       
       t.remove :ros_general_constitutional
       t.remove :ros_HEENT_and_mouth
@@ -84,6 +79,13 @@ class ChangeVisitToHpiAuto < ActiveRecord::Migration
       t.remove :pe_back_and_spine
       t.remove :pe_psychiatric
       t.remove :pe_neurological
+      
+      t.remove :marital_status_id
+      t.remove :living_arrangement_id
+      t.remove :education_level_id
+      t.remove :pharmacy_id
+      
+      t.text :disability
       
       t.remove :assessment_and_plan
     end

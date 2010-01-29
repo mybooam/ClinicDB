@@ -1,10 +1,49 @@
 #!/usr/bin/env ruby
-unless File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid')
-  `script/xfer_backup`
-  `script/decrypt #{ARGV[0]}`
-  `rake environment RAILS_ENV=production db:migrate`
-  if(File.exist?(File.dirname(__FILE__) + '/../db/production.sqlite3'))
-    `mongrel_rails start -d -e production --port 3000`
-  end
-  puts "startup script finished"
+require 'date.rb'
+require 'optparse'
+
+port = 3000
+env = "production"
+d = true
+
+optparse = OptionParser.new do|opts|
+	opts.banner = "Usage: startup.rb [options]"
+  
+	opts.on( '-e', '--env Environment', 'Sets the environment (default is production)' ) do |e|
+		env = e = e.downcase
+		env = 'production' if e=='p'
+		env = 'development' if e=='d'||e=='dev'
+	end
+
+	opts.on( '-p', '--port PORT', 'Sets the port (default is 3000)' ) do |p|
+		port = p
+	end
+
+	opts.on( '-n', '--nondaemon', '' ) do
+		d = false
+	end
+
+	opts.on( '-h', '--help', 'Display this screen' ) do
+    	puts opts
+		exit
+	end
 end
+
+optparse.parse!
+
+if File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid')
+	puts "Shutting down previous mongrel server"
+	`shutdown`
+end
+
+puts "Starting #{env} server on port #{port}"
+
+`rake environment RAILS_ENV=#{env} db:migrate`
+if(File.exist?(File.dirname(__FILE__) + "/../db/#{env}.sqlite3"))
+	log_file = "log/log_#{Date.today.strftime('%Y_%m_%d') + Time.now.strftime('_%H_%M_%S')}.log"
+	cmd = "mongrel_rails start #{'-d ' if d}-e #{env} --port #{port}"
+	puts cmd
+	`#{cmd}`
+end
+
+puts "startup script finished"

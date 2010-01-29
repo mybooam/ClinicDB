@@ -1,0 +1,20 @@
+<h1>Listing marital_statuses</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+<% @marital_statuses.each do |marital_status| %>
+  <tr>
+    <td><%=h marital_status.name %></td>
+    <td><%= link_to 'Show', marital_status %></td>
+    <td><%= link_to 'Edit', edit_marital_status_path(marital_status) %></td>
+    <td><%= link_to 'Destroy', marital_status, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New marital_status', new_marital_status_path %>

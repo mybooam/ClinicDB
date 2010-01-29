@@ -1,0 +1,16 @@
+<h1>Editing marital_status</h1>
+
+<% form_for(@marital_status) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @marital_status %> |
+<%= link_to 'Back', marital_statuses_path %>

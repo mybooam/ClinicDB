@@ -50,9 +50,28 @@
 
 <h2>Social History</h2>
 
-<% Visit.column_names.select{|k| k.starts_with?("sochx_") }.each_with_index do |label, count| %>
-	<%= hp_field_tag(label, {:neg_value => "wnl", :show_checkbox_labels => count==0, :value => @visit[label] || "" }) %>
-<% end %>
+<table class="hp_line">
+	<tr>
+		<td class="hp_line_label">Living Arrangement:</td>
+		<td class="hp_text_field_cell"><%= select :visit, :living_arrangement_id, options_for_select( LivingArrangement.find(:all).collect{|a| [a.name, a.id]}, @visit.living_arrangement_id), { :class => "hp_select_field" } %></td>
+	</tr>
+	<tr>
+		<td class="hp_line_label">Marital Status:</td>
+		<td class="hp_text_field_cell"><%= select :visit, :marital_status_id, options_for_select( MaritalStatus.find(:all).collect{|a| [a.name, a.id]}, @visit.marital_status_id), { :class => "hp_select_field" } %></td>
+	</tr>
+	<tr>
+		<td class="hp_line_label">Highest Education:</td>
+		<td class="hp_text_field_cell"><%= select :visit, :education_level_id, options_for_select( EducationLevel.find(:all).collect{|a| [a.name, a.id]}, @visit.education_level_id), { :class => "hp_select_field" } %></td>
+	</tr>
+	<tr>
+		<td class="hp_line_label">Disability:</td>
+		<td class="hp_text_field_cell"><%= text_field :visit, :disability %></td>
+	</tr>
+	<tr>
+		<td class="hp_line_label">Pharmacy:</td>
+		<td class="hp_text_field_cell"><%= select :visit, :pharmacy_id, options_for_select( Pharmacy.find(:all).collect{|a| [a.name, a.id]}, @visit.pharmacy_id), {:class => "hp_select_field" } %></td>
+	</tr>
+</table>
 
 <br/>
 

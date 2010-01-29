@@ -83,7 +83,7 @@
 						<table class="layout">
 							<% for label in Visit.column_names.select{|k| k.starts_with?("ros_") } %>
 								<tr>
-									<td><%= hp_label(label) %></td>	
+									<td><%= hp_label(label) %>:</td>	
 									<td><%= visit[label] %></td>
 								</tr>
 							<% end %>
@@ -97,7 +97,7 @@
 						<table class="layout">
 							<% for label in Visit.column_names.select{|k| k.starts_with?("pe_") } %>
 								<tr>
-									<td><%= hp_label(label) %></td>	
+									<td><%= hp_label(label) %>:</td>	
 									<td><%= visit[label] %></td>
 								</tr>
 							<% end %>
@@ -109,12 +109,26 @@
 					<div class="visit_box_heading">Social History</div>	
 					<div class="visit_box_text">
 						<table class="layout">
-							<% for label in Visit.column_names.select{|k| k.starts_with?("sochx_") } %>
-								<tr>
-									<td><%= hp_label(label) %></td>	
-									<td><%= visit[label] %></td>
-								</tr>
-							<% end %>
+							<tr>
+								<td>Living Arrangement:</td>	
+								<td><%= visit.living_arrangement.name %></td>
+							</tr>
+							<tr>
+								<td>Marital Status:</td>	
+								<td><%= visit.marital_status.name %></td>
+							</tr>
+							<tr>
+								<td>Highest Education:</td>	
+								<td><%= visit.education_level.name %></td>
+							</tr>
+							<tr>
+								<td>Disability:</td>	
+								<td><%= visit.disability %></td>
+							</tr>
+							<tr>
+								<td>Pharmacy:</td>	
+								<td><%= visit.pharmacy.name %></td>
+							</tr>
 						</table>
 					</div>
 				</div>

@@ -1,4 +1,14 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :marital_statuses
+
+  map.resources :pharmacies
+
+  map.resources :marital_status
+
+  map.resources :education_levels
+
+  map.resources :living_arrangements
+
   map.resources :settings
 
   # The priority is based upon order of creation: first created -> highest priority.
