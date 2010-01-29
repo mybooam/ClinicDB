@@ -3,7 +3,7 @@
 function directHome(){
     window.location = "/"
 }
-setTimeout("directHome()", 120000)
+setTimeout("directHome()", <%= Setting.get_i("close_patient_home_time_sec", 120000) %>)
 //-->
 </script>
 
