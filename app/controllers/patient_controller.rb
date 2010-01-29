@@ -196,25 +196,18 @@ class PatientController < ApplicationController
   end
 	
 	def live_search
-	    max_listing = 15
-      post_sections = request.raw_post.split('&')
-      if(post_sections.length>1)
-        phrases = post_sections[0].upcase.split('%20')
+      phrases = params[:searchtext].upcase.split('%20')
 
-        patients = Patient.find(:all)
-        
-        res = []
+      patients = Patient.find(:all)
       
-        for p in patients do
-          matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)||p.dob_str.upcase.include?(s)}
-          res << {:p => p, :score => matches.length} if matches.length>0
-        end
-        res = res.sort{|a,b| b[:score]<=>a[:score]}
-        @results = res.collect{|a| a[:p]}
-#        res.each{|a| puts "#{a[:p].to_label} - #{a[:score]}"}
-       
-      end  
-
+      res = []
+    
+      for p in patients do
+        matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)||p.dob_str.upcase.include?(s)}
+        res << {:p => p, :score => matches.length} if matches.length>0
+      end
+      res = res.sort{|a,b| b[:score]<=>a[:score]}
+      @results = res.collect{|a| a[:p]}
       render(:layout => false)
   end
   

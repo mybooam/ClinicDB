@@ -17,6 +17,7 @@
 <%= observe_field(:searchtext,
                  :frequency => 0.1,
                  :update => :search_hits,
+				 :with => 'searchtext',
                  :loading => "Element.show('spinner')",
                  :complete => "Element.hide('spinner')",
                  :url => { :controller => :patient, :action => :live_search }) %>
