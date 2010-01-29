@@ -11,7 +11,7 @@
 		</tr>
 	<% end %>
 	<tr>
-		<td class="hp_line_label"><%= hp_label(column_name) %></td>
+		<td class="hp_line_label"><%= hp_label(column_name) %>:</td>
 		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_na'), {:class => "hp_check_box", :checked => value.downcase=="n/a"} %></td>
 		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_neg'), {:class => "hp_check_box", :checked => value.downcase=="neg"} %></td>
 		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_abn'), {:class => "hp_check_box", :checked => abn_str!=""} %></td>
