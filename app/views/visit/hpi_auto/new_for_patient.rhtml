@@ -1,0 +1,8 @@
+<% @visit = Visit.new %>
+<h2> <%= "#{@patient.first_name} #{@patient.last_name}" %>: Visit</h2>
+
+<% form_tag "add_for_patient" do %>
+
+<%= render :partial => '/visit/hpi_auto/form' %>
+
+<% end %>

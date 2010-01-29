@@ -29,7 +29,7 @@ td.patient_box_title_blank {
 	border-right: none;
 	border-top: none;
 	border-bottom: #aad solid thin;
-	background-color: none;
+	background-color: transparent;
 }
 
 tr.patient_box_top {

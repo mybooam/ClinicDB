@@ -37,13 +37,6 @@ table.list
 	font-size: 14pt;
 }
 
-td.form_filled_in
-{
-	color: #000;
-	font-family: monospace;
-	font-size: 14pt;
-}
-
 table.layout
 {
 	border-collapse: collapse;
@@ -77,15 +70,6 @@ tr.odd_row
 tr.even_row
 {
 	background-color: #EEEEFF
-}
-
-tr.odd_form_row
-{
-}
-
-tr.even_form_row
-{
-	background-color: #F0F0FF
 }
 
 table.live_search_small
@@ -228,93 +212,6 @@ a:active {
 	text-decoration: none;
 }
 
-label {
-	text-align:right;
-	float:left;
-	padding:0.2em;
-	margin:0;
-	margin-top:0.3em;
-	font-family: serif;
-	font-size: 14pt;
-	font-weight: bold;
-	color: #000088;
-}
-
-label.req {
-	text-align:right;
-	float:left;
-	padding:0.2em;
-	margin:0;
-	margin-top:0.3em;
-	font-family: serif;
-	font-size: 14pt;
-	font-weight: bold;
-	color: #880000;
-}
-
-input {
-	margin-right:3px;
-	margin-left:3px;
-	margin-top:3px;
-	margin-bottom:3px;
-	padding: 3px;
-	font-size: 14pt;
-	font-family: serif;
-	border:solid 1px #000;
-	color: #000088;
-}
-
-input.checkbox {
-	margin-right:3px;
-	margin-left:3px;
-	margin-top:3px;
-	margin-bottom:3px;
-	width: 20px;
-	height: 20px;
-	padding: 3px;
-	font-size: 14pt;
-	font-family: serif;
-	border:solid 1px #000;
-	color: #000088;
-}
-
-input.radio {
-	margin-right:3px;
-	margin-left:3px;
-	margin-top:3px;
-	margin-bottom:3px;
-	width: 20px;
-	height: 20px;
-	padding: 3px;
-	font-size: 14pt;
-	font-family: serif;
-	border:solid 1px #000;
-	color: #000088;
-}
-
-textarea {
-	margin-right:3px;
-	margin-left:3px;
-	margin-top:3px;
-	margin-bottom:3px;
-	padding: 3px;
-	font-size: 14pt;
-	font-family: serif;
-	border:solid 1px #000;
-	color: #000088;
-}
-
-select {
-	margin-right:3px;
-	margin-left:3px;
-	margin-top:3px;
-	margin-bottom:3px;
-	font-size: 14pt;
-	font-family: serif;
-	border:solid 1px #000000;
-	color: #000088;
-}
-
 .chart_box {
 	margin: 0px;
 	padding: 0px;
@@ -335,15 +232,6 @@ select {
 	font-size:11pt;
 	width: 75%;
 	color: #333;
-}
-
-td.form_instructions {
-	font-size:10pt;
-	font-style: italic;
-	margin: 0px;
-	padding: 2px;
-	padding-top: 0px;
-	padding-left: 25px;
 }
 
 p.footer_text {

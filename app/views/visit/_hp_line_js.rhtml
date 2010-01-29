@@ -1,0 +1,72 @@
+<script type="text/javascript" language="JavaScript">
+	function na_changed(column_name) {
+		cb_name = "cb_"+column_name
+		na_field = document.getElementById(cb_name+"_na");
+		neg_field = document.getElementById(cb_name+"_neg");
+		abn_field = document.getElementById(cb_name+"_abn");
+		
+		if (na_field.checked) {
+			abn_field.checked = false;
+			neg_field.checked = false;
+		}
+		
+		changed(column_name);
+	}
+	function neg_changed(column_name) {
+		cb_name = "cb_"+column_name
+		na_field = document.getElementById(cb_name+"_na");
+		neg_field = document.getElementById(cb_name+"_neg");
+		abn_field = document.getElementById(cb_name+"_abn");
+		
+		if (neg_field.checked) {
+			na_field.checked = false;
+			abn_field.checked = false;
+		}
+		
+		changed(column_name);
+	}
+	
+	function abn_changed(column_name) {
+		cb_name = "cb_"+column_name
+		na_field = document.getElementById(cb_name+"_na");
+		neg_field = document.getElementById(cb_name+"_neg");
+		abn_field = document.getElementById(cb_name+"_abn");
+		
+		if (abn_field.checked) {
+			na_field.checked = false;
+			neg_field.checked = false;
+		}
+		
+		changed(column_name);
+		
+		if (abn_field.checked) {
+			text_field.focus();
+		}
+	}
+	
+	function changed(column_name) {
+		cb_name = "cb_"+column_name
+		na_field = document.getElementById(cb_name+"_na");
+		neg_field = document.getElementById(cb_name+"_neg");
+		abn_field = document.getElementById(cb_name+"_abn");
+		text_field = document.getElementById(cb_name+"_text");
+		hidden_field = document.getElementById("visit_"+column_name);
+		
+		if (abn_field.checked) {
+			text_field.disabled = false;
+			text_field.setAttribute("class", "hp_text_field_shown");
+		} else {
+			text_field.disabled = true;
+			text_field.setAttribute("class", "hp_text_field_hidden");
+		}
+		
+		if (abn_field.checked) {
+			v = new String();
+			hidden_field.value = text_field.value;
+		} else if (neg_field.checked) {
+			hidden_field.value = "neg";
+		} else if (na_field.checked) {
+			hidden_field.value = "n/a";
+		}
+	}
+</script>

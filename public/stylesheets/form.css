@@ -1,0 +1,164 @@
+label {
+	text-align:right;
+	float:left;
+	padding:0.2em;
+	margin:0;
+	margin-top:0.3em;
+	font-family: serif;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #000088;
+}
+
+label.req {
+	text-align:right;
+	float:left;
+	padding:0.2em;
+	margin:0;
+	margin-top:0.3em;
+	font-family: serif;
+	font-size: 14pt;
+	font-weight: bold;
+	color: #880000;
+}
+
+input {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	padding: 3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000;
+	color: #000088;
+}
+
+input.checkbox {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	width: 20px;
+	height: 20px;
+	padding: 3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000;
+	color: #000088;
+}
+
+input.radio {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	width: 20px;
+	height: 20px;
+	padding: 3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000;
+	color: #000088;
+}
+
+textarea {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	padding: 3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000;
+	color: #000088;
+}
+
+select {
+	margin-right:3px;
+	margin-left:3px;
+	margin-top:3px;
+	margin-bottom:3px;
+	font-size: 14pt;
+	font-family: serif;
+	border:solid 1px #000000;
+	color: #000088;
+}
+
+td.form_instructions {
+	font-size:10pt;
+	font-style: italic;
+	margin: 0px;
+	padding: 2px;
+	padding-top: 0px;
+	padding-left: 25px;
+}
+
+table.hp_line {
+	clear:both;
+	padding:0px;
+	margin-top:0px;
+	margin-bottom:0px;
+	border: none;
+}
+
+td.hp_line_label {
+	margin:0px;
+	padding:0px;
+	width:180px;
+	font-size: 11pt;
+	color: black;
+	text-align: right;
+	vertical-align: baseline;
+}
+
+input.checkbox {
+	background-color: white;
+	border: 1px solid black;
+}
+
+td.hp_empty_cell {
+	padding:0px;
+	margin: 0px;
+	text-align:center;
+	width: 20px;
+	font-size: 9pt;
+	text-align: center;
+	vertical-align: baseline;
+}
+
+td.hp_check_box_cell {
+	padding:0px;
+	margin: 0px;
+	text-align:center;
+	width: 20px;
+	font-size: 9pt;
+	text-align: center;
+	vertical-align: baseline;
+}
+
+td.hp_text_field_cell {
+	padding: 0px;
+	height: 22px;
+	width: 260px;
+	font-size: 10pt;
+	background-color: transparent;
+}
+
+.hp_text_field_shown {
+	color: #000000;
+	font-size: 10pt;
+	vertical-align: middle;
+	background-color: transparent;
+	margin:0px;
+}
+
+.hp_text_field_hidden {
+	display: none;
+}
+
+tr.odd_form_row {}
+
+tr.even_form_row {
+	background-color: #F0F0FF
+}

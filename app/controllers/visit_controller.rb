@@ -6,7 +6,13 @@ class VisitController < ApplicationController
 		
     config.columns[:patient].form_ui = :select
 		config.columns[:users].form_ui = :select
-	end
+  end
+
+  def new_for_patient
+    @visit = Visit.new
+    @patient = Patient.find(params[:patient_id])
+    render "/visit/#{Visit.current_version}/new_for_patient", :layout => 'application'
+  end
 	
 	def add_for_patient
     visit = Visit.new(params[:visit])
@@ -33,10 +39,21 @@ class VisitController < ApplicationController
     end
   end
   
+  def edit_visit
+    @visit = Visit.find(params[:visit_id])
+    @patient = Patient.find(@visit.patient_id)
+    render "/visit/#{@visit.version}/edit_visit", :layout => 'application'
+  end
+  
   def update_visit
     Visit.update(params[:visit_id][:visit_id], params[:visit])
     
     visit = Visit.find(params[:visit_id][:visit_id], :include => [:patient])
+    if(visit.temperature)
+      if(visit.temperature < 50)
+        visit.temperature = visit.temperature * 1.8 + 32
+      end
+    end
     visit.users = []
     
     if params[:users_id1] && params[:users_id1]!=""

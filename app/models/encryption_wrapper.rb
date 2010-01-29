@@ -1,16 +1,16 @@
 require 'lib/security_helpers'
 
 class EncryptionWrapper
-   def initialize(attribute)
-     @attribute = attribute
+   def initialize(attributes)
+     @attributes = attributes
    end
 
    def before_save(record)
-     @attribute.each{|a| record.send("#{a}=", encrypt(record.send("#{a}"))) }
+     @attributes.each{|a| record.send("#{a}=", encrypt(record.send("#{a}"))) }
    end
 
    def after_save(record)
-     @attribute.each{|a| record.send("#{a}=", decrypt(record.send("#{a}"))) }
+     @attributes.each{|a| record.send("#{a}=", decrypt(record.send("#{a}"))) }
    end
 
    alias_method :after_find, :after_save

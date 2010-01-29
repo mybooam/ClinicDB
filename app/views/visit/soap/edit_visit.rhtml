@@ -1,4 +1,4 @@
-<% visit = Visit.find(params[:visit_id])%>
+<% visit = @visit %>
 <% patient = visit.patient %>
 <h2> <%= "#{patient.first_name} #{patient.last_name}" %>: Visit</h2>
 

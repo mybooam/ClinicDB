@@ -4,15 +4,20 @@ class Visit < ActiveRecord::Base
 	
 	validates_presence_of :patient_id
 	
-	before_save      EncryptionWrapper.new(["chief_complaint","referrals","subjective_note","objective_note","assessment_note","plan_note"])
-  after_save       EncryptionWrapper.new(["chief_complaint","referrals","subjective_note","objective_note","assessment_note","plan_note"])
-  after_find       EncryptionWrapper.new(["chief_complaint","referrals","subjective_note","objective_note","assessment_note","plan_note"])
-  after_initialize EncryptionWrapper.new(["chief_complaint","referrals","subjective_note","objective_note","assessment_note","plan_note"])
+	before_save      EncryptionWrapper.new( Visit.columns.select{ |c| c.text? }.collect{ |c| c.name })
+  after_save       EncryptionWrapper.new( Visit.columns.select{ |c| c.text? }.collect{ |c| c.name })
+  after_find       EncryptionWrapper.new( Visit.columns.select{ |c| c.text? }.collect{ |c| c.name })
+  after_initialize EncryptionWrapper.new( Visit.columns.select{ |c| c.text? }.collect{ |c| c.name })
 	
 	def after_find
   end
   
 	def to_label
 		"#{patient.to_label} seen #{visit_date}"
-	end
+  end
+
+  def self.current_version
+    #"soap"
+    "hpi_auto"
+  end
 end
