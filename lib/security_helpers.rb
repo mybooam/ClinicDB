@@ -104,7 +104,7 @@ def loadKeyFromFile(key_file_name = "secret.key")
 end
 
 def is_likely_hex_string?(str)
-  /^[A-Fa-f0-9]*$/.match(str) != nil
+  str =~ /^[A-Fa-f0-9]*$/
 end
 
 @security_helper_in_reset_mode = false
@@ -141,10 +141,9 @@ def getKey(mode=:decrypt)
 end
 
 def getFingerprintString(key_c) 
-  key_str = hex_array2str(key_c)
-  len = [key_str.length/8,8].max-1
-  sub_str = hex_array2str(key_c)[0..len]
-  tr=hex_array2str(Digest::SHA256.digest(sub_str*8))[0..len]
+  key_str = hex_array2str(Digest::SHA256.digest(key_c))
+  sub_str = key_str[0..7]
+  tr=hex_array2str(Digest::SHA256.digest(sub_str*8))[0..7]
   tr
 end
 
