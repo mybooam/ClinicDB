@@ -1,6 +1,12 @@
 require 'lib/security_helpers'
 
 class HomeController < ApplicationController
+  before_filter :check_session
+  
+  def check_session
+    redirect_to :controller=>:session, :action=>:start_session if Session.todayNeedsOne?
+  end
+  
   def index
     @all_tb_tests = TbTest.find(:all)
     @tb_tests_open = TbTest.find(:all).select { |a| a.open }
@@ -96,6 +102,43 @@ class HomeController < ApplicationController
     session[:admin_mode] = false
     flash[:notice] = "Logged out of Administration mode."
     redirect_to :back
+  end
+  
+  def setup_encryption
+    rkey = OpenSSL::Cipher::Cipher.new("aes-256-cbc").random_key
+    @suggest = hex_array2str(rkey)
+    @suggest_fingerprint = getFingerprintString(rkey)
+    render :layout => "security_error"
+  end
+  
+  def encryption_key_fingerprint
+    key = params[:key]
+    if key =~ /^[A-Fa-f0-9]{64}$/
+      @fp = getFingerprintString(hex_str2array(key))
+      render :layout => 'none';
+    else
+      render :text => "Error!"
+     end
+  end
+  
+  def accept_encryption
+    if Setting.get("key_fingerprint")
+      flash[:error] = "Database already keyed for a different fingerprint (#{params[:fingerprint]}}"
+      redirect_to :back
+      return
+    end
+    fingerprint = params[:fingerprint]
+    if fingerprint =~ /^[A-Fa-f0-9]{8}$/
+      Setting.set("key_fingerprint", fingerprint);
+    else
+      flash[:error] = "Fingerprint was invalid"
+      redirect_to :back
+      return
+    end
+  end
+  
+  def setup_admin_password
+    render :layout => "security_error"
   end
   
   def update_admin_password

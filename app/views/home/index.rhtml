@@ -1,11 +1,4 @@
 <center>
-	<% if Session.todayNeedsOne? %>
-		<center>
-			<div style='border: #FF0000 solid 2px; padding: 15px; background: #FFCCCC; width: 200px;'>
-			<%= link_to "Start Session", {:controller=>"session", :action=>"start_session"}, :class=>"big"  %>
-			</div>
-		</center>
-	<% else %>
 		<h2>Patient Visit</h2>
 		<table class='layout'>
 			<tr>
@@ -55,6 +48,5 @@
 				</tr>	
 			<% end %>
 		</table>
-	<% end %>
 	<% end %>
 </center>

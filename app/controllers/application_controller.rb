@@ -10,10 +10,25 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'c237eedfa42e563fc603e33178c792ac'
   
+  before_filter :check_encryption_setup
+  before_filter :check_admin_password_setup
+  before_filter :check_first_user_setup
   before_filter :check_security, :unless => proc { |c| %w(home:status home:security_error).include? "#{c.params[:controller]}:#{c.params[:action]}" }
   before_filter :check_login, :unless => proc { |c| %w(user:login user:do_login user:logout home:security_error home:status).include? "#{c.params[:controller]}:#{c.params[:action]}" }
   
   $render_start_time = Time.new
+  
+  def check_encryption_setup
+    redirect_to :controller => :home, :action => :setup_encryption if !Setting.get("key_fingerprint")
+  end
+  
+  def check_admin_password_setup
+    redirect_to :controller => :home, :action => :setup_admin_password if !Setting.get("admin_password")
+  end
+  
+  def check_first_user_setup
+    redirect_to :controller => :user, :action => :setup_first_user if User.find(:all).empty?
+  end
   
   def check_security
     unless security_unlocked?
