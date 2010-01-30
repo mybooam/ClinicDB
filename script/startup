@@ -43,7 +43,8 @@ end
 
 if svnupdate
 	puts "Updating software"
-	`svn update`
+	cmd = "mongrel_rails start #{'-d ' if d}-e #{env} --port #{port}"
+	`svn update #{File.dirname(__FILE__) + '/../'}`
 end
 
 puts "Starting #{env} server on port #{port}"
