@@ -1,0 +1,34 @@
+<div class="security_box">
+	<h1 class="security_error">Please set Admin Password</h1>
+	<p class="security_error">Please set the password that is to be used for accessing the administrative </p>
+	<center>
+		<% form_tag "add_first_user" do %>
+			<table class="layout" valign=top style="margin: 15px">
+				<tr>
+					<td class="form_label">First Name:</td>
+					<td><%= text_field :user, :first_name, :size => 20 %></td>
+				</tr>
+				<tr>
+					<td class="form_label">Last Name:</td>
+					<td><%= text_field :user, :last_name, :size => 20 %></td>
+				</tr>
+				<tr>
+					<td class="form_label">Email (optional):</td>
+					<td><%= text_field :user, :email, :size => 20 %></td>
+				</tr>
+				<tr>
+					<td class="form_label">Access Code:</td>
+					<td><%= password_field :access_code, :ac1, {:size => 20, :maxlength => 4} %></td>
+				</tr>
+				<tr>
+					<td class="form_label">Repeat Access Code:</td>
+					<td><%= password_field :access_code, :ac2, {:size => 20, :maxlength => 4} %></td>
+				</tr>
+				<%= hidden_field :user, :active, :value=>true %>
+				<tr>
+					<td colspan=2 class="submit"><%= submit_tag 'Add first user', {:style => "font-size:14pt"} %></td>
+				</tr>
+			<% end %>
+		</table>
+	</center>
+</div>
