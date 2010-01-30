@@ -32,7 +32,24 @@ class SetupController < ApplicationController
       redirect_to :back
       return
     end
-    redirect_to :controller=>:home, :action=>:index
+    redirect_to :controller=>:setup, :action=>:encrypt_all
+  end
+  
+  def encrypt_all
+    if RAILS_ENV != 'production'
+      Patient.find(:all).each{|a| a.save}
+      Visit.find(:all).each{|a| a.save}
+      Attending.find(:all).each{|a| a.save}
+      User.find(:all).each{|a| a.save}
+      TbTest.find(:all).each{|a| a.save}
+      Prescription.find(:all).each{|a| a.save}
+      
+      flash[:notice] = "Database encrypted"
+    else  
+      flash[:error] = "Cannot encrypt in Production mode"
+    end
+    
+    redirect_to :controller =>'home', :action => 'index'
   end
   
   def setup_admin_password

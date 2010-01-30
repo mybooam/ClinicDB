@@ -20,23 +20,6 @@ class UtilController < ApplicationController
     redirect_to :controller =>'home', :action => 'list_patients'
   end
   
-  def encrypt_all
-    if RAILS_ENV != 'production'
-      Patient.find(:all).each{|a| a.save}
-      Visit.find(:all).each{|a| a.save}
-      Attending.find(:all).each{|a| a.save}
-      User.find(:all).each{|a| a.save}
-      TbTest.find(:all).each{|a| a.save}
-      Prescription.find(:all).each{|a| a.save}
-      
-      flash[:notice] = "Database encrypted"
-    else  
-      flash[:error] = "Cannot encrypt in Production mode"
-    end
-    
-    redirect_to :controller =>'home', :action => 'list_patients'
-  end
-  
   def generate_new_key
     key = OpenSSL::Cipher::Cipher.new("aes-256-cbc").random_key
 #    key_file = "#{securityVolumeDirectory}security/secret.key_123"
