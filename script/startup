@@ -5,6 +5,7 @@ require 'optparse'
 port = 3000
 env = "production"
 d = true
+svnupdate = false
 
 optparse = OptionParser.new do|opts|
 	opts.banner = "Usage: startup.rb [options]"
@@ -23,6 +24,10 @@ optparse = OptionParser.new do|opts|
 		d = false
 	end
 
+	opts.on( '-u', '--update', '' ) do
+		svnupdate = true
+	end
+
 	opts.on( '-h', '--help', 'Display this screen' ) do
     	puts opts
 		exit
@@ -36,13 +41,17 @@ if File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid')
 	`shutdown`
 end
 
+if svnupdate
+	puts "Updating software"
+	`svn update`
+end
+
 puts "Starting #{env} server on port #{port}"
 
 `rake environment RAILS_ENV=#{env} db:migrate`
 if(File.exist?(File.dirname(__FILE__) + "/../db/#{env}.sqlite3"))
 	log_file = "log/log_#{Date.today.strftime('%Y_%m_%d') + Time.now.strftime('_%H_%M_%S')}.log"
 	cmd = "mongrel_rails start #{'-d ' if d}-e #{env} --port #{port}"
-	puts cmd
 	`#{cmd}`
 end
 
