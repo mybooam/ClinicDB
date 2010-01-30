@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
   
   def check_first_user_setup
-    redirect_to :controller => :setup, :action => :setup_first_user if User.find(:all).empty?
+    redirect_to :controller => :setup, :action => :setup_first_user if User.find(:all).select{|u| u.access_hash && u.access_hash!=""}.empty?
   end
   
   def check_security

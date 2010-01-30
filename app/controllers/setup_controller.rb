@@ -39,7 +39,7 @@ class SetupController < ApplicationController
     Patient.find(:all).each{|a| a.save!}
     Visit.find(:all).each{|a| a.save!}
     Attending.find(:all).each{|a| a.save!}
-    User.find(:all).each{|a| a.save!}
+#    User.find(:all).each{|a| puts a.first_name; a.save!}
     TbTest.find(:all).each{|a| a.save!}
     Prescription.find(:all).each{|a| a.save!}
     
@@ -82,7 +82,7 @@ class SetupController < ApplicationController
   end
   
   def setup_first_user
-    if !User.find(:all).empty?
+    unless User.find(:all).select{|u| u.access_hash && u.access_hash!=""}.empty?
       flash[:error] = "First user is already set"
       redirect_to :controller => :home, :action => :index and return
     end
@@ -90,7 +90,7 @@ class SetupController < ApplicationController
   end
   
   def add_first_user
-    if !User.find(:all).empty?
+    unless User.find(:all).select{|u| u.access_hash && u.access_hash!=""}.empty?
       flash[:error] = "First user is already set"
       redirect_to :controller => :home, :action => :index and return
     end
