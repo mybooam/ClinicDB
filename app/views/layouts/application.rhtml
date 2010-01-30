@@ -39,6 +39,16 @@
 				<% if flash[:notice] -%>
 			    	<div class=notice_flash><img src="/images/info_32.png"class="flash" > <b>Notice</b>: <%= flash[:notice] %></div>
 			    <% end -%>
+		
+				<% if Session.todayNeedsOne? -%>
+					<div class=notice_flash><img src="/images/info_32.png"class="flash" > <b>Notice</b>: 
+					<% if adminMode? %>
+			    		No session set for today. Please <%= link_to "click here", :controller=>:session, :action=>:start_session %> to start one.
+			    	<% else %>
+						No session set for today. Please log in as an Administrator to create one.
+			    	<% end %>
+					</div>
+				<% end -%>
 				
 				<% unless %w(user:login).include? "#{params[:controller]}:#{params[:action]}"%>
 					<div class=user_box>

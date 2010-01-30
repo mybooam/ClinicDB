@@ -1,11 +1,6 @@
 require 'lib/security_helpers'
 
 class HomeController < ApplicationController
-  before_filter :check_session
-  
-  def check_session
-    redirect_to :controller=>:session, :action=>:start_session if Session.todayNeedsOne?
-  end
   
   def index
     @all_tb_tests = TbTest.find(:all)
