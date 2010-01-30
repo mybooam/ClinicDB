@@ -9,10 +9,10 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :email
   validates_uniqueness_of :access_hash
 	
-	before_save      EncryptionWrapper.new(["first_name","last_name","email","access_hash"])
-  after_save       EncryptionWrapper.new(["first_name","last_name","email","access_hash"])
-  after_find       EncryptionWrapper.new(["first_name","last_name","email","access_hash"])
-  after_initialize EncryptionWrapper.new(["first_name","last_name","email","access_hash"])
+	before_save      EncryptionWrapper.new(User.columns.select{ |c| c.text? }.collect{ |c| c.name })
+  after_save       EncryptionWrapper.new(User.columns.select{ |c| c.text? }.collect{ |c| c.name })
+  after_find       EncryptionWrapper.new(User.columns.select{ |c| c.text? }.collect{ |c| c.name })
+  after_initialize EncryptionWrapper.new(User.columns.select{ |c| c.text? }.collect{ |c| c.name })
   
   def after_find
   end
