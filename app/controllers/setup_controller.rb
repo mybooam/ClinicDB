@@ -36,12 +36,12 @@ class SetupController < ApplicationController
   end
   
   def encrypt_all
-    Patient.find(:all).each{|a| a.save}
-    Visit.find(:all).each{|a| a.save}
-    Attending.find(:all).each{|a| a.save}
-    User.find(:all).each{|a| a.save}
-    TbTest.find(:all).each{|a| a.save}
-    Prescription.find(:all).each{|a| a.save}
+    Patient.find(:all).each{|a| a.save!}
+    Visit.find(:all).each{|a| a.save!}
+    Attending.find(:all).each{|a| a.save!}
+    User.find(:all).each{|a| a.save!}
+    TbTest.find(:all).each{|a| a.save!}
+    Prescription.find(:all).each{|a| a.save!}
     
     flash[:notice] = "Database encrypted"
     
