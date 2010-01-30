@@ -85,7 +85,7 @@ class ChangeVisitToHpiAuto < ActiveRecord::Migration
       t.remove :education_level_id
       t.remove :pharmacy_id
       
-      t.text :disability
+      t.remove :disability
       
       t.remove :assessment_and_plan
     end
