@@ -1,4 +1,8 @@
 #!/usr/bin/env ruby
+
+
+Dir.chdir("#{File.dirname(__FILE__)}/..")
+
 if File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid') 
   `mongrel_rails stop`
   `script/make_backup`

@@ -36,6 +36,13 @@ end
 
 optparse.parse!
 
+Dir.chdir("#{File.dirname(__FILE__)}/..")
+
+unless Dir.new(Dir.pwd).entries.include?("script") && Dir.new(Dir.pwd).entries.include?("lib")
+  puts "ClinicDB: ERROR: Server startup script must be run from the ClinicDB directory"
+  exit
+end
+
 if File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid')
 	puts "Shutting down previous mongrel server"
 	`shutdown`
