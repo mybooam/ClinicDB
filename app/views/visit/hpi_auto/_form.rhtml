@@ -91,7 +91,7 @@
 	</tr>
 	<tr bgcolor=#F0F0FF>
 		<td><label class=req>Seen by Students:</label></td>
-		<% users = @visit.users || [session[:user]] %>
+		<% users = @visit.users.length > 0 ? @visit.users : [session[:user]] %>
 		<td><%= user_field :users_id1, {}, users[0] %><br/><%= user_field :users_id2, {}, users[1]  %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
