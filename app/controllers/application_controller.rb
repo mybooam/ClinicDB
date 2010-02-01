@@ -33,7 +33,7 @@ class ApplicationController < ActionController::Base
   def check_security
     unless security_unlocked?
 #      puts "Security is not unlocked"
-      redirect_to :controller =>'home', :action => 'security_error' 
+      redirect_to :controller =>'setup', :action => 'security_error' 
     else
 #      puts "Security is unlocked"
     end
