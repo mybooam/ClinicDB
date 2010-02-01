@@ -28,6 +28,19 @@ class Setting < ActiveRecord::Base
     end
   end
   
+  def self.get_f(key, default = 0)
+    begin
+      v = get(key, default.to_s)
+      if /\A-?\d*\.?\d+\Z/ =~ v
+        v.to_f
+      else
+        default
+      end
+    rescue
+      default
+    end
+  end
+  
   def self.set(key, value)
     res = Setting.find(:all, :conditions => "key == '#{key}'")
     if(res.length==1)

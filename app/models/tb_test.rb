@@ -25,11 +25,11 @@ class TbTest < ActiveRecord::Base
   end
   
   def due_date_min
-    given_date + 2
+    given_date + Setting.get_f("tb_test_read_start", 2)
   end
   
   def due_date_max
-    given_date + 3
+    given_date + Setting.get_f("tb_test_read_end", 3)
   end
   
   def ready_to_be_read

@@ -68,4 +68,38 @@ class SettingTest < ActiveSupport::TestCase
     assert_equal 3, Setting.get_i("no_key", 3)
     assert_equal 123122, Setting.get_i("no_key", 123122)
   end
+  
+  test "get_f" do
+    Setting.set("key1", "5.14")
+    assert_equal 5.14, Setting.get_f("key1")
+    assert_equal 5.14, Setting.get_f("key1",123.45)
+    assert_equal 0, Setting.get_f("key2")
+    assert_equal 3.2, Setting.get_f("key2", 3.2)
+    assert_equal -3, Setting.get_f("key2", -3)
+    
+    Setting.set("key1", "-14")
+    assert_equal -14, Setting.get_f("key1")
+    assert_equal -14, Setting.get_f("key1",4)
+    
+    Setting.set("key1", "-14.0")
+    assert_equal -14, Setting.get_f("key1")
+    assert_equal -14, Setting.get_f("key1",4)
+    
+    Setting.set("key1", "-.14")
+    assert_equal -0.14, Setting.get_f("key1")
+    assert_equal -0.14, Setting.get_f("key1",4)
+    
+    Setting.set("key1", "-0.14")
+    assert_equal -0.14, Setting.get_f("key1")
+    assert_equal -0.14, Setting.get_f("key1",4)
+    
+    Setting.set("bad_key", "hello")
+    assert_equal 0, Setting.get_f("bad_key")
+    assert_equal 3, Setting.get_f("bad_key", 3)
+    assert_equal 123122, Setting.get_f("bad_key", 123122)
+    
+    assert_equal 0, Setting.get_f("no_key")
+    assert_equal 3, Setting.get_f("no_key", 3)
+    assert_equal 123122, Setting.get_f("no_key", 123122)
+  end
 end
