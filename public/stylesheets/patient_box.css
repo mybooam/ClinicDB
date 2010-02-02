@@ -150,11 +150,11 @@ td.prescription_box {
 	background-color: #fee;
 	border: #aad solid thin;
 	border-collapse: collapse;
+	text-align: left;
 }
 
 td.tb_test_box {
 	border: #aad solid thin;
-	text-align: left;
 }
 
 .tb_test_box_text {
