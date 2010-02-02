@@ -100,6 +100,7 @@ td.patient_box_history {
 .prescription_box {
 	background-color: #eee;
 	border: #aad solid thin;
+	text-align: left;
 }
 
 td.prescription_box {
@@ -153,6 +154,7 @@ td.prescription_box {
 
 td.tb_test_box {
 	border: #aad solid thin;
+	text-align: left;
 }
 
 .tb_test_box_text {
@@ -205,6 +207,7 @@ td.tb_test_box_title {
 .immunization_box {
 	background-color: #efe;
 	border: #aad solid thin;
+	text-align: left;
 }
 
 td.immunization_box {
