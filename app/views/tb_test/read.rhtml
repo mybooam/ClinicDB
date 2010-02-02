@@ -12,7 +12,7 @@
 		</tr>
 		<tr bgcolor=#F0F0FF>
 			<td><label>Read by:</label></td>
-			<td><%= user_field :readby_user_id, {:size => 26}  %></td>
+			<td><%= user_field :readby_user_id, {:size => 26}, session[:user]  %></td>
 		</tr>
 		<tr>
 			<td colspan=2 align=right><%= submit_tag 'Save' %></td>
