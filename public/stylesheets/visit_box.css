@@ -59,6 +59,7 @@ td.visit_box_soap {
 	color: #000088;
 	font-size: 11pt;
 	font-family: sans-serif;
+	text-align: left;
 }
 
 .visit_box_text {
@@ -69,6 +70,7 @@ td.visit_box_soap {
 	padding-left: 25px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	text-align: left;
 }
 
 .visit_action_box {
