@@ -8,8 +8,9 @@
 }
 
 tr.visit_box_top {
-background-color: #ffc;
-border: #aad solid thin;
+	background-color: #ffc;
+	border: #aad solid thin;
+	text-align: left;
 }
 
 td.visit_box_title {
