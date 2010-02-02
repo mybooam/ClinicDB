@@ -45,7 +45,7 @@ end
 
 if File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid')
 	puts "Shutting down previous mongrel server"
-	`shutdown`
+	`script/shutdown`
 end
 
 if svnupdate
