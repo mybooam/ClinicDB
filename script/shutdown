@@ -3,8 +3,11 @@
 
 Dir.chdir("#{File.dirname(__FILE__)}/..")
 
+pid = File.dirname(__FILE__) + '/../log/mongrel.pid'
+
 if File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid') 
   `mongrel_rails stop`
+  `rm #{pid}`
   `script/make_backup`
   log_file = File.dirname(__FILE__) + '/../log/production.log'
   `rm #{log_file}`
