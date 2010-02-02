@@ -28,6 +28,7 @@ td.visit_box_editlink {
 td.visit_box_telem {
 	background-color: #ffe;
 	border: #aad solid thin;
+	text-align: left;
 }
 
 tr.visit_box_soap {
