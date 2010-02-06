@@ -4,7 +4,7 @@ class HomeController < ApplicationController
   
   def index
     @all_tb_tests = TbTest.find(:all)
-    @tb_tests_open = TbTest.find(:all).select { |a| a.open }
+    @tb_tests_open = TbTest.find(:all, :include => [:patient]).select { |a| a.open }
   end
   
   def patient_home
