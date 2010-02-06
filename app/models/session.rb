@@ -15,7 +15,11 @@ class Session < ActiveRecord::Base
   end
   
   def self.getToday
-    sess = Session.find(:all).select{|a| a.session_date==Date.today()}
+    forDate
+  end
+  
+  def self.forDate(date = Date.today())
+    sess = Session.find(:all).select{|a| a.session_date==date}
     if !sess.empty?
       sess[0]
     else
