@@ -5,7 +5,7 @@ Dir.chdir("#{File.dirname(__FILE__)}/..")
 
 pid = File.dirname(__FILE__) + '/../log/mongrel.pid'
 
-if File.exist?(File.dirname(__FILE__) + '/../log/mongrel.pid') 
+if File.exist?(pid) 
   `mongrel_rails stop`
   `rm #{pid}`
   `script/make_backup`
