@@ -1,14 +1,5 @@
 class VisitController < ApplicationController
-	active_scaffold :visit do |config|
-		config.label = "Visit"
-		config.columns = [:visit_date, :patient, :blood_press_sys, :blood_press_dias, :pulse, :temperature, :weight, :chief_complaint, :referrals, :users]
-		config.list.columns = [:visit_date, :patient, :chief_complaint]
-		
-    config.columns[:patient].form_ui = :select
-		config.columns[:users].form_ui = :select
-  end
-
-  def new_for_patient
+	def new_for_patient
     @visit = Visit.new
     @patient = Patient.find(params[:patient_id])
     render "/visit/#{Visit.current_version}/new_for_patient", :layout => 'application'
@@ -70,6 +61,19 @@ class VisitController < ApplicationController
     else
       flash[:notice] = "Visit update failed."
       redirect_to :back
+    end
+  end
+  
+  def show_visit
+    @visit = Visit.find(params[:visit_id])
+  end
+  
+  def print_visit
+    @visit = Visit.find(params[:id])
+    
+    respond_to do |format|
+      format.html { redirect_to :action => :show_visit, :visit_id => @visit.id }
+      format.pdf { render :layout => false }
     end
   end
 end
