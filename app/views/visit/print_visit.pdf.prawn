@@ -1,4 +1,4 @@
 require "prawn"
-require "app/views/visit/#{@visit.version}/print_hpi_auto"
+require "app/helpers/print/print_#{@visit.version}"
 
 print(pdf, @visit)

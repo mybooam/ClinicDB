@@ -12,7 +12,7 @@ require "prawn/measurement_extensions"
 def patient_top_box(pdf, visit)
   pdf.font_size = 14
   pdf.bounding_box [0.in, 10.in], :width => 7.5.in, :height => 0.2.in do
-    pdf.text "#{Setting.get('visit_form_title', 'LSUHSC Homeless Clinic - Ozanam Inn').upcase}", :align => :center
+    pdf.text "#{Setting.get('visit_form_title', 'Clinic Visit').upcase}", :align => :center
   end
   
   pdf.font_size = 12
@@ -68,6 +68,7 @@ def print(pdf, visit)
   page_number(pdf)
   
   pdf.font_size = 10
+  pdf.font @arial_font
   
   pdf.bounding_box [0.in, 8.9.in], :width => 7.5.in, :height => 0.3.in do
     data_box pdf, "BP:", (visit.blood_press_sys&&visit.blood_press_dias ? '%d/%d' % [visit.blood_press_sys, visit.blood_press_dias] : ""), 0.in, 1.875.in
