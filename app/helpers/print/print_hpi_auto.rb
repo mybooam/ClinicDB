@@ -1,13 +1,9 @@
 require "prawn"
 require "prawn/measurement_extensions"
 
-@arial_bold_font = Rails.root.join('public', 'fonts', 'Arial_Bold.ttf')
+@arial_bold_font = Rails.root.join('public', 'fonts', 'Arial_Bold.ttf').to_s
 @arial_font = Rails.root.join('public', 'fonts', 'Arial.ttf').to_s
-@courier_new_font = Rails.root.join('public', 'fonts', 'Courier_New.ttf')
-
-#puts @arial_bold_font.to_s
-#puts @arial_font.to_s
-#puts @courier_new_font.to_s
+@courier_new_font = Rails.root.join('public', 'fonts', 'Courier_New.ttf').to_s
 
 def patient_top_box(pdf, visit)
   pdf.font_size = 14
