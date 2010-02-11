@@ -73,7 +73,7 @@
 						HPI:
 					</div>	
 					<div class="visit_box_text">
-						<%= visit.hpi %>
+						<%= visit.hpi.gsub(/[\n\r]+/ ,"<br/>") %>
 					</div>
 				</div>
 				
@@ -138,7 +138,7 @@
 						Assessment/Plan:
 					</div>	
 					<div class="visit_box_text">
-						<%= visit.assessment_and_plan %>
+						<%= visit.assessment_and_plan.gsub(/[\n\r]+/ ,"<br/>") %>
 					</div>
 				</div>
 				
@@ -147,7 +147,7 @@
 						Referrals:
 					</div>	
 					<div class="visit_box_text">
-						<%= visit.referrals %>
+						<%= visit.referrals.gsub(/[\n\r]+/ ,"<br/>") %>
 					</div>
 				</div>
 				<div class="visit_box_group">
