@@ -10,11 +10,11 @@ class ApplicationController < ActionController::Base
   # Uncomment the :secret if you're not using the cookie session store
   protect_from_forgery # :secret => 'c237eedfa42e563fc603e33178c792ac'
   
-  before_filter :check_encryption_setup, :unless => proc { |c| c.params[:controller]=="setup" }
-  before_filter :check_admin_password_setup, :unless => proc { |c| c.params[:controller]=="setup" }
-  before_filter :check_first_user_setup, :unless => proc { |c| c.params[:controller]=="setup" }
-  before_filter :check_security, :unless => proc { |c| c.params[:controller]=="setup"}
-  before_filter :check_login, :unless => proc { |c| (%w(user:login user:do_login user:logout).include? "#{c.params[:controller]}:#{c.params[:action]}") || c.params[:controller]=="setup"}
+  before_filter :check_encryption_setup, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test' }
+  before_filter :check_admin_password_setup, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test' }
+  before_filter :check_first_user_setup, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test' }
+  before_filter :check_security, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test'}
+  before_filter :check_login, :unless => proc { |c| (%w(user:login user:do_login user:logout).include? "#{c.params[:controller]}:#{c.params[:action]}") || c.params[:controller]=="setup"||RAILS_ENV == 'test'}
   
   $render_start_time = Time.new
   
