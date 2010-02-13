@@ -196,7 +196,16 @@ class PatientController < ApplicationController
   end
 	
 	def live_search
-      phrases = params[:searchtext].upcase.split('%20')
+      phrases = params[:searchtext].upcase.split(' ')
+      phrases = phrases.collect { |a|
+        m = a.match(/^[A-Z]+/)
+        m ? m[0] : nil
+      }.select {|a|
+        a&&a.length>0
+      }
+      
+      
+#      puts phrases.join "|"
 
       patients = Patient.find(:all)
       
@@ -206,7 +215,7 @@ class PatientController < ApplicationController
         matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)||p.dob_str.upcase.include?(s)}
         res << {:p => p, :score => matches.length} if matches.length>0
       end
-      res = res.sort{|a,b| b[:score]<=>a[:score]}
+      res = res.sort{|a,b| a[:p].to_label <=> b[:p].to_label}.sort{|a,b| b[:score]<=>a[:score]}
       @results = res.collect{|a| a[:p]}
       render(:layout => false)
   end

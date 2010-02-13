@@ -1,7 +1,9 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+white:
+    id: 1
+    name: White
+    
+black:
+    id: 2
+    name: African American

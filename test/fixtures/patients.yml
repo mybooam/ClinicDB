@@ -1,7 +1,50 @@
 # Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
 
-# one:
-#   column: value
-#
-# two:
-#   column: value
+john_s:
+    first_name: John
+    last_name: Smith
+    dob: 1979-10-15 
+    sex: M
+    ethnicity_id: 1
+
+john_w:
+    first_name: John
+    last_name: Williams
+    dob: 1979-10-15 
+    sex: M
+    ethnicity_id: 1
+
+john_s2:
+    first_name: John
+    last_name: Sample
+    dob: 1979-10-15 
+    sex: M
+    ethnicity_id: 1
+
+jeff_s:
+    first_name: Jeff
+    last_name: Smith
+    dob: 1979-10-15 
+    sex: M
+    ethnicity_id: 1
+
+sam_f:
+    first_name: Sam
+    last_name: Franz
+    dob: 1979-10-15 
+    sex: M
+    ethnicity_id: 1
+    
+bryan_c:
+    first_name: Bryan
+    last_name: Coleman
+    dob: 1979-10-15 
+    sex: M
+    ethnicity_id: 1
+    
+bryan_a:
+    first_name: Bryan
+    last_name: Allen
+    dob: 1979-10-15 
+    sex: M
+    ethnicity_id: 1
