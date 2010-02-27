@@ -18,7 +18,11 @@ class User < ActiveRecord::Base
 	
 	def to_label 
 		"#{first_name} #{last_name}"
-	end
+  end
+
+  def first_initial_last_name
+    "#{first_name[0..0].upcase} #{last_name}"
+  end
 	
 	def isLinked?
 	  !(visits.empty? && tb_tests_given.empty? && tb_tests_read.empty? && immunizations_given.empty?)

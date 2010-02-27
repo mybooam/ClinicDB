@@ -59,7 +59,7 @@ def patient_top_box(pdf, visit)
       pdf.text "#{visit.visit_date.strftime('%b %e, %G')}", :align => :right, :leading => 2
       sess = Session.forDate(visit.visit_date)
       pdf.text "Attending: #{sess.attending.to_label}", :align => :right, :leading => 2 if sess
-      pdf.text "Seen by: #{visit.users.collect{|u| u.to_label}.join(", ")}", :align => :right, :leading => 2
+      pdf.text "Seen by: #{visit.users.collect{|u| u.first_initial_last_name}.join(", ")}", :align => :right, :leading => 2
     end
   end
 end
