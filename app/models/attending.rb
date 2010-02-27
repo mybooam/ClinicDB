@@ -14,5 +14,9 @@ class Attending < ActiveRecord::Base
   
 	def to_label
 		"#{last_name}, #{first_name}"
-	end
+  end
+
+  def to_dr_label
+    "Dr. #{first_name} #{last_name}"
+  end
 end
