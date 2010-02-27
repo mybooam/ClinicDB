@@ -50,7 +50,7 @@ def patient_top_box(pdf, visit)
     pdf.fill_color "000000"
     
     pdf.bounding_box [0.1.in, 0.7.in], :width => 3.5.in, :height => 0.6.in do
-      pdf.text "#{visit.patient.last_name}, #{visit.patient.last_name}", :leading => 2
+      pdf.text "#{visit.patient.last_name}, #{visit.patient.first_name}", :leading => 2
       pdf.text "DOB: #{visit.patient.dob_str}  (#{visit.patient.age})", :leading => 2
       pdf.text "Race: #{visit.patient.ethnicity}    Sex: #{visit.patient.isMale? ? 'Male' : 'Female'}", :leading => 2
     end
