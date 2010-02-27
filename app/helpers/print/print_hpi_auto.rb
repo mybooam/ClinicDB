@@ -68,8 +68,14 @@ def page_number(pdf)
   pdf.font heading_font
   pdf.font_size=8
   pdf.bounding_box [0, 0.1.in], :width => 7.5.in, :height=>0.2.in do
+    pdf.text "#{Time.now.strftime('%m/%d/%Y %H:%M')}", :align => :left
+  end
+  
+  pdf.bounding_box [0, 0.1.in], :width => 7.5.in, :height=>0.2.in do
     pdf.text "Page #{pdf.page_number} of 3", :align => :right
   end
+  
+  
 end
 
 def data_box(pdf, label, value, x_pos, width)
