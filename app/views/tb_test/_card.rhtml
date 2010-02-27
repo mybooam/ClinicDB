@@ -49,7 +49,7 @@
 			<td class="tb_test_box_middle"><span class="tb_test_box_text_lot"><%= "Lot# #{tb_test.lot_number} | Exp:#{tb_test.expiration_date}" %></span></td>
 		</tr>
 		<tr>
-			<td class="tb_test_box_bottom"><span class="tb_test_box_text"><%= link_to 'No-Show', {:controller => 'tb_test', :action => 'no_show', :id => tb_test}, :confirm => "Are you sure you want to mark #{tb_test.patient.first_name} #{tb_test.patient.last_name} as a No-Show?", :class => 'list' %></span></td>
+			<td class="tb_test_box_bottom"><span class="tb_test_box_text"><%= link_to 'No-Show', {:controller => 'tb_test', :action => 'no_show', :id => tb_test}, :confirm => "Are you sure you want to mark #{tb_test.patient.first_name} #{tb_test.patient.last_name} as a No-Show?", :class => 'list' %><%= link_to 'Read', {:controller => 'tb_test', :action => 'read', :id => tb_test}, :class => 'list' if adminMode? %></span></td>
 		</tr>
 	<% else %>
 		<tr>
