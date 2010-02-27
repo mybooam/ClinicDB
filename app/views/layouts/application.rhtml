@@ -96,8 +96,9 @@
 			<div id="footer">
 				Created for the <a href='http://www.lsuhsc.edu/'>New Orleans LSUHSC</a> Homeless Clinic System <br/>
 				<% if session[:user] && session[:user].can_be_admin %>
-					Admin mode: <%= adminMode? ? "on|" + (link_to "off", {:controller => "home", :action => "turn_off_admin"}) : (link_to "on", {:controller => "home", :action => "request_on_admin"} )+"|off" %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]
+					Admin mode: <%= adminMode? ? "on|" + (link_to "off", {:controller => "home", :action => "turn_off_admin"}) : (link_to "on", {:controller => "home", :action => "request_on_admin"} )+"|off" %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]<br/>
 				<% end %>
+				Revision #<%= get_svn_revision %>
 			</div>
 		</div>
 	</body>

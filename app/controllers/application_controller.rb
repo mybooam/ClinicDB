@@ -2,6 +2,7 @@
 # Likewise, all the methods added will be available for all controllers.
 
 require 'lib/security_helpers'
+require 'lib/file_helpers'
 
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
