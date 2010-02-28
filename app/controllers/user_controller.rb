@@ -62,15 +62,14 @@ class UserController < ApplicationController
   end
   
   def update_user
-    if session[:user].id == params[:user_id][:user_id]
-      if !session[:user][:can_be_admin]
+    if User.update(params[:user_id][:user_id], params[:user])
+      user = User.find(params[:user_id][:user_id])
+      if session[:user].id == user.id && !user.can_be_admin
+        user.can_be_admin = true
+        user.save
         flash[:error] = "Current user cannot lose admin privilege."
         redirect_to :back and return
       end
-    end
-    
-    if User.update(params[:user_id][:user_id], params[:user])
-      user = User.find(params[:user_id][:user_id])
       flash[:notice] = "User #{user.to_label} updated successfully."
       redirect_to :action => :manager
     else
