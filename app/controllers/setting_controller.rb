@@ -6,4 +6,13 @@ class SettingController < ApplicationController
       columns[:key].label = "Key"
       columns[:value].label = "Value"
     end
+  
+  before_filter :check_admin_for_settings
+  
+  def check_admin_for_settings
+    unless adminMode?
+      flash[:error] = "Settings may only be changed in Admin Mode."
+      redirect_to :controller=>:home, :action=>:index and return
+    end
+  end
 end

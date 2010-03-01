@@ -48,4 +48,8 @@ class ApplicationController < ActionController::Base
       session[:last_action] = Time.now
     end
   end
+  
+  def adminMode?
+    session[:admin_mode]
+  end
 end
