@@ -1,16 +1,12 @@
 require 'find'
 
 def get_svn_revision
-  if !@current_revision
-    @current_revision = load_svn_revision
-  end
-  @current_revision
+  $current_revision = $current_revision || load_svn_revision
 end
 
 private
 
 def load_svn_revision
-  puts "Loading SVN revision"
   rev_lines = `svn info -R #{Rails.root}/ | grep Revision`
   max = 0
   rev_lines.each_line { |line| 
