@@ -1,11 +1,11 @@
 <div class="patient_box">
 	<table class="layout" width=100% >
 		<tr>
-			<td class="patient_box_title" width=40% >
+			<td class="patient_box_title_left" width=60% >
 				<%= "#{patient.last_name}, #{patient.first_name}"%>
 			</td>
-			<td colspan=1 class="patient_box_title_blank">
-				&nbsp;
+			<td colspan=2 class="patient_box_title_right">
+				#<%= patient.patient_number %>
 			</td>
 		</tr>
 		<tr class="patient_box_top">

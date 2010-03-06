@@ -57,6 +57,7 @@ class PatientController < ApplicationController
     end
 
     if pat.save 
+      PatientIdentifier.give_identifier(pat)
       flash[:notice] = "#{pat.properLastName} was saved successfully"
       Transaction.log_create_patient(session[:user].id, pat.id)
       redirect_to :controller=>:home, :action => :patient_history_query, :patient_id => pat
@@ -196,7 +197,24 @@ class PatientController < ApplicationController
   end
 	
 	def live_search
-      phrases = params[:searchtext].upcase.split(' ')
+      search_text = params[:searchtext].upcase 
+      
+      if search_text =~ /^#*\d+$/
+        if search_text =~ /^#/
+          puts search_text
+          search_text = search_text[1..(search_text.length-1)]
+          puts search_text
+        end
+        res = PatientIdentifier.patient_by_number(search_text.to_i)
+        @results = []
+        unless res == nil
+          @results << res
+        end
+        render(:layout => false) and return
+      end
+      
+      phrases = search_text.split(' ')
+      
       phrases = phrases.collect { |a|
         m = a.match(/^[A-Z]+/)
         m ? m[0] : nil
@@ -204,15 +222,12 @@ class PatientController < ApplicationController
         a&&a.length>0
       }
       
-      
-#      puts phrases.join "|"
-
       patients = Patient.find(:all)
       
       res = []
     
       for p in patients do
-        matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)||p.dob_str.upcase.include?(s)}
+        matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)}
         res << {:p => p, :score => matches.length} if matches.length>0
       end
       res = res.sort{|a,b| a[:p].to_label <=> b[:p].to_label}.sort{|a,b| b[:score]<=>a[:score]}

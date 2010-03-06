@@ -17,6 +17,10 @@ class Visit < ActiveRecord::Base
 	def after_find
   end
   
+  def visit_number
+    VisitIdentifier.get_or_create_for_visit(self).identifier
+  end
+  
 	def to_label
 		"#{patient.to_label} seen #{visit_date}"
   end

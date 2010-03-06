@@ -15,22 +15,29 @@
 	padding-right: 0px;
 }
 
-td.patient_box_title {
+td.patient_box_title_left {
 	background-color: #ffc;
 	color: #000000;
 	border: #aad solid thin;
 	border-bottom: none;
+	border-right:none;
 	font-size: 15pt;
 	font-family: monospace;
 	padding-bottom: 5px;
 	padding-left: 10px;
 }
 
-td.patient_box_title_blank {
-	border-right: none;
-	border-top: none;
-	border-bottom: #aad solid thin;
-	background-color: transparent;
+td.patient_box_title_right {
+	background-color: #ffc;
+	color: #000000;
+	border: #aad solid thin;
+	border-bottom: none;
+	border-left:none;
+	font-size: 15pt;
+	font-family: monospace;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	text-align: right;
 }
 
 tr.patient_box_top {

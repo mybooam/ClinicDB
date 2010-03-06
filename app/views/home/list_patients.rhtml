@@ -9,6 +9,10 @@ end
 case sort_by
 when "name_back" then
 	patients.sort!{|b,a| "#{a.last_name}#{a.first_name}" <=> "#{b.last_name}#{b.first_name}"}
+when "num_fwd" then
+	patients.sort!{|a,b| a.patient_number <=> b.patient_number}
+when "num_back" then
+	patients.sort!{|b,a| a.patient_number <=> b.patient_number}
 when "dob_fwd" then
 	patients.sort!{|a,b| a.dob <=> b.dob}
 when "dob_back" then
@@ -36,6 +40,7 @@ end
 <center>
 <table class="list">
 	<tr>
+		<th><%= link_to 'Num', :action => :list_patients, :sort_by => (sort_by=="num_fwd" ? "num_back" : "num_fwd") %></th>
 		<th><%= link_to 'Name', :action => :list_patients, :sort_by => (sort_by=="name_fwd" ? "name_back" : "name_fwd") %></th>
 		<th><%= link_to 'Birthdate', :action => :list_patients, :sort_by => (sort_by=="dob_fwd" ? "dob_back" : "dob_fwd") %></th>
 		<th><%= link_to 'Ethnicity', :action => :list_patients, :sort_by => (sort_by=="ethnicity_fwd" ? "ethnicity_back" : "ethnicity_fwd") %></th>
@@ -46,13 +51,16 @@ end
 		<% end %>
 	</tr>
 	<tr class="odd_row">
-		<td colspan=<%= adminMode? ? "6" : "4" %> align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
+		<td colspan=<%= adminMode? ? "7" : "5" %> align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
 	</tr>
 <% counter=1 %>
 <% for patient in patients %>
 	<% counter = counter + 1 %>
 	<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
 	<tr class="<%= style %>">
+		<td>
+			<%= link_to "#{patient.patient_number}", :controller => "patient", :action => "set_patient", :patient_id => "#{patient.id}" %>
+		</td>
 		<td>
 			<%= link_to "#{patient.last_name}, #{patient.first_name}", :controller => "patient", :action => "set_patient", :patient_id => "#{patient.id}" %>
 		</td>
@@ -76,7 +84,7 @@ end
 	</tr>
 <% end %>
 	<tr class="<%= (counter+1).modulo(2).nonzero? ? 'odd_row' : 'even_row' %>">
-		<td colspan=4 align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
+		<td colspan=<%= adminMode? ? "7" : "5" %> align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
 	</tr>
 </table>
 </center>

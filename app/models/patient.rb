@@ -24,6 +24,10 @@ class Patient < ActiveRecord::Base
   def after_find
   end
 	
+  def patient_number
+    PatientIdentifier.get_or_create_for_patient(self).identifier
+  end
+  
 	def to_label
 	  "#{last_name}, #{first_name} (#{dob_str})"
 	end
@@ -46,5 +50,13 @@ class Patient < ActiveRecord::Base
   
   def isMale?
     sex=='Male'
+  end
+  
+  def visit_for_date(date)
+    on = visits.select {|a| a.visit_date == date}
+    if on.length > 0
+      return on[0]
+    end
+    nil
   end
 end

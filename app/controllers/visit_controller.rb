@@ -76,4 +76,11 @@ class VisitController < ApplicationController
       format.pdf { render :layout => false }
     end
   end
+  
+  def print_attending_form
+    respond_to do |format|
+      format.html { redirect_to :back }
+      format.pdf { render :layout => false }
+    end
+  end
 end

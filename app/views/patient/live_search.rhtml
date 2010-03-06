@@ -2,8 +2,8 @@
 	<% if @results.empty? %>
 		<center><div class="big">- No Matching Patients -</div></center>
 	<% else %>
-		<% if(@results.length>7)	
-			@results_trimmed = @results[0..6]
+		<% if(@results.length>Setting.get_i("patient_search_result_size",7))	
+			@results_trimmed = @results[0..(Setting.get_i("patient_search_result_size",7)-1)]
 		else
 			@results_trimmed = @results
 		end
@@ -16,7 +16,7 @@
 			<tr style="border: <%= first ? '#5555FF solid 4px' : '#AAAAFF solid thin'%>">
 				<td align=left bgcolor="#AAFFAA">
 					<%= link_to "#{result.last_name}, #{result.first_name}", :action => "set_patient", :patient_id => "#{result.id}" %> <br\>
-					<div class=small><%= result.dob_str %> - <%= result.ethnicity.name %> <%= result.sex %></div>
+					<div class=small>#<%= result.patient_number %> - <%= result.dob_str %> - <%= result.age %> y/o <%= result.sex %></div>
 				</td>
 				<td align=right bgcolor="#AAFFAA"><%= link_to "[ #{first ? 'Enter to ' : ''}Select]", :action => "set_patient", :patient_id => "#{result.id}" %></td>
 			</tr>	

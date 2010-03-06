@@ -1,4 +1,6 @@
 require "prawn"
-require "app/helpers/print/print_#{@visit.version}"
 
-print(pdf, @visit)
+case @visit.version
+when "hpi_auto"
+  print_hpi_auto(pdf, @visit)
+end
