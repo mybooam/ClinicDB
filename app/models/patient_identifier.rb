@@ -33,7 +33,7 @@ class PatientIdentifier < ActiveRecord::Base
       new(:identifier => pat.id*100, :patient => pat)
     end
     
-    puts "Given patient identifier #{find_by_patient_id(pat.id).to_label}"
+    #puts "Given patient identifier #{find_by_patient_id(pat.id).to_label}"
   end
   
   def self.get_next_identifier_value

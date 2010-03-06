@@ -33,7 +33,7 @@ class VisitIdentifier < ActiveRecord::Base
       new(:identifier => v.id*100, :visit => v)
     end
     
-    puts "Given visit identifier #{find_by_visit_id(v.id).to_label}"
+    #puts "Given visit identifier #{find_by_visit_id(v.id).to_label}"
   end
   
   def self.get_next_identifier_value
