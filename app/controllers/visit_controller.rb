@@ -2,7 +2,7 @@ class VisitController < ApplicationController
 	def new_for_patient
     @visit = Visit.new
     @patient = Patient.find(params[:patient_id])
-    render "/visit/#{Visit.current_version}/new_for_patient", :layout => 'application'
+    @version = params[:version] || Visit.current_version
   end
 	
 	def add_for_patient
@@ -33,7 +33,6 @@ class VisitController < ApplicationController
   def edit_visit
     @visit = Visit.find(params[:visit_id])
     @patient = Patient.find(@visit.patient_id)
-    render "/visit/#{@visit.version}/edit_visit", :layout => 'application'
   end
   
   def update_visit
