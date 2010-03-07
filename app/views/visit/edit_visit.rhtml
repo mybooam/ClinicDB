@@ -3,6 +3,6 @@
 <% form_tag "update_visit" do %>
 
 <%= hidden_field :visit_id, :visit_id, :value => "#{@visit.id}" %>
-<%= render :partial => '/visit/hpi_auto/form' %>
+<%= render :partial => "/visit/#{@visit.version}/form" %>
 
 <% end %>
