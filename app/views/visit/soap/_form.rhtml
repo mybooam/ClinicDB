@@ -48,7 +48,7 @@
 		<td><%= user_field :users_id1, {}, !visit.users[0].nil? ? visit.users[0] : nil %><br/><%= user_field :users_id2, {},  !visit.users[1].nil? ? visit.users[1] : nil %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
-		<td colspan=2 align=right><%= submit_tag 'Save' %></td>
+		<td colspan=2 align=right><%= submit_tag 'Save', :id => "commit" %></td>
 	</tr>
 </table>
 </center>

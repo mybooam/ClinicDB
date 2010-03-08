@@ -95,7 +95,7 @@
 		<td><%= user_field :users_id1, {}, users[0] %><br/><%= user_field :users_id2, {}, users[1]  %></td>
 	</tr>
 	<tr style="border-top: #aaa solid thin">
-		<td colspan=2 align=right><%= submit_tag 'Save' %></td>
+		<td colspan=2 align=right><%= submit_tag 'Save', :id => "commit" %></td>
 	</tr>
 	<%= hidden_field :visit, :patient_id, :value => "#{@patient.id}" %>
 </table>
