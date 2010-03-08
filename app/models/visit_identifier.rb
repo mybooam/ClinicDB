@@ -54,6 +54,11 @@ class VisitIdentifier < ActiveRecord::Base
     end
   end
   
+  def self.delete_for_visit(v)
+    ident = find_by_visit_id(v.id)
+    VisitIdentifier.destroy(ident.id)
+  end
+  
   def to_label
     "#{identifier} - #{visit_id ? visit.to_label : '<NULL>'}"  
   end
