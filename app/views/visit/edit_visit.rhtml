@@ -19,7 +19,6 @@
 	
 	setInterval('save_if_inactive()', 3000);
 	
-	
 	document.getElementById("commit").setAttribute('onclick', 'submit_actions()'); 
 	
 	function save_if_inactive() {
@@ -39,7 +38,11 @@
 	
 	function submit_actions() {
 		visit_form = document.getElementById("visit_form");
-		grayOut(true, null);
+		box_text = 'Saving Visit...';
+		if(document.getElementById("auto_save").value=='true') {
+			box_text = 'Auto-Saving...';
+		}
+		grayOut(true, {'box':'true', 'box_text':box_text});
 	}
 </script>
 

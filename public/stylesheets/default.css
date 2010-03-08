@@ -244,3 +244,12 @@ p.footer_text {
 	color: #AAAAAA;
 	text-align: right;
 }
+
+#darkenScreenBox {
+	padding-top: 15px;
+	font-size: 18pt;
+	text-align: center;
+	background-color: black;
+	color: #999999;
+	border: solid 2px white;
+}
