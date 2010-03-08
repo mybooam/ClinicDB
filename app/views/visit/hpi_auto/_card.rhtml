@@ -26,7 +26,11 @@
 				<%= "#{visit.visit_date.strftime("%A, %B %e, %Y")} - Visit ##{visit.visit_number}"%>
 			</td>
 			<td class="visit_box_editlink">
-				<%= link_to "[edit]", :controller=>'visit', :action=>'edit_visit', :visit_id => visit.id %>|<%= link_to "[print]", "/visit/print_visit/#{visit.id}.pdf" %>
+				<%= link_to "[edit]", :controller=>'visit', :action=>'edit_visit', :visit_id => visit.id %> |
+				<% if adminMode? %>
+					<%= link_to "[delete]", :controller=>'visit', :action=>'delete_visit', :visit_id => visit.id %> |
+				<% end %>
+				<%= link_to "[print]", "/visit/print_visit/#{visit.id}.pdf" %>
 			</td>
 		</tr>
 		<% if !hide_telem %>

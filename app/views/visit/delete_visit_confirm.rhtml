@@ -1,0 +1,16 @@
+<h3>Are you sure you want to delete the visit for <%= @visit.patient.to_label %> from <%= @visit.to_label %>?</h3>
+
+<center>
+<table width=300pt>
+	<tr>
+		<td width=50% align=center style="background: #ada">
+			<%= link_to "<div>Yes</div>", {:controller => 'visit', :action => 'delete_visit', :visit_id => @visit.id, :confirm => "yes"}, :class => 'big' %>
+		</td>
+		<td width=50pt> </td>
+		<td width=50% align=center style="background: #daa">
+			<%= link_to "<div>No</div>", {:controller => 'home', :action => 'patient_home', :patient_id => @visit.patient.id}, :class => 'big' %>
+		</td>
+	</tr>
+</table>
+<br/>
+</center>
