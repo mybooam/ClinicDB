@@ -127,4 +127,17 @@ class SetupController < ApplicationController
     reset_session
     render :layout => "security_error"
   end
+  
+  def incompatible_browser
+    @browser_name = params[:browser_name] || 'unknown'
+    render :layout => 'security_error'
+  end
+  
+  def ignore_incompatible_browser
+    session[:ignore_incompatible_browser] = true;
+    
+    flash[:warning] = "Be aware that the browser you are using is incomplatible with ClinicDB."
+    
+    redirect_to :controller => :home, :action => :index
+  end
 end

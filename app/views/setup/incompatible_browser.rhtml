@@ -1,0 +1,19 @@
+<div class="security_box">
+	<h1 class="security_error">ERROR - Incompatible Browser</h1>
+	<p class="security_error">Your browser (<%= @browser_name %>) is not compatible with ClinicDB.  Please download one of the compatible browsers below:</p>
+	<center>
+	<table class='layout'>
+		<tr>
+			<td width='150px' align=center style='border: #777777 dotted 0px; padding-left: 25px; padding-right: 25px;'>
+				<a href='http://www.mozilla.com/firefox/' class="big"><div><img src='/images/firefox_logo_256.png' width=150 border=0 /><br/>Firefox</div></a>
+			</td>
+			<td width='150px' align=center style='border: #777777 dotted 0px; padding-left: 25px; padding-right: 25px;'>
+				<a href='http://www.google.com/chrome' class="big"><div><img src='/images/chrome_logo_256.png' width=150 border=0 /><br/>Google Chrome</div></a>
+			</td>
+		</tr>
+	</table>
+	</center>
+	<div class="security_box_button">
+		<%= link_to "<div>Ignore and use this browser anyway...</div>", {:controller => 'setup', :action => 'ignore_incompatible_browser'}, :class => 'big' %>
+	</div>
+</div>

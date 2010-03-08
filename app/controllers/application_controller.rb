@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   before_filter :check_admin_password_setup, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test' }
   before_filter :check_first_user_setup, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test' }
   before_filter :check_security, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test'}
+  before_filter :check_browser, :unless => proc { |c| c.params[:controller]=="setup"||(%w(user:login user:do_login user:logout).include? "#{c.params[:controller]}:#{c.params[:action]}")||RAILS_ENV == 'test'}
   before_filter :check_login, :unless => proc { |c| (%w(user:login user:do_login user:logout).include? "#{c.params[:controller]}:#{c.params[:action]}") || c.params[:controller]=="setup"||RAILS_ENV == 'test'}
   
   $render_start_time = Time.new
@@ -48,6 +49,35 @@ class ApplicationController < ActionController::Base
       session[:last_action] = Time.now
     end
   end
+  
+  def check_browser
+    unless %w(gecko safari).include? browser_name
+      redirect_to :controller => 'setup', :action => 'incompatible_browser', :browser_name => browser_name and return unless session[:ignore_incompatible_browser]
+    end
+  end
+  
+  def browser_name
+    @browser_name ||= begin
+
+      ua = request.env['HTTP_USER_AGENT'].downcase
+
+      if ua.index('msie') && !ua.index('opera') && !ua.index('webtv')
+        'ie'+ua[ua.index('msie')+5].chr
+      elsif ua.index('gecko/')
+        'gecko'
+      elsif ua.index('opera')
+        'opera'
+      elsif ua.index('konqueror')
+        'konqueror'
+      elsif ua.index('applewebkit/')
+        'safari'
+      elsif ua.index('mozilla/')
+        'gecko'
+      end
+
+    end
+  end
+
   
   def adminMode?
     session[:admin_mode]
