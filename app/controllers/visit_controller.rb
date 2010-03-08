@@ -1,65 +1,35 @@
 class VisitController < ApplicationController
 	def new_for_patient
     @visit = Visit.new
+    
     @patient = Patient.find(params[:patient_id])
-    @version = params[:version] || Visit.current_version
-  end
-	
-	def add_for_patient
-    visit = Visit.new(params[:visit])
-    visit.visit_date = Date.today()
-    if(visit.temperature)
-      if(visit.temperature < 50)
-        visit.temperature = visit.temperature * 1.8 + 32
-      end
-    end
-    visit.users = []
+    @visit.version = params[:version] || Visit.current_version
     
-    if params[:users_id1] && params[:users_id1] != ""
-      visit.users << User.find(params[:users_id1])
-    end
-    if params[:users_id2] && params[:users_id2] != ""
-      visit.users << User.find(params[:users_id2])
-    end
-    
-    if visit.save
-      Transaction.log_edit_patient(session[:user].id, params[:visit][:patient_id])
-      redirect_to :controller => 'home', :action => 'patient_home', :patient_id => params[:visit][:patient_id]
-    else
-      redirect_to :back
-    end
+    render :edit_visit
   end
   
   def edit_visit
     @visit = Visit.find(params[:visit_id])
     @patient = Patient.find(@visit.patient_id)
+    @version = @visit.version
   end
   
-  def update_visit
-    Visit.update(params[:visit_id][:visit_id], params[:visit])
+  def add_or_update
+    puts "add or update"
+    puts params.collect{|a,b| "#{a} -> #{b}"}.join(" | ")
     
-    visit = Visit.find(params[:visit_id][:visit_id], :include => [:patient])
-    if(visit.temperature)
-      if(visit.temperature < 50)
-        visit.temperature = visit.temperature * 1.8 + 32
+    visit = Visit.new_or_update_from_params(params)
+    if visit
+      if params[:auto_save] == 'true'
+        flash[:notice] = "Visit auto-saved."
+        redirect_to :action => :edit_visit, :visit_id => visit.id and return
+      else
+        flash[:notice] = "Visit saved."
+        redirect_to :controller => :home, :action => :patient_home, :patient_id => visit.patient.id and return
       end
-    end
-    visit.users = []
-    
-    if params[:users_id1] && params[:users_id1]!=""
-      visit.users << User.find(params[:users_id1])
-    end
-    if params[:users_id2] && params[:users_id2]!=""
-      visit.users << User.find(params[:users_id2])
-    end
-    
-    if visit.save
-      flash[:notice] = "#{visit.patient.properLastName}'s visit on #{visit.visit_date} was successfully updated."
-      Transaction.log_edit_patient(session[:user].id, visit.patient.id)
-      redirect_to :controller => 'home', :action => 'patient_home', :patient_id => visit.patient.id
     else
-      flash[:notice] = "Visit update failed."
-      redirect_to :back
+      flash[:error] = "Visit could not be #{params[:auto_save] ? 'auto-saved' : 'saved'}"
+      redirect_to :back and return
     end
   end
   
@@ -74,6 +44,30 @@ class VisitController < ApplicationController
       format.html { redirect_to :action => :show_visit, :visit_id => @visit.id }
       format.pdf { render :layout => false }
     end
+  end
+  
+  def delete_visit
+    unless adminMode?
+      flash[:error] = "Cannot delete a visit unless you are in admin mode."
+      redirect_to :back and return
+    end
+    
+    @visit = Visit.find(params[:visit_id])
+    
+    unless @visit
+      flash[:error] = "Invalid visit."
+      redirect_to :back and return
+    end
+    
+    unless params[:confirm]=='yes'
+      render :action => "delete_visit_confirm" and return
+    end
+    
+    patient = @visit.patient
+    
+    Visit.destroy(params[:visit_id])
+    
+    redirect_to :controller => 'home', :action => 'patient_home', :patient_id => patient.id and return
   end
   
   def print_attending_form

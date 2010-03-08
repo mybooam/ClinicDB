@@ -1,8 +1,48 @@
 <h2> <%= "#{@patient.first_name} #{@patient.last_name}" %>: Visit</h2>
 
-<% form_tag "update_visit" do %>
+<% form_tag "add_or_update", :id => 'visit_form' do %>
 
-<%= hidden_field :visit_id, :visit_id, :value => "#{@visit.id}" %>
+<%= hidden_field :visit_id, :visit_id, :value => "#{@visit.id}" if @visit.id %>
+
+<%= hidden_field_tag :auto_save, false %>
+
 <%= render :partial => "/visit/#{@visit.version}/form" %>
 
 <% end %>
+
+<%= javascript_include_tag 'dark' %>
+<script language="JAVASCRIPT">
+	has_had_activity = false;
+	visit_form_auto_save_delay = <%= Setting.get_i(:visit_form_auto_save_delay, 15000) %>;
+
+	last_activity = (new Date).getTime();
+	
+	setInterval('save_if_inactive()', 3000);
+	
+	
+	document.getElementById("commit").setAttribute('onclick', 'submit_actions()'); 
+	
+	function save_if_inactive() {
+		if(has_had_activity && (new Date).getTime()-last_activity > visit_form_auto_save_delay) {
+			//set hidden field
+			document.getElementById("auto_save").value = true;
+			
+			//submit the form
+			document.getElementById("commit").click();
+		}
+	}
+	
+	function update_activity() {
+		has_had_activity = true;
+		last_activity = (new Date).getTime();
+	}
+	
+	function submit_actions() {
+		visit_form = document.getElementById("visit_form");
+		grayOut(true, null);
+	}
+</script>
+
+<%= observe_form(:visit_form,
+                 :frequency => 1,
+				 :function => "update_activity()") %>
