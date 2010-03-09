@@ -201,9 +201,7 @@ class PatientController < ApplicationController
       
       if search_text =~ /^#*\d+$/
         if search_text =~ /^#/
-          puts search_text
           search_text = search_text[1..(search_text.length-1)]
-          puts search_text
         end
         res = PatientIdentifier.patient_by_number(search_text.to_i)
         @results = []
@@ -232,7 +230,7 @@ class PatientController < ApplicationController
       end
       res = res.sort{|a,b| a[:p].to_label <=> b[:p].to_label}.sort{|a,b| b[:score]<=>a[:score]}
       @results = res.collect{|a| a[:p]}
-      render(:layout => false)
+      render :layout => false 
   end
   
   def set_patient
