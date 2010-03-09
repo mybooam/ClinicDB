@@ -5,6 +5,7 @@
 <%= hidden_field :visit_id, :visit_id, :value => "#{@visit.id}" if @visit.id %>
 
 <%= hidden_field_tag :auto_save, false %>
+<%= hidden_field_tag :focus_id, "" %>
 
 <%= render :partial => "/visit/#{@visit.version}/form" %>
 
@@ -13,18 +14,33 @@
 <%= javascript_include_tag 'dark' %>
 <script language="JAVASCRIPT">
 	has_had_activity = false;
-	visit_form_auto_save_delay = <%= Setting.get_i(:visit_form_auto_save_delay, 15000) %>;
+	visit_form_auto_save_delay = (<%= Setting.get_i(:visit_form_auto_save_delay, 15000) %>);
+	<% if @focus_id!="" %>
+		document.getElementById("<%= @focus_id %>").focus();
+	<% end %>
 
 	last_activity = (new Date).getTime();
 	
-	setInterval('save_if_inactive()', 3000);
+	setInterval('save_if_inactive()', 1000);
 	
 	document.getElementById("commit").setAttribute('onclick', 'submit_actions()'); 
+	
+	current_focus_id = "";
+	
+	elems = document.getElementById("visit_form").elements;
+	for(i=0; i<elems.length; i++) {
+		elems[i].onfocus = function() {
+			current_focus_id = this.id;
+		};
+	}
 	
 	function save_if_inactive() {
 		if(has_had_activity && (new Date).getTime()-last_activity > visit_form_auto_save_delay) {
 			//set hidden field
 			document.getElementById("auto_save").value = true;
+			
+			//set focus_id field
+			document.getElementById("focus_id").value = current_focus_id;
 			
 			//submit the form
 			document.getElementById("commit").click();
@@ -36,13 +52,17 @@
 		last_activity = (new Date).getTime();
 	}
 	
-	function submit_actions() {
+	function showSavingScreen() {
 		visit_form = document.getElementById("visit_form");
 		box_text = 'Saving Visit...';
 		if(document.getElementById("auto_save").value=='true') {
 			box_text = 'Auto-Saving...';
 		}
 		grayOut(true, {'box':'true', 'box_text':box_text});
+	}
+	
+	function submit_actions() {
+		showSavingScreen();
 	}
 </script>
 
