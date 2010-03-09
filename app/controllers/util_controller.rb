@@ -54,6 +54,6 @@ class UtilController < ApplicationController
   end
   
   def note_user_activity
-    
+    render :nothing => true
   end
 end
