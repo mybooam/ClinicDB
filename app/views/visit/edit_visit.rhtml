@@ -49,3 +49,6 @@
 <%= observe_form(:visit_form,
                  :frequency => 1,
 				 :function => "update_activity()") %>
+				 
+<%= periodically_call_remote(:url => {:controller => :util, :action => :note_user_activity},
+				 :frequency => 10) %>
