@@ -1,0 +1,26 @@
+<% form_tag :controller => 'visit', :action => 'show_visit' do -%>
+<table class="layout">
+	<tr>
+		<td>
+			<h2>Enter Visit Number:</h2>
+		</td>
+		<td align="right">
+			<%= text_field_tag :visit_number %> <img align="top" alt="spinner" id="spinner" src="/images/spinner.gif" style="display:none;" />
+		</td>
+	</tr>
+</table>
+
+<script language="JAVASCRIPT">
+	document.getElementById("visit_number").focus();
+</script>
+
+<%= observe_field(:visit_number,
+                 :frequency => 0.1,
+                 :update => :search_hit,
+				 :with => 'visit_number',
+                 :loading => "Element.show('spinner')",
+                 :complete => "Element.hide('spinner')",
+                 :url => { :controller => :visit, :action => :live_search_by_number }) %>
+
+<div id="search_hit"></div>
+<% end %>

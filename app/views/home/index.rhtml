@@ -9,6 +9,14 @@
 					<%= link_to "<div>#{image_tag '/images/existing_patient.png', :width=>150, :border=>0 }Existing Patient</div>", {:action => 'existing_patient'}, :class=>'big'  %>
 				</td>
 			</tr>
+			<tr>
+				<td colspan=2 height=10px> </td>
+			</tr>	
+			<tr>
+				<td colspan=2 align=center style='border: none; padding-left: 10px; padding-right: 10px;'>
+					<%= link_to "<div id='search_by_number_link'>Find Visit by Number</div>", {:controller => 'visit', :action => 'search_by_number'}, :class => 'big' %>
+				</td>
+			</tr>
 		</table>
 		<hr />
 		<h2>TB Testing</h2>
@@ -38,7 +46,7 @@
 					<% end %>
 					<td width="250px"><%= link_to "#{item.patient.last_name}, #{item.patient.first_name}", {:action => 'patient_home', :patient_id => item.patient } %></td>
 					<% if overdue %>
-						<td colspan=2><%= link_to 'Clear', {:controller => 'tb_test', :action => 'no_show', :id => item}, :class => 'list' %></td>
+						<td colspan=2><%= link_to 'Clear', {:controller => 'tb_test', :action => 'no_show', :id => item}, :confirm => "Are you sure you want to mark #{item.patient.first_name} #{item.patient.last_name} as a No-Show?", :class => 'list' %></td>
 					<% elsif item.coming_due? %>
 						<td colspan=2>Due: <%= "#{item.due_date_min.strftime('%a')} - #{item.due_date_max.strftime('%a')}" %></td>
 					<% else %>

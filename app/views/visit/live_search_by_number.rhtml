@@ -1,0 +1,16 @@
+<% if @visit %>
+	<center>
+		<table width="500px" class="visit_live_search">
+			<tr style="border: #5555FF solid 2px;">
+				<td align=left bgcolor="#AAFFAA">
+					<a href='/visit/show_visit?visit_id=<%= @visit.id %>'>
+						<div>
+							<%=  "##{@visit.visit_number} - #{@visit.patient.last_name}, #{@visit.patient.first_name}"%> <br\>
+							<div class=small><%= @visit.visit_date.strftime('%b %e, %G') %> - Patient #<%= @visit.patient.patient_number %></div>
+						</div>
+					</a>
+				</td>
+			</tr>	
+		</table>
+	</center>
+<% end %>	
