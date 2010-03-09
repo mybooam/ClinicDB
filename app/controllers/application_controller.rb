@@ -43,8 +43,7 @@ class ApplicationController < ActionController::Base
   
   def check_login
     if session[:user] == nil || session[:last_action] == nil || session[:last_action] < Setting.get_i("user_timeout_sec", 300).seconds.ago
-      redirect_to :controller => 'user', :action => 'logout'
-      return
+      redirect_to :controller => 'user', :action => 'logout' and return
     else
       session[:last_action] = Time.now
     end
