@@ -16,38 +16,30 @@ class HomeController < ApplicationController
     @dates = []
     
     for visit in @patient.visits
-      if @cards[visit.visit_date.to_s] == nil
-        @cards[visit.visit_date.to_s] = []
-        @dates << visit.visit_date
-      end
+      @dates << visit.visit_date
+      @cards[visit.visit_date.to_s] = @cards[visit.visit_date.to_s] || []
       @cards[visit.visit_date.to_s] << {:type => 'visit', :partial_name => 'visit/card', :locals => {:visit => visit}}
     end
     
     for scrip in @patient.prescriptions
-      if @cards[scrip.given_date.to_s] == nil
-        @cards[scrip.given_date.to_s] = []
-        @dates << scrip.given_date
-      end
+      @dates << scrip.given_date
+      @cards[scrip.given_date.to_s] = @cards[scrip.given_date.to_s] || []
       @cards[scrip.given_date.to_s] << {:type => 'prescription', :partial_name => 'prescription/card', :locals => {:scrip => scrip}}
     end
     
     for tb_test in @patient.tb_tests
-      if @cards[tb_test.given_date.to_s] == nil
-        @cards[tb_test.given_date.to_s] = []
-        @dates << tb_test.given_date
-      end
+      @dates << tb_test.given_date
+      @cards[tb_test.given_date.to_s] = @cards[tb_test.given_date.to_s] || []
       @cards[tb_test.given_date.to_s] << {:type => 'tb_test', :partial_name => 'tb_test/card', :locals => {:tb_test => tb_test}}
     end
     
     for immunization in @patient.immunizations
-      if @cards[immunization.given_date.to_s] == nil
-        @cards[immunization.given_date.to_s] = []
-        @dates << immunization.given_date
-      end
+      @dates << immunization.given_date
+      @cards[immunization.given_date.to_s] = @cards[immunization.given_date.to_s] || []
       @cards[immunization.given_date.to_s] << {:type => 'immunization', :partial_name => 'immunization/card', :locals => {:immu => immunization}}
     end
     
-    @dates = @dates.uniq.sort{|a, b| b <=> a}
+    @dates = @dates.uniq.sort.reverse
   end
   
   def list_patients
