@@ -15,9 +15,6 @@ class VisitController < ApplicationController
   end
   
   def add_or_update
-    puts "add or update"
-    puts params.collect{|a,b| "#{a} -> #{b}"}.join(" | ")
-    
     visit = Visit.new_or_update_from_params(params)
     if visit
       if params[:auto_save] == 'true'
@@ -28,13 +25,28 @@ class VisitController < ApplicationController
         redirect_to :controller => :home, :action => :patient_home, :patient_id => visit.patient.id and return
       end
     else
-      flash[:error] = "Visit could not be #{params[:auto_save] ? 'auto-saved' : 'saved'}"
+      flash[:error] = "Visit could not be #{params[:auto_save] ? 'auto-saved' : 'saved'}."
       redirect_to :back and return
     end
   end
   
   def show_visit
-    @visit = Visit.find(params[:visit_id])
+    if params[:visit_id]
+      @visit = Visit.find(params[:visit_id])
+    elsif params[:visit_number]
+      number = params[:visit_number]
+      if number =~ /^#*\d+$/
+        if number =~ /^#/
+          number = number[1..(number.length-1)]
+        end
+        @visit = VisitIdentifier.visit_by_number(number.to_i)
+      end
+      
+      unless @visit
+        flash[:error] = "Invalid visit number"
+        redirect_to :back and return
+      end
+    end
   end
   
   def print_visit
@@ -75,5 +87,19 @@ class VisitController < ApplicationController
       format.html { redirect_to :back }
       format.pdf { render :layout => false }
     end
+  end
+  
+  def live_search_by_number
+    search_text = params[:visit_number] 
+    
+    if search_text =~ /^#*\d+$/
+      if search_text =~ /^#/
+        search_text = search_text[1..(search_text.length-1)]
+      end
+      @visit = VisitIdentifier.visit_by_number(search_text.to_i)
+      render :layout => false and return if @visit
+    end
+    
+    render :text => "<center><div style='font-size:24px;'>- Invalid or Unknown Visit Number -</div></center>"
   end
 end
