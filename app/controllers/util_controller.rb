@@ -52,4 +52,8 @@ class UtilController < ApplicationController
     
     redirect_to :controller =>'home', :action => 'list_patients'
   end
+  
+  def note_user_activity
+    
+  end
 end
