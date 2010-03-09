@@ -94,6 +94,16 @@ table.live_search
 	color: #2222AA;
 }
 
+table.visit_live_search
+{
+	margin-left:25px;
+	margin-top:15px;
+	width: 350px;
+	border-collapse: collapse;
+	font-size: 16pt;
+	color: #2222AA;
+}
+
 table.live_search>tr.patient {
 	background-color: #AAFFAA;
 }
@@ -252,4 +262,14 @@ p.footer_text {
 	background-color: black;
 	color: #999999;
 	border: solid 2px white;
+}
+
+#search_by_number_link {
+	width: 100%;
+	background-color: #AADDAA;
+	border: solid 1px black;
+	vertical-align: middle;
+}
+
+#search_by_number_link_inner {
 }
