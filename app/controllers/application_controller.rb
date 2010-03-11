@@ -50,33 +50,10 @@ class ApplicationController < ActionController::Base
   end
   
   def check_browser
-    unless %w(gecko safari).include? browser_name
-      redirect_to :controller => 'setup', :action => 'incompatible_browser', :browser_name => browser_name and return unless session[:ignore_incompatible_browser]
+    unless %w(gecko safari).include? browser_name(request)
+      redirect_to :controller => 'setup', :action => 'incompatible_browser', :browser_name => browser_name(request) and return unless session[:ignore_incompatible_browser]
     end
   end
-  
-  def browser_name
-    @browser_name ||= begin
-
-      ua = request.env['HTTP_USER_AGENT'].downcase
-
-      if ua.index('msie') && !ua.index('opera') && !ua.index('webtv')
-        'ie'+ua[ua.index('msie')+5].chr
-      elsif ua.index('gecko/')
-        'gecko'
-      elsif ua.index('opera')
-        'opera'
-      elsif ua.index('konqueror')
-        'konqueror'
-      elsif ua.index('applewebkit/')
-        'safari'
-      elsif ua.index('mozilla/')
-        'gecko'
-      end
-
-    end
-  end
-
   
   def adminMode?
     session[:admin_mode]

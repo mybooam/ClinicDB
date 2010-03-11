@@ -4,6 +4,28 @@ def get_svn_revision
   $current_revision = $current_revision || load_svn_revision
 end
 
+def get_db_revision
+  
+end
+
+def browser_name(request)
+    ua = request.env['HTTP_USER_AGENT'].downcase
+      
+    if ua.index('msie') && !ua.index('opera') && !ua.index('webtv')
+      'ie'+ua[ua.index('msie')+5].chr
+    elsif ua.index('gecko/')
+      'gecko'
+    elsif ua.index('opera')
+      'opera'
+    elsif ua.index('konqueror')
+      'konqueror'
+    elsif ua.index('applewebkit/')
+      'safari'
+    elsif ua.index('mozilla/')
+      'gecko'
+    end
+  end
+
 private
 
 def load_svn_revision
