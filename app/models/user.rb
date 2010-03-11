@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   end
 
   def first_initial_last_name
-    "#{first_name[0..0].upcase} #{last_name}"
+    "#{first_name[0..0].upcase}. #{last_name}"
   end
 	
 	def isLinked?
