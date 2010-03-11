@@ -52,11 +52,31 @@ class Patient < ActiveRecord::Base
     sex=='Male'
   end
   
+  def dates
+    (visits.collect{|a| a.visit_date} + 
+      prescriptions.collect{|a| a.given_date} +
+      tb_tests.collect{|a| a.given_date} +
+      immunizations.collect{|a| a.given_date}).uniq
+  end
+  
   def visit_for_date(date)
-    on = visits.select {|a| a.visit_date == date}
-    if on.length > 0
-      return on[0]
-    end
-    nil
+    on = visits_for_date date
+    on.length > 0 ? on[0] : nil
+  end
+  
+  def visits_for_date(date)
+    visits.select {|a| a.visit_date == date}
+  end
+  
+  def prescriptions_for_date(date)
+    prescriptions.select {|a| a.given_date == date}
+  end
+  
+  def tb_tests_for_date(date)
+    tb_tests.select {|a| a.given_date == date}
+  end
+  
+  def immunizations_for_date(date)
+    immunizations.select {|a| a.given_date == date}
   end
 end

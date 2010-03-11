@@ -26,4 +26,14 @@ class PrescriptionController < ApplicationController
       redirect_to :controller => 'drug', :action => 'new_drug', :drug_name => params[:drug_name], :patient_id => params[:patient_id]
     end
   end
+  
+  def for_patient
+    @patient = Patient.find(params[:patient_id])
+    @dates = @patient.dates.sort.reverse.select{|a| @patient.prescriptions_for_date(a).length > 0}
+    
+    @scrips = {}
+    for date in @dates
+      @scrips[date.to_s] = @patient.prescriptions_for_date(date)
+    end
+  end
 end

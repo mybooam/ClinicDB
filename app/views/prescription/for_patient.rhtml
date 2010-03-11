@@ -1,0 +1,36 @@
+<h2>Rx History for <%= link_to @patient.name, :controller => :home, :action => :patient_home, :patient_id => @patient.id %></h2>
+
+<% for date in @dates%>
+	<hr />
+	<% if date==Date.today() %>
+		<h2>Today</h2>
+	<% elsif date > Date.today()-8%>
+		<h2>Last <%= date.strftime("%A") %></h2>
+	<% else %>
+		<h2><%= "#{date.strftime("%A, %B %e, %Y")}" %></h2>
+	<% end %>
+	<table class="layout">
+		<tr>
+			<td>
+				<table class="layout">
+					<% count = 0 %>
+					<% for scrip in @scrips[date.to_s]  %>
+						<% if count.modulo(3)==0%>
+							<tr>
+						<% end %>
+						<% count = count+1 %>
+						<td width=170px align=center valign=top>
+							<%= render :partial => 'prescription/card', :locals => {:scrip => scrip} %>	
+						</td>
+						<% if count.modulo(3)== 0%>
+							</tr>
+						<% end %>
+					<% end %>	
+					<% if count.modulo(3) != 0%>
+						</tr>
+					<% end %>
+				</table>
+			</td>
+		</tr>	
+	</table>
+<% end %>

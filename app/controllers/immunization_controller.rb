@@ -25,9 +25,7 @@ class ImmunizationController < ApplicationController
     
     immu.expiration_date = Date.civil(year, month, day)
      
-    if immu.expiration_date - 28 < Date.today()
-      flash[:warning] = "#{immu.name} batch expires on #{expdate}"
-    end
+    flash[:warning] = "#{immu.name} batch expires on #{expdate}" if immu.expiration_date - 28 < Date.today()
     
     if immu.save
       flash[:notice] = "Immunization saved"
@@ -36,6 +34,16 @@ class ImmunizationController < ApplicationController
     else
       flash[:error] = "Error saving immunization."
       redirect_to :back
+    end
+  end
+  
+  def for_patient
+    @patient = Patient.find(params[:patient_id])
+    @dates = @patient.dates.sort.reverse.select{|a| @patient.immunizations_for_date(a).length > 0}
+    
+    @immus = {}
+    for date in @dates
+      @immus[date.to_s] = @patient.immunizations_for_date(date)
     end
   end
 end

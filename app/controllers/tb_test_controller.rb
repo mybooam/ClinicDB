@@ -84,4 +84,14 @@ class TbTestController < ApplicationController
       redirect_to :back
     end
   end
+  
+  def for_patient
+    @patient = Patient.find(params[:patient_id])
+    @dates = @patient.dates.sort.reverse.select{|a| @patient.tb_tests_for_date(a).length > 0}
+    
+    @tb_tests = {}
+    for date in @dates
+      @tb_tests[date.to_s] = @patient.tb_tests_for_date(date)
+    end
+  end
 end
