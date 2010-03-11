@@ -1,0 +1,8 @@
+<h2>Blood Pressure</h2>
+<%= render :partial => "patient/patient_chart", :locals => {:patient_id => params[:patient_id], :data_source_action => 'bp_data_for_patient'}%>
+
+<h2>Heart Rate</h2>
+<%= render :partial => "patient/patient_chart", :locals => {:patient_id => params[:patient_id], :data_source_action => 'pulse_data_for_patient'}%>
+
+<h2>Weight</h2>
+<%= render :partial => "patient/patient_chart", :locals => {:patient_id => params[:patient_id], :data_source_action => 'weight_data_for_patient'}%>

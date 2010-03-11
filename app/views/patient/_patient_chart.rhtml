@@ -1,0 +1,29 @@
+<center>
+	<div class="chart_box" style="width: 500px; height: 250px;">
+		<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
+		    codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
+		    WIDTH="500"
+		    HEIGHT="250"
+		    id="charts"
+		    ALIGN="">
+
+		<PARAM NAME=movie
+		VALUE="/charts.swf?library_path=/charts_library&xml_source=<%=url_for :controller=>"data", :action=>data_source_action, :patient_id=>patient_id,:only_path=>true %>">
+		<PARAM NAME=quality VALUE=high>
+		<PARAM NAME=bgcolor VALUE=#666666>
+
+		<EMBED
+		src="/charts.swf?library_path=/charts_library&xml_source=<%=url_for :controller=>"data", :action=>data_source_action, :patient_id=>patient_id,:only_path=>true %>"
+		       quality=high
+		       bgcolor=#ddffdd
+		       WIDTH="500"
+		       HEIGHT="250"
+		       NAME="charts"
+		       ALIGN=""
+		       swLiveConnect="true"
+		       TYPE="application/x-shockwave-flash"
+		       PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+		</EMBED>
+		</OBJECT>
+	</div>
+</center>
