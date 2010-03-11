@@ -1,9 +1,16 @@
 <center>
-<table class="list">
-	<tr class="even_row"><td>Security Unlocked:</td><td><%= security_unlocked? %></td></tr>
-	<tr class="odd_row"><td>Security Key Present:</td><td><%= securityKeyPresent? %></td></tr>
-	<tr class="even_row"><td>Security Key Location:</td><td><%= securityVolumeDirectory %></td></tr>
-	<tr class="odd_row"><td>Current Security Key Fingerprint:</td><td><%= getKey !=nil ? getFingerprintString(getKey) : "nil" %></td></tr>
-	<tr class="even_row"><td>Stored Security Key Fingerprint:</td><td><%= Setting.get("key_fingerprint") %></td></tr>
+<table class="list" width=90%>
+	<tr class="even_row"><td>Security Unlocked:</td><td class='status_value'><%= security_unlocked? %></td></tr>
+	<tr class="odd_row"><td>Security Key Present:</td><td class='status_value'><%= securityKeyPresent? %></td></tr>
+	<tr class="even_row"><td>Security Key Location:</td><td class='status_value'><%= securityVolumeDirectory %></td></tr>
+	<tr class="odd_row"><td>Current Security Key Fingerprint:</td><td class='status_value'><%= getKey !=nil ? getFingerprintString(getKey) : "nil" %></td></tr>
+	<tr class="even_row"><td>Stored Security Key Fingerprint:</td><td class='status_value'><%= Setting.get("key_fingerprint") %></td></tr>
 </table>
+<br/>
+<table class="list" width=90%>
+	<tr class="even_row"><td>SVN Revision:</td><td class='status_value'><%= get_svn_revision %></td></tr>
+	<tr class="odd_row"><td>Database Revision:</td><td class='status_value'><%= get_db_revision %></td></tr>
+	<tr class="even_row"><td>Browser:</td><td class='status_value'><%= browser_name(request) %></td></tr>
+</table>
+
 </center>
