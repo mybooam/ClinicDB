@@ -1,8 +1,4 @@
 class DrugController < ApplicationController
-	active_scaffold :drug do |config|
-		config.columns = [:name]
-	end
-	
 	def test_new_drug
 	  s = params[:drug][:name]
     flash[:notice] = Drug.from_user_string(s)
@@ -26,8 +22,7 @@ class DrugController < ApplicationController
     
     if !Drug.find(:all).select{|a| a.to_label == d.to_label }.empty?
       flash[:error] = "Drug already exists."
-      redirect_to :back
-      return
+      redirect_to :back and return
     end
     
     if d.save
@@ -41,8 +36,7 @@ class DrugController < ApplicationController
   
   def add_drug_from_manager
     if params['commit'] == "Cancel"
-      redirect_to :action => :manage_drugs
-      return
+      redirect_to :action => :manage_drugs and return
     end
     
     drug_name = params[:drug][:name]
@@ -58,8 +52,7 @@ class DrugController < ApplicationController
     
     if !Drug.find(:all).select{|a| a.to_label == d.to_label }.empty?
       flash[:error] = "Drug already exists."
-      redirect_to :back
-      return
+      redirect_to :back and return
     end
     
     if d.save
@@ -73,8 +66,7 @@ class DrugController < ApplicationController
   
   def update_drug
     if params['commit'] == "Cancel"
-      redirect_to :action => :manage_drugs
-      return
+      redirect_to :action => :manage_drugs and return
     end
     
     d = Drug.find(params[:drug][:drug_id])
@@ -84,8 +76,7 @@ class DrugController < ApplicationController
     
     if drug_name.size == 0
       flash[:error] = "Cannot have blank name."
-      redirect_to :back
-      return
+      redirect_to :back and return
     end
     
     d.name = "#{drug_name}|#{strength}"
@@ -129,6 +120,6 @@ class DrugController < ApplicationController
       @results = (@results_start + @results_all).uniq
     end
     
-    render(:layout => false)
+    render :layout => false
   end
 end
