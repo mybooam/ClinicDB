@@ -1,55 +1,29 @@
 class PatientController < ApplicationController
-	active_scaffold :patient do |config|
-		config.columns = [:first_name, :last_name, :dob, :sex, :ethnicity, :history_taken, :curr_smoking, :prev_smoking, :smoking_py, :curr_etoh_use, :prev_etoh_use, :etoh_notes, :curr_drug_use, :prev_drug_use, :drug_notes, :adult_illness, :surgeries, :allergies, :immunization_histories, :childhood_diseases, :family_histories]
-		
-		config.list.columns = [:last_name, :first_name, :dob, :sex, :ethnicity, :history_taken]
-		
-		config.columns[:history_taken].form_ui = :checkbox
-		
-		config.columns[:dob].form_ui = :textarea
-		config.columns[:dob].options[:cols] = 10
-		config.columns[:dob].options[:rows] = 1
-		
-		config.columns[:ethnicity].form_ui = :select
-		config.columns[:curr_smoking].form_ui = :checkbox
-		config.columns[:prev_smoking].form_ui = :checkbox
-		config.columns[:curr_etoh_use].form_ui = :checkbox
-		config.columns[:prev_etoh_use].form_ui = :checkbox
-		config.columns[:curr_drug_use].form_ui = :checkbox
-		config.columns[:prev_drug_use].form_ui = :checkbox
-		
-		config.columns[:immunization_histories].form_ui = :select
-		config.columns[:childhood_diseases].form_ui = :select
-		config.columns[:family_histories].form_ui = :select
-	end
-	
 	def add_patient
     pat = Patient.new(params[:patient])
     
-    if params[:patient][:dob].match("[0-9]{1,2}[- /.][0-9]{1,2}[- /.](19|20|)[0-9]{2}").nil?
+    unless params[:patient][:dob] =~ /[0-9]{1,2}[- \/.][0-9]{1,2}[- \/.](19|20|)[0-9]{2}/
       flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
-      redirect_to :back
-      return
+      redirect_to :back and return
     end
     
     begin
       pat.dob = Date.parse(params[:patient][:dob], true)
     rescue
       flash[:error] = "Invalid date.  Please enter in the form mm/dd/yy.  For example: 7/22/68"
-      redirect_to :back
-      return
+      redirect_to :back and return
     end
     
     if pat.dob>Date.today()
       pat.dob = Date.civil(pat.dob.year-100, pat.dob.mon, pat.dob.mday)
     end
+    
     pat.ethnicity = Ethnicity.find(params[:ethnicity])
     pat.history_taken = false
 
     if !Patient.find(:all).select{|a| a.to_label.downcase == pat.to_label.downcase }.empty?
       flash[:error] = "Patient already exists."
-      redirect_to :back
-      return
+      redirect_to :back and return
     end
 
     if !Patient.find(:all).select{|a| a.name.downcase == pat.name.downcase }.empty?
@@ -63,7 +37,6 @@ class PatientController < ApplicationController
       redirect_to :controller=>:home, :action => :patient_history_query, :patient_id => pat
     else
       flash[:error] = "Saving patient failed."
-#      redirect_to :controller=>:home, :action => :new_patient
       redirect_to :back
     end
   end
@@ -236,4 +209,9 @@ class PatientController < ApplicationController
   def set_patient
     redirect_to :controller => 'home', :action => "patient_home", :patient_id => params[:patient_id]
   end
+  
+#  def bp_visits_for_patient
+#    @patient = Patient.find(params[:patient_id])
+#    @bp_visits = @patient.visits.select{|a| a.blood_press_sys && a.blood_press_dias}.sort{|a,b| b.visit_date <=> a.visit_date}
+#  end
 end
