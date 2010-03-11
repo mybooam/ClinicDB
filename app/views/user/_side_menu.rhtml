@@ -1,0 +1,10 @@
+<li class='side_menu_list_1'><%= link_to "User #{user.first_initial_last_name}", :controller => :home, :action => :user_info, :user_id => user.id %>:
+	<ul class='side_menu_list_2'>
+		<li><%= link_to "Edit User", :controller => :user, :action => :edit_user, :user_id => user.id %></li>
+		<li><%= link_to "#{user.access_hash ? 'Change' : 'Set'} Access Code", :controller => :user, :action => :change_access_code, :user_id => user.id %></li>
+		<% if adminMode? %>
+			<hr/>
+			<li><%= link_to "Audit Trail", :controller => 'transaction', :action => 'list_for_user', :user_id => user.id %></li>
+		<% end %>
+	</ul>
+</li>

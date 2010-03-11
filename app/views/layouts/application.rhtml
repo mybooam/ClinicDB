@@ -4,6 +4,7 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="/stylesheets/top_layout.css" type="text/css" />
+		<link rel="stylesheet" href="/stylesheets/side_menu.css" type="text/css" />
 		<link rel="stylesheet" href="/stylesheets/default.css" type="text/css" />
 		<link rel="stylesheet" href="/stylesheets/form.css" type="text/css" />
 		<link rel="stylesheet" href="/stylesheets/patient_box.css" type="text/css" />
@@ -53,7 +54,7 @@
 				<% unless %w(user:login).include? "#{params[:controller]}:#{params[:action]}"%>
 					<div class=user_box>
 						<% if session[:user]!=nil%>
-							<%= link_to session[:user].to_label, {:controller=> "user", :action => "user_info", :user_id => session[:user].id } %> | <%= link_to "logout", :controller => "user", :action => "logout" %>
+							<%= link_to session[:user].to_label, {:controller=> "user", :action => "user_info", :user_id => session[:user].id } %> | <%= link_to "[logout]", :controller => "user", :action => "logout" %>
 						<% else %>
 							<%= link_to 'Log in', :controller => :user, :action => :login %>
 						<% end %>
@@ -70,29 +71,54 @@
 				<%= yield %>
 			
 				<br/>
-			<% if adminMode? %>
-				<hr/>
-				<div align=center class="small">
-					Utilities: 
-					<a href="/report" class="small">Reports</a> |
-					<a href="/report/patients_by_session" class="small">Visits</a> |
-					<a href="/option" class="small">History Options</a> |
-					<a href="/user/manager" class="small">Users</a>  |
-					<a href="/drug/manage_drugs" class="small">Drugs</a> 
-					<br/>
-					<a href="/home/change_admin_password" class="small">Change Admin Password</a> |
-					<a href="/setting" class="small">Settings</a>
-					
-				</div>
-			<% end %>
 			</div>
 			<div id="footer">
-				Created for the <a href='http://www.lsuhsc.edu/'>New Orleans LSUHSC</a> Homeless Clinic System <br/>
-				<% if session[:user] && session[:user].can_be_admin %>
-					Admin mode: <%= adminMode? ? "on|" + (link_to "off", {:controller => "home", :action => "turn_off_admin"}) : (link_to "on", {:controller => "home", :action => "request_on_admin"} )+"|off" %>|[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]<br/>
-				<% end %>
-				Revision #<%= get_svn_revision %>
+				Created for the <a href='http://www.lsuhsc.edu/'>New Orleans LSUHSC</a> Homeless Clinic System |[<%= ((Time.now-$render_start_time)*1000).to_i %>ms]
 			</div>
+		</div>
+		
+		<div id="side_menu_wrap">
+			<div id="side_menu_content">
+				<ul class='side_menu_list_1'>
+					<li class='side_menu_list_1'><%= link_to 'ClinicDB Home', '/' %></li>
+					<li class='side_menu_list_1'>Patients
+						<ul class='side_menu_list_2'>
+							<li><%= link_to "New Patient", :controller => 'home', :action => 'new_patient' %></li>
+							<li><%= link_to "Existing Patient", :controller => 'home', :action => 'existing_patient' %></li>
+						</ul>
+					</li>
+					<% if params[:patient_id] && patient = Patient.find(params[:patient_id]) %>
+						<%= render :partial => 'patient/side_menu', :locals => {:patient => patient} %>
+					<% end %>
+					<% if adminMode? && params[:user_id] && user = User.find(params[:user_id]) %>
+						<%= render :partial => 'user/side_menu', :locals => {:user => user} %>
+					<% end %>
+					<% if adminMode? %>
+						<li class='side_menu_list_1'>Admin Utilities: 
+							<ul class='side_menu_list_2'>
+								<li><%= link_to 'User Management', :controller =>:user, :action => :manager %></li>
+								<li><%= link_to 'Settings', :controller => :setting %></li>
+								<li><%= link_to 'System Status', :controller => :setup, :action => :status %></li>
+								<li><%= link_to 'History Options', :controller => :option %></li>
+								<li><%= link_to 'Visits', :controller =>:report, :action => :patients_by_session %></li>
+								<li><%= link_to 'Drugs', :controller =>:drug, :action => :manage_drugs %></li>
+								<li><%= link_to 'Change Admin Password', :controller =>:home, :action => :change_admin_password %></li>
+							</ul>
+						</li>
+					<% end %>
+					<li class='side_menu_list_1'>Links
+						<ul class='side_menu_list_2'>
+							<li><a href="/report">Reports</a></li>
+							<li><%= link_to "LIH Referrals", "http://www.lsuhsc.edu/hcsd/cmo/hcet/ebmcrl/", :popup => ['ryan', 'status=1,toolbar=1'] %></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<% if session[:user] && session[:user].can_be_admin %>
+				<div id='side_menu_bottom'>
+					Admin mode: <%= adminMode? ? "on|" + (link_to "off", {:controller => "home", :action => "turn_off_admin"}) : (link_to "on", {:controller => "home", :action => "turn_on_admin"} )+"|off" %><br/>
+				</div>
+			<% end %>
 		</div>
 	</body>
 </html>
