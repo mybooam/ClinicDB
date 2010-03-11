@@ -3,81 +3,49 @@ require 'lib/security_helpers'
 class HomeController < ApplicationController
   
   def index
-    @all_tb_tests = TbTest.find(:all)
     @tb_tests_open = TbTest.find(:all, :include => [:patient]).select { |a| a.open }
   end
   
   def patient_home
-    @patient = Patient.find(params['patient_id'], :include=> [:visits, :tb_tests, :immunizations, :prescriptions] )
+    begin
+      @patient = Patient.find(params['patient_id'], :include=> [:visits, :tb_tests, :immunizations, :prescriptions] )
+    rescue
+      flash[:error] = "Patient does not exist.  Please contact an administrator if you receivee this message in error"
+      redirect_to :controller => :home, :action => :index and return
+    end
     
     Transaction.log_view_patient(session[:user].id, @patient.id)
     
     @cards = {}
-    @dates = []
+    @dates = @patient.dates.sort.reverse
     
-    for visit in @patient.visits
-      @dates << visit.visit_date
-      @cards[visit.visit_date.to_s] = @cards[visit.visit_date.to_s] || []
-      @cards[visit.visit_date.to_s] << {:type => 'visit', :partial_name => 'visit/card', :locals => {:visit => visit}}
+    for date in @dates
+      @cards[date.to_s] = @patient.visits_for_date(date).collect{|a| 
+          {:type => 'visit', :partial_name => 'visit/card', :locals => {:visit => a}}} +
+        @patient.prescriptions_for_date(date).collect{|a| 
+          {:type => 'prescription', :partial_name => 'prescription/card', :locals => {:scrip => a}}} +
+        @patient.tb_tests_for_date(date).collect{|a| 
+          {:type => 'tb_test', :partial_name => 'tb_test/card', :locals => {:tb_test => a}}} +
+        @patient.immunizations_for_date(date).collect{|a| 
+          {:type => 'immunization', :partial_name => 'immunization/card', :locals => {:immu => a}}}
     end
-    
-    for scrip in @patient.prescriptions
-      @dates << scrip.given_date
-      @cards[scrip.given_date.to_s] = @cards[scrip.given_date.to_s] || []
-      @cards[scrip.given_date.to_s] << {:type => 'prescription', :partial_name => 'prescription/card', :locals => {:scrip => scrip}}
-    end
-    
-    for tb_test in @patient.tb_tests
-      @dates << tb_test.given_date
-      @cards[tb_test.given_date.to_s] = @cards[tb_test.given_date.to_s] || []
-      @cards[tb_test.given_date.to_s] << {:type => 'tb_test', :partial_name => 'tb_test/card', :locals => {:tb_test => tb_test}}
-    end
-    
-    for immunization in @patient.immunizations
-      @dates << immunization.given_date
-      @cards[immunization.given_date.to_s] = @cards[immunization.given_date.to_s] || []
-      @cards[immunization.given_date.to_s] << {:type => 'immunization', :partial_name => 'immunization/card', :locals => {:immu => immunization}}
-    end
-    
-    @dates = @dates.uniq.sort.reverse
   end
   
   def list_patients
     @patients = Patient.find(:all).sort{|a,b| a.to_label.downcase <=> b.to_label.downcase }
   end
 
-  def request_on_admin
-    if session[:user] == nil
-      flash[:error] = "Must be logged in to admin user to activate Admin Mode."
-      redirect_to :back
-      return
-    end
-    
-    unless session[:user].can_be_admin
-      flash[:error] = "Must be logged in to admin user to activate Admin Mode."
-      redirect_to :back
-      return
-    end
-  end
-
   def turn_on_admin
-    if session[:user] == nil
+    if session[:user] == nil || !session[:user].can_be_admin
       flash[:error] = "Must be logged in to admin user to activate Admin Mode."
-      redirect_to :back
-      return
+      redirect_to :back and return
     end
     
-    unless session[:user].can_be_admin
-      flash[:error] = "Must be logged in to admin user to activate Admin Mode."
-      redirect_to :back
-      return
-    end
+    render 'request_on_admin' and return if !params[:admin] || !params[:admin][:pass]
     
-    pass_hash = hash_password(params[:admin][:pass])
-    unless pass_hash == Setting.get("admin_password")
+    unless hash_password(params[:admin][:pass]) == Setting.get("admin_password")
       flash[:error] = "Incorrect password."
-      redirect_to :back
-      return
+      redirect_to :back and return
     end
     
     session[:admin_mode] = true
@@ -92,8 +60,7 @@ class HomeController < ApplicationController
   end
   
   def update_admin_password
-    old_pass_hash = hash_password(params[:admin][:old_pass])
-    if old_pass_hash != Setting.get("admin_password")
+    if hash_password(params[:admin][:old_pass]) != Setting.get("admin_password")
       flash[:error] = "Old admin password is incorrect."
       redirect_to :back
     else  
