@@ -108,8 +108,11 @@
 					<% end %>
 					<li class='side_menu_list_1'>Links
 						<ul class='side_menu_list_2'>
-							<li><a href="/report">Reports</a></li>
+							<li><%= link_to "Clinic Reports", :controller => :report, :action => :index %></li>
 							<li><%= link_to "LIH Referrals", "http://www.lsuhsc.edu/hcsd/cmo/hcet/ebmcrl/", :popup => ['ryan', 'status=1,toolbar=1'] %></li>
+							<hr/>
+							<li><%= link_to "EMR Guidlines", :controller => :help, :action => :guidelines %></li>
+							<li><%= link_to "License", :controller => :help, :action => :license %></li>
 						</ul>
 					</li>
 				</ul>
