@@ -1,0 +1,20 @@
+ul.side_menu_list_1 {
+	font-size:14pt;
+	list-style-type: none;
+	margin: 0px;
+	padding: 10px;
+}
+
+li.side_menu_list_1 {
+	padding-left: 5px;
+	margin-top: 15px;
+	border-top: black thin dashed;
+}
+
+ul.side_menu_list_2 {
+	font-size:11pt;
+	list-style-type: none;
+	margin-left: 15px;
+	padding: 0px;
+	text-align: right;
+}
