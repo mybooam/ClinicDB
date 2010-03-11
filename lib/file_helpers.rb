@@ -5,7 +5,8 @@ def get_svn_revision
 end
 
 def get_db_revision
-  
+  sql = ActiveRecord::Base.connection()
+  sql.execute("SELECT version FROM schema_migrations").collect{|a| a['version'].to_i}.max
 end
 
 def browser_name(request)
