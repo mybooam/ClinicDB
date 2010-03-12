@@ -1,7 +1,6 @@
 <li class='side_menu_list_1'><%= link_to patient.properLastName, :controller => :home, :action => :patient_home, :patient_id => patient.id %>:
 	<ul class='side_menu_list_2'>
 		<li><%= link_to "New Visit", :controller => :visit, :action => :new_for_patient, :patient_id => patient.id %></li>
-		<li><%= link_to "New BP-only Visit", :controller => :visit, :action => :new_for_patient, :patient_id => patient.id, :version => 'bp_check' %></li>
 		<li><%= link_to "New Prescription", :controller => 'drug', :action => 'select_drug', :patient_id => patient.id %></li>
 		<li><%= link_to "New TB-Test", :controller => 'tb_test', :action => 'new_for_patient', :patient_id => patient.id %></li>
 		<li><%= link_to "New Immunization", :controller => 'immunization', :action => 'new_for_patient', :patient_id => patient.id %></li>

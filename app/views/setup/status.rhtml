@@ -1,6 +1,6 @@
 <center>
 <h2>Security</h2>
-<table class="list" width=90%>
+<table class="list" width=90% >
 	<tr class="even_row"><td>Security Unlocked:</td><td class='status_value'><%= security_unlocked? %></td></tr>
 	<tr class="odd_row"><td>Security Key Present:</td><td class='status_value'><%= securityKeyPresent? %></td></tr>
 	<tr class="even_row"><td>Security Key Location:</td><td class='status_value'><%= securityVolumeDirectory %></td></tr>
@@ -10,7 +10,7 @@
 <br/>
 
 <h2>Rails/Ruby info</h2>
-<table class="list" width=90%>
+<table class="list" width=90% >
 	<tr class="even_row"><td>Rails version:</td><td class='status_value'><%= Rails::VERSION::STRING %></td></tr>
 	<tr class="odd_row"><td>Ruby version:</td><td class='status_value'><%= RUBY_VERSION %></td></tr>
 	<tr class="even_row"><td>Ruby platform:</td><td class='status_value'><%= RUBY_PLATFORM %></td></tr>
@@ -24,7 +24,7 @@
 
 <h2>ENV info</h2>
 <% counter = 0 %>
-<table class="list" width=90%>
+<table class="list" width=90% >
 	<% ENV.keys.sort.each do |key| %>
 	<tr class="<%= counter = counter +1 ; counter.odd? ? 'odd_row' : 'even_row' %>">
 		<td><%= key %></td>
