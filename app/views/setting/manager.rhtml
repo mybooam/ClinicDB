@@ -1,0 +1,51 @@
+<script language="JAVASCRIPT">
+function new_key(key) {
+	document.getElementById("setting_key").value = key;
+	document.getElementById("setting_key").focus();
+}
+
+function edit(key, value) {
+	document.getElementById("setting_key").value = key;
+	document.getElementById("setting_value").value = value;
+	document.getElementById("setting_value").focus();
+}
+</script>
+
+<% form_tag "/setting/set" do %>
+	<table class="layout" valign=top style="border: #aaa solid thin">
+		<tr bgcolor=#F0F0FF>
+			<td><label>Key:</label></td>
+			<td><%= text_field :setting, :key, :size => 40 %></td>
+		</tr>
+		<tr>
+			<td><label>Value:</label></td>
+			<td><%= text_field :setting, :value, :size => 40 %></td>
+		</tr>
+		<tr>
+			<td colspan=2 align=right><%= submit_tag 'Set' %></td>
+		</tr>
+	</table>
+<% end %>
+	
+<br/>
+
+<% counter = 0 %>
+<table class="list" width=90% >
+	<% @settings.each do |setting| %>
+	<tr class="<%= cycle 'even_row', 'odd_row' %>">
+		<td><%= setting.key %></td>
+		<td class='status_value'><%= truncate(setting.value, 30) %></td>
+		<td><a href="javascript:edit('<%= setting.key %>', '<%= setting.value %>')", class = "list">edit</a></td>
+		<td><%= link_to "delete", {:action => "delete", :id => setting.id }, :class => "list", :confirm => "Are you sure you want to delete the setting '#{setting.key}'.  THIS ACTION CANNOT BE UNDONE!" %></td>
+	</tr>
+	<% end %>
+</table>
+
+<h2>Unused Settings</h2>
+<ul>
+	<% for key in @unused do %>
+		<li>
+			<a href="javascript:new_key('<%= key %>')"><%= key %></a>
+		</li>
+	<% end %>
+</ul>

@@ -19,4 +19,35 @@ class SettingController < ApplicationController
       redirect_to :controller=>:home, :action=>:index and return
     end
   end
+  
+  def manager
+    @all_settings = %w(key_fingerprint 
+      admin_password 
+      user_timeout_sec 
+      patient_search_result_size 
+      visit_form_auto_save_delay_ms
+      visit_form_activity_period_min)
+      
+    @settings = Setting.find(:all).sort{|a,b| a.key <=> b.key}
+    
+    @unused = @all_settings.select{|a| !@settings.collect{|b| b.key}.include? a}
+  end
+  
+  def set
+    key = params[:setting][:key]
+    value = params[:setting][:value]
+    if Setting.set(key, value)
+      flash[:notice] = "Saved #{key} = #{value}"
+      redirect_to :action => :manager and return
+    else
+      flash[:error] = "Could not set #{key} = #{value}"
+      redirect_to :back and return
+    end
+  end
+  
+  def delete
+    Setting.destroy(params[:id])
+    flash[:notice] = "Setting deleted"
+    redirect_to :action => :manager
+  end
 end
