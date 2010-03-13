@@ -65,6 +65,7 @@ td
 td.status_value {
 	text-align: right;
 	font-family: monospace;
+	font-size: 10pt;
 }
 
 tr.odd_row
