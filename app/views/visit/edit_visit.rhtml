@@ -14,7 +14,7 @@
 <%= javascript_include_tag 'dark' %>
 <script language="JAVASCRIPT">
 	has_had_activity = false;
-	visit_form_auto_save_delay = (<%= Setting.get_i(:visit_form_auto_save_delay, 15000) %>);
+	visit_form_auto_save_delay = (<%= Setting.get_i(:visit_form_auto_save_delay_ms, 15000) %>);
 	<% if @focus_id!="" %>
 		document.getElementById("<%= @focus_id %>").focus();
 	<% end %>
@@ -71,4 +71,4 @@
 				 :function => "update_activity()") %>
 				 
 <%= periodically_call_remote(:url => {:controller => :util, :action => :note_user_activity},
-				 :frequency => 60) %>
+				 :frequency => Setting.get_i(:visit_form_activity_period_min, 60)) %>
