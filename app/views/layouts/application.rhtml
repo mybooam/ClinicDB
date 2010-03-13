@@ -97,7 +97,7 @@
 						<li class='side_menu_list_1'>Admin Utilities: 
 							<ul class='side_menu_list_2'>
 								<li><%= link_to 'User Management', :controller =>:user, :action => :manager %></li>
-								<li><%= link_to 'Settings', :controller => :setting %></li>
+								<li><%= link_to 'Settings', :controller => :setting, :action => :manager %></li>
 								<li><%= link_to 'System Status', :controller => :setup, :action => :status %></li>
 								<li><%= link_to 'History Options', :controller => :option %></li>
 								<li><%= link_to 'Visits', :controller =>:report, :action => :patients_by_session %></li>
