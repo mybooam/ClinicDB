@@ -4,6 +4,10 @@ class Setting < ActiveRecord::Base
   
   validates_uniqueness_of :key
   
+  def self.key_exists? (key)
+    Setting.find(:all, :conditions => "key == '#{key}'").length > 0
+  end
+  
   def self.get(key, default = nil)
     res = Setting.find(:all, :conditions => "key == '#{key}'")
     if(res.length==1)
