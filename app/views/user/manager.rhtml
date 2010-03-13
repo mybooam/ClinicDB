@@ -79,9 +79,7 @@ end
 		
 		<% counter = 1 %>
 		<% for user in users %>
-			<% counter = counter + 1 %>
-			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
-			<tr class='<%= style %>'>
+			<tr class='<%= cycle 'even_row', 'odd_row' %>'>
 				<td align=center><%= user.active ? "+" : "" %></td>
 				<td><%= link_to user.id, {:action => "user_info", :user_id => user.id } %></td>
 				<td><%= link_to user.first_name, {:action => "user_info", :user_id => user.id } %></td>

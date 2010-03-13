@@ -8,9 +8,7 @@
 	<table width="500px" class="list">
 		<% counter = 1 %>
 		<% for drug in drugs %>
-			<% counter = counter + 1 %>
-			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
-			<tr class='<%= style %>'>
+			<tr class='<%= cycle 'even_row', 'odd_row' %>'>
 				<td width="350px"><%= drug.to_label %></td>
 				<% if drug.prescriptions.empty? %>
 					<td width="75px" align=right><%= link_to "delete", {:action => :delete_drug, :drug_id => drug.id }, :confirm => "Are you sure you want to delete #{drug.to_label}?", :class => "list" %></td>

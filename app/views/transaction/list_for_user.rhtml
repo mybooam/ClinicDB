@@ -34,13 +34,10 @@ end
 			<th width=250px><%= link_to 'Patient', :action => :list_for_user, :user_id => @user.id, :sort_by => (sort_by=="patient_fwd" ? "patient_back" : "patient_fwd") %></th>
 		</tr>
 		
-		<% counter = 1 %>
 		<% for xaction in @transactions %>
 			<% user = User.find(xaction.user_id) %>
 			<% patient = Patient.find(xaction.patient_id) %>
-			<% counter = counter + 1 %>
-			<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
-			<tr class='<%= style %>'>
+			<tr class='<%= cycle 'even_row', 'odd_row' %>'>
 				<td><%= xaction.created_at.strftime("%m-%e-%Y %H:%M:%S") %></td>
 				<td>[<%= xaction.transaction_type %>]</td>
 				<td><%= link_to patient.to_label, :controller=>:home, :action=>:patient_home, :patient_id => patient.id %></td>

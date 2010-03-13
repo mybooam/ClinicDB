@@ -55,9 +55,7 @@ end
 	</tr>
 <% counter=1 %>
 <% for patient in patients %>
-	<% counter = counter + 1 %>
-	<% style = counter.modulo(2).nonzero? ? 'odd_row' : 'even_row' %>
-	<tr class="<%= style %>">
+	<tr class="<%= cycle 'even_row', 'odd_row' %>">
 		<td>
 			<%= link_to "#{patient.patient_number}", :controller => "patient", :action => "set_patient", :patient_id => "#{patient.id}" %>
 		</td>
@@ -83,7 +81,7 @@ end
 		<% end %>
 	</tr>
 <% end %>
-	<tr class="<%= (counter+1).modulo(2).nonzero? ? 'odd_row' : 'even_row' %>">
+	<tr class="<%= cycle 'even_row', 'odd_row' %>">
 		<td colspan=<%= adminMode? ? "7" : "5" %> align=center><%= link_to "New Patient", {:controller => "home", :action => "new_patient"}, :class => "list" %></td>
 	</tr>
 </table>
