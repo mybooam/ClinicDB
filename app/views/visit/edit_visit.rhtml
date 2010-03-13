@@ -71,4 +71,4 @@
 				 :function => "update_activity()") %>
 				 
 <%= periodically_call_remote(:url => {:controller => :util, :action => :note_user_activity},
-				 :frequency => 10) %>
+				 :frequency => 60) %>
