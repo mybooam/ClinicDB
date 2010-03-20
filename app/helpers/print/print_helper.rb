@@ -34,62 +34,78 @@ module Print::PrintHelper
     pdf.font_size = s
   end
   
-  def patient_top_box(pdf, options = {})
+  def top_box_stamp(pdf, options = {})
+    
     visit = options[:visit] || nil
     patient = visit ? visit.patient : (options[:patient] || nil)
     title = options[:title] || Setting.get('visit_form_title', 'Clinic Visit')
     
-    pdf.font heading_font
-    pdf.font_size = 14
-    pdf.bounding_box [0.in, 10.in], :width => 7.5.in, :height => 0.2.in do
-      pdf.text "#{title.upcase}", :align => :center
+    pdf.create_stamp "top_box" do
+      pdf.font heading_font
+      pdf.font_size = 14
+      pdf.bounding_box [0.in, 10.in], :width => 7.5.in, :height => 0.2.in do
+        pdf.text "#{title.upcase}", :align => :center
+      end
+      
+      pdf.font_size = 12
+      pdf.bounding_box [0.in, 9.75.in], :width => 7.5.in, :height => (visit ? 0.75.in : 0.6.in) do
+        pdf.fill_color top_gray_level
+        pdf.fill_and_stroke do
+          pdf.rectangle pdf.bounds.top_left, pdf.bounds.width, pdf.bounds.height
+          #pdf.stroke_bounds
+        end
+        
+        pdf.fill_color "000000"
+        
+        data_box pdf, "Patient #:", "#{patient.patient_number}", 0.075.in, 1.75.in, pdf.bounds.height - 0.075.in, 0.25.in
+        data_box pdf, "Visit #:", "#{visit.visit_number}", 1.95.in, 1.75.in, pdf.bounds.height - 0.075.in, 0.25.in if visit
+        
+        pdf.bounding_box [0.1.in, pdf.bounds.height-0.4.in], :width => 3.5.in, :height => pdf.bounds.height-0.15.in do
+          #pdf.stroke_bounds
+          if visit
+            pdf.text "DOB: #{patient.dob_str}    Age:#{patient.age}", :leading => 2
+            pdf.text "Race: #{patient.ethnicity}    Sex: #{patient.isMale? ? 'Male' : 'Female'}", :leading => 2
+          end
+        end
+        
+        pdf.bounding_box [3.in, pdf.bounds.height-0.1.in], :width => 4.4.in, :height => pdf.bounds.height-0.15.in do
+          pdf.text "#{patient.last_name}, #{patient.first_name}", :align => :right, :leading => 2
+          if visit
+            pdf.text "Visit on #{visit.visit_date.strftime('%b %e, %G')}", :align => :right, :leading => 2
+            sess = Session.forDate(visit.visit_date)
+            pdf.text "Attending: #{sess.attending.to_dr_label}", :align => :right, :leading => 2 if sess
+            pdf.text "Seen by: #{visit.users.collect{|u| u.first_initial_last_name}.join(", ")}", :align => :right, :leading => 2
+          else
+            pdf.text "DOB: #{patient.dob_str}    Age:#{patient.age}", :leading => 2, :align => :right
+            pdf.text "Race: #{patient.ethnicity}    Sex: #{patient.isMale? ? 'Male' : 'Female'}", :leading => 2, :align => :right
+          end
+        end
+      end
     end
     
-    pdf.font_size = 12
-    pdf.bounding_box [0.in, 9.75.in], :width => 7.5.in, :height => (visit ? 0.75.in : 0.6.in) do
-      pdf.fill_color top_gray_level
-      pdf.fill_and_stroke do
-        pdf.rectangle pdf.bounds.top_left, pdf.bounds.width, pdf.bounds.height
-        #pdf.stroke_bounds
-      end
-      
-      pdf.fill_color "000000"
-      
-      data_box pdf, "Patient #:", "#{patient.patient_number}", 0.075.in, 1.75.in, pdf.bounds.height - 0.075.in, 0.25.in
-      data_box pdf, "Visit #:", "#{visit.visit_number}", 1.95.in, 1.75.in, pdf.bounds.height - 0.075.in, 0.25.in if visit
-      
-      pdf.bounding_box [0.1.in, pdf.bounds.height-0.4.in], :width => 3.5.in, :height => pdf.bounds.height-0.15.in do
-        #pdf.stroke_bounds
-        if visit
-          pdf.text "DOB: #{patient.dob_str}    Age:#{patient.age}", :leading => 2
-          pdf.text "Race: #{patient.ethnicity}    Sex: #{patient.isMale? ? 'Male' : 'Female'}", :leading => 2
-        end
-      end
-      
-      pdf.bounding_box [3.in, pdf.bounds.height-0.1.in], :width => 4.4.in, :height => pdf.bounds.height-0.15.in do
-        pdf.text "#{patient.last_name}, #{patient.first_name}", :align => :right, :leading => 2
-        if visit
-          pdf.text "Visit on #{visit.visit_date.strftime('%b %e, %G')}", :align => :right, :leading => 2
-          sess = Session.forDate(visit.visit_date)
-          pdf.text "Attending: #{sess.attending.to_dr_label}", :align => :right, :leading => 2 if sess
-          pdf.text "Seen by: #{visit.users.collect{|u| u.first_initial_last_name}.join(", ")}", :align => :right, :leading => 2
-        else
-          pdf.text "DOB: #{patient.dob_str}    Age:#{patient.age}", :leading => 2, :align => :right
-          pdf.text "Race: #{patient.ethnicity}    Sex: #{patient.isMale? ? 'Male' : 'Female'}", :leading => 2, :align => :right
-        end
-      end
+    pdf.repeat(:all) do
+      pdf.stamp "top_box"
     end
   end
   
-  def page_number(pdf)
-    pdf.font heading_font
-    pdf.font_size=8
-    pdf.bounding_box [0, 0.1.in], :width => 7.5.in, :height=>0.2.in do
-      pdf.text "Printed #{Time.now.strftime('%m/%d/%Y %H:%M')} by #{session[:user].first_initial_last_name}", :align => :left
+  def footer_stamp(pdf, total_pages=3)
+    pdf.create_stamp "printed_by" do
+      pdf.font heading_font
+      pdf.font_size=8
+      pdf.bounding_box [0, 0.1.in], :width => 7.5.in, :height=>0.2.in do
+        pdf.text "Printed #{Time.now.strftime('%m/%d/%Y %H:%M')} by #{session[:user].first_initial_last_name}", :align => :left
+      end
     end
     
-    pdf.bounding_box [0, 0.1.in], :width => 7.5.in, :height=>0.2.in do
-      pdf.text "Page #{pdf.page_number} of 3", :align => :right
+    pdf.repeat(:all, :dynamic => true) do
+      pdf.font Rails.root.join('public', 'fonts', 'Arial.ttf')
+      pdf.font_size=8
+      pdf.bounding_box [0, 0.1.in], :width => 7.5.in, :height=>0.2.in do
+        pdf.stroke_line [0, pdf.bounds.top + 0.05.in], [pdf.bounds.width, pdf.bounds.top + 0.05.in]
+        pdf.text "Page #{pdf.page_number} of #{[total_pages, pdf.page_number].max}", :align => :right
+      end
+    
+      pdf.stamp "printed_by"
     end
   end
   

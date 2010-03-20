@@ -3,8 +3,8 @@ require "prawn/measurement_extensions"
 
 module Print::HpiAutoHelper
 def print_hpi_auto(pdf, visit)
-  patient_top_box(pdf, :visit => visit)
-  page_number(pdf)
+  top_box_stamp(pdf, :visit => visit)
+  footer_stamp(pdf, 3)
   
   y = page_width_box_text pdf, "Chief Complaint", 8.8.in, 0.5.in, visit.chief_complaint
   
@@ -55,9 +55,6 @@ def print_hpi_auto(pdf, visit)
   
   pdf.start_new_page
   
-  patient_top_box(pdf, :visit => visit)
-  page_number(pdf)
-  
   y = page_width_box pdf, "Review of Systems", 8.7.in, 0 do
   #pdf.bounding_box [0, 8.7.in], :width => 7.5.in do
     data = []
@@ -89,9 +86,6 @@ def print_hpi_auto(pdf, visit)
   end
   
   pdf.start_new_page
-  
-  patient_top_box(pdf, :visit => visit)
-  page_number(pdf)
   
   y = page_width_box_text pdf, "Assessment/Plan", 8.8.in, 4.in, visit.assessment_and_plan
   
