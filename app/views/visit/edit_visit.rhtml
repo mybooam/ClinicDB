@@ -15,7 +15,7 @@
 <script language="JAVASCRIPT">
 	has_had_activity = false;
 	visit_form_auto_save_delay = (<%= Setting.get_i(:visit_form_auto_save_delay_ms, 15000) %>);
-	<% if @focus_id!="" %>
+	<% if @focus_id&&@focus_id!="" %>
 		document.getElementById("<%= @focus_id %>").focus();
 	<% end %>
 
