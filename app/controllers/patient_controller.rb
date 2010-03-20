@@ -210,6 +210,15 @@ class PatientController < ApplicationController
     redirect_to :controller => 'home', :action => "patient_home", :patient_id => params[:patient_id]
   end
   
+  def print_immunization_history
+    @patient = Patient.find(params[:id], :include => :immunizations)
+    
+    respond_to do |format|
+      format.html { redirect_to :controller => :home, :action => :patient_home, :patient_id => @patient.id }
+      format.pdf { render :layout => false }
+    end
+  end
+  
 #  def bp_visits_for_patient
 #    @patient = Patient.find(params[:patient_id])
 #    @bp_visits = @patient.visits.select{|a| a.blood_press_sys && a.blood_press_dias}.sort{|a,b| b.visit_date <=> a.visit_date}
