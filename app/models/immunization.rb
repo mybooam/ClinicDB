@@ -12,6 +12,10 @@ class Immunization < ActiveRecord::Base
     
   end
   
+  def name
+    immunization_drug.name
+  end
+  
 	def to_label
 		"#{immunization_drug.name} #{given_date}"
 	end
