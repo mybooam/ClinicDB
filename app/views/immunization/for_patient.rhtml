@@ -1,5 +1,9 @@
 <h2>Immunization History for <%= link_to @patient.name, :controller => :home, :action => :patient_home, :patient_id => @patient.id %></h2>
 
+<div class=big_link>
+<%= link_to "<div>Print Immunization History</div>", "/patient/print_immunization_history/#{@patient.id}.pdf", :class => "big" %>
+</div>
+
 <% for date in @dates%>
 	<hr />
 	<% if date==Date.today() %>
