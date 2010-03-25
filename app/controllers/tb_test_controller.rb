@@ -20,7 +20,7 @@ class TbTestController < ApplicationController
   
   def read
     @item = TbTest.find(params[:id])
-    if @item.overdue
+    if @item.overdue?
       flash[:warning] = "This test if overdue.  Please only read if it was read during the correct period."
     end
   end

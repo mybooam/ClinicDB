@@ -3,7 +3,7 @@ require 'lib/security_helpers'
 class HomeController < ApplicationController
   
   def index
-    @tb_tests_open = TbTest.find(:all, :include => [:patient]).select { |a| a.open }
+    @tb_tests_open = TbTest.find(:all, :include => [:patient]).select { |a| a.open? }
   end
   
   def patient_home
