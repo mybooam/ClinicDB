@@ -9,8 +9,9 @@ class ApplicationController < ActionController::Base
 
   # See ActionController::RequestForgeryProtection for details
   # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery # :secret => 'c237eedfa42e563fc603e33178c792ac'
-  
+  # protect_from_forgery # :secret => 'c237eedfa42e563fc603e33178c792ac'
+	# removed this for now since it is causing some issues with saving visits.  I can't reproduce the problem - pkinney  
+
   before_filter :check_encryption_setup, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test' }
   before_filter :check_admin_password_setup, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test' }
   before_filter :check_first_user_setup, :unless => proc { |c| c.params[:controller]=="setup"||RAILS_ENV == 'test' }
