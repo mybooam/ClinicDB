@@ -20,8 +20,10 @@ module Print::TbTestHistoryPrintHelper
           elsif tb_test.unknown?
             row << "Unknown"
           end
+        elsif tb_test.open? && !tb_test.overdue?
+          row << "Due #{tb_test.due_date_min.strftime('%m/%e')}-#{tb_test.due_date_max.strftime('%m/%e')}"
         else
-          row << "UNREAD"
+          row << "NOT READ"
         end
         row << "#{tb_test.notes}"
         data << row
@@ -35,7 +37,7 @@ module Print::TbTestHistoryPrintHelper
           :horizontal_padding => 0.05.in,
           :font_size => 11,
           :align => {0 => :left, 1 => :left, 2 => :left},
-          :column_widths => {0 => 1.5.in, 1 => 0.8.in, 2 => pdf.bounds.width - 2.3.in},
+          :column_widths => {0 => 1.5.in, 1 => 1.5.in, 2 => pdf.bounds.width - 3.in},
           :border_style => :underline_header
       else
         pdf.text " "
