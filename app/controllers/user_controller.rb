@@ -11,6 +11,34 @@ class UserController < ApplicationController
     columns[:active].form_ui = :checkbox
   end
   
+  def manager
+    @users = User.find(:all)
+    @sort_by = params[:sort_by] || "last_name_fwd"
+
+    case @sort_by
+    when "id_fwd" then
+      @users.sort!{|a,b| a.id <=> b.id}
+    when "id_back" then
+      @users.sort!{|a,b| b.id <=> a.id}
+    when "first_name_fwd" then
+      @users.sort!{|a,b| "#{a.first_name}#{a.last_name}" <=> "#{b.first_name}#{b.last_name}"}
+    when "first_name_back" then
+      @users.sort!{|a,b| "#{b.first_name}#{b.last_name}" <=> "#{a.first_name}#{a.last_name}"}
+    when "last_name_fwd" then
+      @users.sort!{|a,b| "#{a.last_name}#{a.first_name}" <=> "#{b.last_name}#{b.first_name}"}
+    when "last_name_back" then
+      @users.sort!{|a,b| "#{b.last_name}#{b.first_name}" <=> "#{a.last_name}#{a.first_name}"}
+    when "active_fwd" then
+      @users.sort!{|a,b| a.to_label <=> b.to_label}
+      @users.sort!{|a,b| "#{a.active}#{a.active}" <=> "#{b.active}#{b.active}"}
+    when "active_back" then
+      @users.sort!{|a,b| a.to_label <=> b.to_label}
+      @users.sort!{|a,b| "#{b.active}#{b.active}" <=> "#{a.active}#{a.active}"}
+    when "admin" then
+      @users.sort!{|a,b| (a.can_be_admin ? "a" : "b") <=> (b.can_be_admin ? "a" : "b")}
+    end
+  end
+  
   def add_user
     ac1 = params[:access_code][:ac1]
     ac2 = params[:access_code][:ac2]

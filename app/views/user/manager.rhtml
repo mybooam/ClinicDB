@@ -1,37 +1,3 @@
-<% users = User.find(:all) %>
-
-<%
-if params[:sort_by]
-	sort_by = params[:sort_by]
-else
-	sort_by = "first_name_fwd"
-end
-
-case sort_by
-when "id_fwd" then
-	users.sort!{|a,b| a.id <=> b.id}
-when "id_back" then
-	users.sort!{|a,b| b.id <=> a.id}
-when "first_name_fwd" then
-	users.sort!{|a,b| "#{a.first_name}#{a.last_name}" <=> "#{b.first_name}#{b.last_name}"}
-when "first_name_back" then
-	users.sort!{|a,b| "#{b.first_name}#{b.last_name}" <=> "#{a.first_name}#{a.last_name}"}
-when "last_name_fwd" then
-	users.sort!{|a,b| "#{a.last_name}#{a.first_name}" <=> "#{b.last_name}#{b.first_name}"}
-when "last_name_back" then
-	users.sort!{|a,b| "#{b.last_name}#{b.first_name}" <=> "#{a.last_name}#{a.first_name}"}
-when "active_fwd" then
-	users.sort!{|a,b| a.to_label <=> b.to_label}
-	users.sort!{|a,b| "#{a.active}#{a.active}" <=> "#{b.active}#{b.active}"}
-when "active_back" then
-	users.sort!{|a,b| a.to_label <=> b.to_label}
-	users.sort!{|a,b| "#{b.active}#{b.active}" <=> "#{a.active}#{a.active}"}
-when "admin" then
-	users.sort!{|a,b| (a.can_be_admin ? "a" : "b") <=> (b.can_be_admin ? "a" : "b")}
-end
-
-%>
-
 <div align=center>
 	<% form_tag "/user/add_user" do %>
 		<table class="layout" valign=top style="border: #aaa solid thin">
@@ -66,10 +32,10 @@ end
 	
 	<table width="690px" class="list">
 		<tr>
-			<th width="15px" align=center><%= link_to '+/-', :action => :manager, :sort_by => (sort_by=="active_fwd" ? "active_back" : "active_fwd") %></th>
-			<th width="50px"><%= link_to 'ID', :action => :manager, :sort_by => (sort_by=="id_fwd" ? "id_back" : "id_fwd") %></th>
-			<th width="125px"><%= link_to 'First Name', :action => :manager, :sort_by => (sort_by=="first_name_fwd" ? "first_name_back" : "first_name_fwd") %></th>
-			<th width="125px"><%= link_to 'Last Name', :action => :manager, :sort_by => (sort_by=="last_name_fwd" ? "last_name_back" : "last_name_fwd") %></th>
+			<th width="15px" align=center><%= link_to '+/-', :action => :manager, :sort_by => (@sort_by=="active_fwd" ? "active_back" : "active_fwd") %></th>
+			<th width="50px"><%= link_to 'ID', :action => :manager, :sort_by => (@sort_by=="id_fwd" ? "id_back" : "id_fwd") %></th>
+			<th width="125px"><%= link_to 'First Name', :action => :manager, :sort_by => (@sort_by=="first_name_fwd" ? "first_name_back" : "first_name_fwd") %></th>
+			<th width="125px"><%= link_to 'Last Name', :action => :manager, :sort_by => (@sort_by=="last_name_fwd" ? "last_name_back" : "last_name_fwd") %></th>
 			<th width="125px">Email</th>
 			<th width="125px"><%= link_to 'Admin', :action => :manager, :sort_by => "admin" %></th>
 			<th width="75px">Access Code</th>
@@ -78,7 +44,7 @@ end
 		</tr>
 		
 		<% counter = 1 %>
-		<% for user in users %>
+		<% for user in @users %>
 			<tr class='<%= cycle 'even_row', 'odd_row' %>'>
 				<td align=center><%= user.active ? "+" : "" %></td>
 				<td><%= link_to user.id, {:action => "user_info", :user_id => user.id } %></td>
