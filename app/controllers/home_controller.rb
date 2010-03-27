@@ -27,8 +27,11 @@ class HomeController < ApplicationController
         @patient.tb_tests_for_date(date).collect{|a| 
           {:type => 'tb_test', :partial_name => 'tb_test/card', :locals => {:tb_test => a}}} +
         @patient.immunizations_for_date(date).collect{|a| 
-          {:type => 'immunization', :partial_name => 'immunization/card', :locals => {:immu => a}}}
+          {:type => 'immunization', :partial_name => 'immunization/card', :locals => {:immu => a}}
+      }
     end
+    
+    @latest_visit = @patient.visits.empty? ? nil : @patient.visits.max{ |a,b| a.visit_date <=> b.visit_date}
   end
   
   def list_patients
