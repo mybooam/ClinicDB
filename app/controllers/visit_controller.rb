@@ -13,6 +13,7 @@ class VisitController < ApplicationController
     @patient = Patient.find(@visit.patient_id)
     @version = @visit.version
     @focus_id = params[:focus_id] || ""
+    @scroll_position = params[:scroll_position] || ""
   end
   
   def add_or_update
@@ -20,7 +21,7 @@ class VisitController < ApplicationController
     if visit
       if params[:auto_save] == 'true'
         flash[:notice] = "Visit auto-saved."
-        redirect_to :action => :edit_visit, :visit_id => visit.id, :focus_id => params[:focus_id] || "" and return
+        redirect_to :action => :edit_visit, :visit_id => visit.id, :focus_id => params[:focus_id] || "", :scroll_position => params[:scroll_position] || "" and return
       else
         flash[:notice] = "Visit saved."
         redirect_to :controller => :home, :action => :patient_home, :patient_id => visit.patient.id and return

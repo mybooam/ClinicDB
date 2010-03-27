@@ -6,22 +6,31 @@
 
 <%= hidden_field_tag :auto_save, false %>
 <%= hidden_field_tag :focus_id, "" %>
+<%= hidden_field_tag :scroll_position, "" %>
 
 <%= render :partial => "/visit/#{@visit.version}/form" %>
 
 <% end %>
 
 <%= javascript_include_tag 'dark' %>
+
 <script language="JAVASCRIPT">
 	has_had_activity = false;
 	visit_form_auto_save_delay = (<%= Setting.get_i(:visit_form_auto_save_delay_ms, 15000) %>);
+	
 	<% if @focus_id&&@focus_id!="" %>
 		document.getElementById("<%= @focus_id %>").focus();
 	<% end %>
+	
+	<% if @scroll_position&&@scroll_position =~ /^\d+$/ %>
+		set_scroll_position(<%= @scroll_position %>);
+	<% end %>
 
 	last_activity = (new Date).getTime();
+	last_scroll_position = 0;
 	
 	setInterval('save_if_inactive()', 1000);
+	setInterval('check_scroll_activity()', 1000);
 	
 	document.getElementById("commit").setAttribute('onclick', 'submit_actions()'); 
 	
@@ -41,6 +50,7 @@
 			
 			//set focus_id field
 			document.getElementById("focus_id").value = current_focus_id;
+			document.getElementById("scroll_position").value = get_scroll_position();
 			
 			//submit the form
 			document.getElementById("commit").click();
@@ -50,6 +60,31 @@
 	function update_activity() {
 		has_had_activity = true;
 		last_activity = (new Date).getTime();
+	}
+	
+	function get_scroll_position() {
+		if (navigator.appName == "Microsoft Internet Explorer") {		
+			return document.body.scrollTop;
+		} else {
+			return window.pageYOffset;
+		}
+	}
+	
+	function set_scroll_position(pos) {
+		if (navigator.appName == "Microsoft Internet Explorer") {		
+			document.body.scrollTop = pos;
+		} else {
+			window.scrollTo(0,pos);
+		}
+	}
+	
+	function check_scroll_activity() {
+		pos = get_scroll_position();
+		
+		if(pos != last_scroll_position) {
+			last_scroll_position = pos;
+			last_activity = (new Date).getTime();
+		}
 	}
 	
 	function showSavingScreen() {
