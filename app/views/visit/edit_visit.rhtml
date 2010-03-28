@@ -3,6 +3,7 @@
 <% form_tag "add_or_update", :id => 'visit_form' do %>
 
 <%= hidden_field :visit_id, :visit_id, :value => "#{@visit.id}" if @visit.id %>
+<%= hidden_field :visit, :version, :value => @visit.version %>
 
 <%= hidden_field_tag :auto_save, false %>
 <%= hidden_field_tag :focus_id, "" %>

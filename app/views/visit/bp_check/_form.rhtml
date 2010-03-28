@@ -1,0 +1,54 @@
+<%= render :partial => '/visit/hp_line_js' %>
+
+<div class=instructions>Enter information from this BP-Check visit.</div>
+
+<center>
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr>
+		<td><label>BP:</label></td>
+		<td><%= text_field :visit, :blood_press_sys, :size => 2  %>/<%= text_field :visit, :blood_press_dias, :size => 2  %></td>
+		<td><label>P:</label></td>
+		<td><%= text_field :visit, :pulse, :size => 2  %></td>
+		<td><label>T:</label></td>
+		<td><%= text_field :visit, :temperature, :size => 2  %></td>
+		<td><label>Wt:</label></td>
+		<td><%= text_field :visit, :weight, :size => 2  %></td>
+	</tr>
+</table>
+</center>
+
+<br/>
+
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label class=req>Notes:</label></td>
+		<td><%= text_area :visit, :hpi, :cols => 40, :rows => 10  %></td>
+	</tr>
+</table>
+
+<br/>
+
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr bgcolor=#F0F0FF>
+		<td><label class=req>Assessment/Plan:</label></td>
+		<td><%= text_area :visit, :assessment_and_plan, :cols => 30, :rows => 4  %></td>
+	</tr>
+</table>
+
+<br/>
+
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr>
+		<td><label>Referrals:</label></td>
+		<td><%= text_area :visit, :referrals, :cols => 40, :rows => 1  %></td>
+	</tr>
+	<tr bgcolor=#F0F0FF>
+		<td><label class=req>Seen by Students:</label></td>
+		<% users = @visit.users.length > 0 ? @visit.users : [session[:user]] %>
+		<td><%= user_field :users_id1, {}, users[0] %><br/><%= user_field :users_id2, {}, users[1]  %></td>
+	</tr>
+	<tr style="border-top: #aaa solid thin">
+		<td colspan=2 align=right><%= submit_tag 'Save', :id => "commit" %></td>
+	</tr>
+	<%= hidden_field :visit, :patient_id, :value => "#{@patient.id}" %>
+</table>

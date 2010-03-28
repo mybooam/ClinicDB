@@ -1,0 +1,103 @@
+<% 
+	hide_telem = true
+	if(visit.blood_press_sys&&visit.blood_press_dias)
+		hide_telem = false
+	end
+	
+	if(visit.pulse)
+		hide_telem = false
+	end
+	
+	if(visit.temperature)
+		hide_telem = false
+	end
+	
+	if(visit.weight)
+		hide_telem = false
+	end
+
+	total_col = 4
+%>
+
+<div class="patient_box">
+	<table class="layout" width=100% >
+		<tr class="visit_box_top">
+			<td class="visit_box_title" colspan="<%= total_col-1 %>">
+				<%= "#{visit.visit_date.strftime("%A, %B %e, %Y")} - Visit ##{visit.visit_number}"%>
+			</td>
+			<td class="visit_box_editlink">
+				<%= link_to "[edit]", :controller=>'visit', :action=>'edit_visit', :visit_id => visit.id %> |
+				<% if adminMode? %>
+					<%= link_to "[delete]", :controller=>'visit', :action=>'delete_visit', :visit_id => visit.id %> |
+				<% end %>
+				<%= link_to "[print]", "/visit/print_visit/#{visit.id}.pdf" %>
+			</td>
+		</tr>
+		<% if !hide_telem %>
+			<tr>
+				<td class="visit_box_telem">
+					BP
+					<% if visit.blood_press_sys&&visit.blood_press_dias %>
+						<span class="visit_box_telem_text"><%= ('%d/%d' % [visit.blood_press_sys, visit.blood_press_dias]) %></span>
+					<% end %>	
+				</td>
+				<td class="visit_box_telem">
+					Pulse:
+					<% if visit.pulse %>
+						<span class="visit_box_telem_text"><%= '%d' % visit.pulse %></span>
+					<% end %>
+				</td>
+				<td class="visit_box_telem">
+					Temp: 
+					<% if visit.temperature %>
+						<span class="visit_box_telem_text"><%= '%.1f F' % visit.temperature %></span>
+					<% end %>
+				</td>
+				<td class="visit_box_telem">
+					Weight:
+					<% if visit.weight %>
+						<span class="visit_box_telem_text"><%= '%.1f lb' % visit.weight %></span>
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+		<tr class="visit_box_soap">
+			<td class="visit_box_soap" colspan=<%= total_col %>>
+				<div class="visit_box_group">
+					<div class="visit_box_heading">
+						HPI:
+					</div>	
+					<div class="visit_box_text">
+						<%= visit.hpi.gsub(/[\n\r]+/ ,"<br/>") %>
+					</div>
+				</div>
+				
+				<div class="visit_box_group">
+					<div class="visit_box_heading">
+						Assessment/Plan:
+					</div>	
+					<div class="visit_box_text">
+						<%= visit.assessment_and_plan.gsub(/[\n\r]+/ ,"<br/>") %>
+					</div>
+				</div>
+				
+				<div class="visit_box_group">
+					<div class="visit_box_heading">
+						Referrals:
+					</div>	
+					<div class="visit_box_text">
+						<%= visit.referrals.gsub(/[\n\r]+/ ,"<br/>") %>
+					</div>
+				</div>
+				<div class="visit_box_group">
+					<div class="visit_box_heading">
+						Seen By:
+					</div>	
+					<div class="visit_box_text">
+						<%= visit.users.collect{|a| link_to a.to_label, :controller => :user, :action => :user_info, :user_id => a.id }.join(", ") %>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
