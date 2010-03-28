@@ -26,7 +26,8 @@ class SettingController < ApplicationController
       user_timeout_sec 
       patient_search_result_size 
       visit_form_auto_save_delay_ms
-      visit_form_activity_period_min)
+      visit_form_activity_period_min
+      close_patient_home_time_sec)
       
     @settings = Setting.find(:all).sort{|a,b| a.key <=> b.key}
     
