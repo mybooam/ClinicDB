@@ -30,38 +30,45 @@
 	
 	<br/>
 	
-	<table width="690px" class="list">
-		<tr>
-			<th width="15px" align=center><%= link_to '+/-', :action => :manager, :sort_by => (@sort_by=="active_fwd" ? "active_back" : "active_fwd") %></th>
-			<th width="50px"><%= link_to 'ID', :action => :manager, :sort_by => (@sort_by=="id_fwd" ? "id_back" : "id_fwd") %></th>
-			<th width="125px"><%= link_to 'First Name', :action => :manager, :sort_by => (@sort_by=="first_name_fwd" ? "first_name_back" : "first_name_fwd") %></th>
-			<th width="125px"><%= link_to 'Last Name', :action => :manager, :sort_by => (@sort_by=="last_name_fwd" ? "last_name_back" : "last_name_fwd") %></th>
-			<th width="125px">Email</th>
-			<th width="125px"><%= link_to 'Admin', :action => :manager, :sort_by => "admin" %></th>
-			<th width="75px">Access Code</th>
-			<th width="75px"></th>
-			<th width="75px"></th>
-		</tr>
-		
-		<% counter = 1 %>
-		<% for user in @users %>
-			<tr class='<%= cycle 'even_row', 'odd_row' %>'>
-				<td align=center><%= user.active ? "+" : "" %></td>
-				<td><%= link_to user.id, {:action => "user_info", :user_id => user.id } %></td>
-				<td><%= link_to user.first_name, {:action => "user_info", :user_id => user.id } %></td>
-				<td><%= link_to user.last_name, {:action => "user_info", :user_id => user.id } %></td>
-				<td><%= user.email %></td>
-				<td align=center><%= user.can_be_admin ? "Y" : "" %></td>
-				<td><%= link_to (user.access_hash ? "Change" : "+"), {:action => "change_access_code", :user_id => user.id }, :class => "list" %></td>
-				<td align=right><%= link_to "edit", {:action => "edit_user", :user_id => user.id }, :class => "list" %></td>
-				<% if user.isLinked? %>
-					<td align=right> </td>
-				<% else %>
-					<td align=right><%= link_to "delete", {:action => "delete_user", :user_id => user.id }, :confirm => "Are you sure you want to delete user #{user.to_label}?", :class => "list" %></td>
-				<% end %>
+	<% form_tag "/user/manage_action" do %>
+		<table class="list">
+			<tr>
+				<th width="15px" align=center> </th>
+				<th width="15px" align=center><%= link_to 'Act', :action => :manager, :sort_by => (@sort_by=="active_fwd" ? "active_back" : "active_fwd") %></th>
+				<th width="50px"><%= link_to 'ID', :action => :manager, :sort_by => (@sort_by=="id_fwd" ? "id_back" : "id_fwd") %></th>
+				<th width="125px"><%= link_to 'First Name', :action => :manager, :sort_by => (@sort_by=="first_name_fwd" ? "first_name_back" : "first_name_fwd") %></th>
+				<th width="125px"><%= link_to 'Last Name', :action => :manager, :sort_by => (@sort_by=="last_name_fwd" ? "last_name_back" : "last_name_fwd") %></th>
+				<th><%= link_to 'Adm', :action => :manager, :sort_by => "admin" %></th>
+				<th width="75px">Access</th>
+				<th></th>
+				<th></th>
 			</tr>
-			<% first = false %>
-		<% end %>
-	</table>
+			
+			<% for user in @users %>
+				<tr class='<%= cycle 'even_row', 'odd_row' %>'>
+					<td align=center><%= check_box :user_select, user.id %></td>
+					<td align=center><%= user.active ? "+" : "" %></td>
+					<td><%= link_to "<div>#{user.id}</div>", {:action => "user_info", :user_id => user.id } %></td>
+					<td><%= link_to "<div>#{user.first_name}</div>", {:action => "user_info", :user_id => user.id } %></td>
+					<td><%= link_to "<div>#{user.last_name}</div>", {:action => "user_info", :user_id => user.id } %></td>
+					<td align=center><%= user.can_be_admin ? "Y" : "" %></td>
+					<td><%= link_to (user.access_hash ? "Change" : "+"), {:action => "change_access_code", :user_id => user.id }, :class => "list" %></td>
+					<td align=right><%= link_to "edit", {:action => "edit_user", :user_id => user.id }, :class => "list" %></td>
+					<% if user.isLinked? %>
+						<td align=right> </td>
+					<% else %>
+						<td align=right><%= link_to "delete", {:action => "delete_user", :user_id => user.id }, :confirm => "Are you sure you want to delete user #{user.to_label}?", :class => "list" %></td>
+					<% end %>
+				</tr>
+				<% first = false %>
+			<% end %>
+			<tr class='<%= cycle 'even_row', 'odd_row' %>' style="border-top: solid thin #aaaaaa">
+				<td colspan=9 align=right>
+					<%= submit_tag 'Activate Selected', :confirm => "Are you sure you want to activate the selected users?" %>
+					<%= submit_tag 'Deactivate Selected', :confirm => "Are you sure you want to deactivate the selected users?" %>
+				</td>
+			</tr>
+		</table>
+	<% end %>
 	<br/>
 </div>

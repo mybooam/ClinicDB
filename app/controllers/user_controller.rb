@@ -39,6 +39,17 @@ class UserController < ApplicationController
     end
   end
   
+  def manage_action
+    user_ids = params[:user_select].select{|k,v| v=='1'}.collect{|a| a[0]}
+    activate = (params[:commit].downcase =~ /^activate/) ? true : false
+    user_ids.each do |id|
+      unless User.update(id, :active => activate)
+        flash[:error] = "One or more user(s) could not be updated."
+      end
+    end
+    redirect_to :action => :manager
+  end
+  
   def add_user
     ac1 = params[:access_code][:ac1]
     ac2 = params[:access_code][:ac2]

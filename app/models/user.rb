@@ -6,15 +6,7 @@ class User < ActiveRecord::Base
 	
 	validates_presence_of :first_name
 	validates_presence_of :last_name
-  validates_uniqueness_of :access_hash
-	
-#	before_save      EncryptionWrapper.new(User.columns.select{ |c| c.text? }.collect{ |c| c.name })
-#  after_save       EncryptionWrapper.new(User.columns.select{ |c| c.text? }.collect{ |c| c.name })
-#  after_find       EncryptionWrapper.new(User.columns.select{ |c| c.text? }.collect{ |c| c.name })
-#  after_initialize EncryptionWrapper.new(User.columns.select{ |c| c.text? }.collect{ |c| c.name })
-#  
-#  def after_find
-#  end
+  validates_uniqueness_of :access_hash, :unless => Proc.new { |user| user.access_hash == nil || user.access_hash == "" }
 	
 	def to_label 
 		"#{first_name} #{last_name}"
