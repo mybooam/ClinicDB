@@ -1,4 +1,6 @@
 class Visit < ActiveRecord::Base
+  Visit::ValidVersions = %w(soap hpi_auto bp_check procedure)
+  
 	belongs_to :patient
 	has_and_belongs_to_many :users
   

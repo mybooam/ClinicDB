@@ -5,6 +5,11 @@ class VisitController < ApplicationController
     @patient = Patient.find(params[:patient_id])
     @visit.version = params[:version] || Visit.current_version
     
+    unless Visit::ValidVersions.include? @visit.version
+      @visit.version = Visit.current_version
+      flash[:error] = "Invalid visit version.  Using #{@visit.version} instead."
+    end
+    
     render :edit_visit
   end
   
@@ -12,6 +17,11 @@ class VisitController < ApplicationController
     @visit = Visit.find(params[:visit_id])
     @patient = Patient.find(@visit.patient_id)
     @version = @visit.version
+    unless Visit::ValidVersions.include? @version
+      flash[:error] = "Editing of visit version '#{@visit.version}' is not valid. Please contact your administrator."
+      redirect_to :back and return
+    end
+    
     @focus_id = params[:focus_id] || ""
     @scroll_position = params[:scroll_position] || ""
   end
