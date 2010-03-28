@@ -10,12 +10,12 @@
 			<td class="hp_empty_cell"></td>
 		</tr>
 	<% end %>
-	<tr>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
 		<td class="hp_line_label"><%= hp_label(column_name) %>:</td>
 		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_na'), {:class => "hp_check_box", :checked => value.downcase=="n/a"} %></td>
 		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_neg'), {:class => "hp_check_box", :checked => value.downcase=="neg"} %></td>
 		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_abn'), {:class => "hp_check_box", :checked => abn_str!=""} %></td>
-		<td class="hp_text_field_cell"><%= text_field :cb, (column_name+'_text'), {:disabled => true, :size => 45, :class => "hp_text_field_hidden", :value => abn_str} %></td>
+		<td class="hp_text_field_cell"><%= text_field :cb, (column_name+'_text'), {:disabled => true, :class => "hp_text_field_hidden", :value => abn_str} %></td>
 	</tr>
 </table>
 <%= hidden_field :visit, column_name, {:value => value.downcase} %>

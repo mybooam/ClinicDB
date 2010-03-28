@@ -99,6 +99,11 @@
 	function submit_actions() {
 		showSavingScreen();
 	}
+	
+	// pre-load the spinner image for auto-saving
+	pic1= new Image(); 
+	pic1.src="/images/spinner_48.gif"; 
+
 </script>
 
 <%= observe_form(:visit_form,
