@@ -140,16 +140,17 @@ td.hp_check_box_cell {
 td.hp_text_field_cell {
 	padding: 0px;
 	height: 22px;
-	width: 260px;
+	width: 320px;
 	font-size: 10pt;
 	background-color: transparent;
 }
 
 .hp_text_field_shown {
 	color: #000000;
+	background-color: #ffffff;
 	font-size: 10pt;
+	width: 312px;
 	vertical-align: middle;
-	background-color: transparent;
 	margin:0px;
 }
 
