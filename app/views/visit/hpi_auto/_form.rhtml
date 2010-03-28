@@ -36,14 +36,12 @@
 </table>
 
 <h2>Review of Systems</h2>
-
-<% first = true%>
 <% Visit.column_names.select{|k| k.starts_with?("ros_") }.each_with_index do |label, count| %>
 	<%= hp_field_tag(label, {:neg_value => "neg", :show_checkbox_labels => count==0, :value => @visit[label] || "" }) %>
 <% end %>
 
+<% reset_cycle %>
 <h2>Physical Exam</h2>
-
 <% Visit.column_names.select{|k| k.starts_with?("pe_") }.each_with_index do |label, count| %>
 	<%= hp_field_tag(label, {:neg_value => "wnl", :show_checkbox_labels => count==0, :value => @visit[label] || "" }) %>
 <% end %>
