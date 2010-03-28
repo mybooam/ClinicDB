@@ -87,7 +87,9 @@
 							<li><%= link_to "Existing Patient", :controller => 'home', :action => 'existing_patient' %></li>
 						</ul>
 					</li>
-					<% if params[:patient_id] && patient = Patient.find(params[:patient_id]) %>
+					<% patient = Patient.find(params[:patient_id]) if params[:patient_id] %>
+					<% patient = Visit.find(params[:visit_id]).patient if params[:visit_id] %>
+					<% if patient %>
 						<%= render :partial => 'patient/side_menu', :locals => {:patient => patient} %>
 					<% end %>
 					<% if adminMode? && params[:user_id] && user = User.find(params[:user_id]) %>
