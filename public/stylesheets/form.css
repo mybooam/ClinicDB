@@ -99,7 +99,8 @@ table.hp_line {
 	padding:0px;
 	margin-top:0px;
 	margin-bottom:0px;
-	border: none;
+	border: #aaa solid thin;
+	width: 100%;
 }
 
 td.hp_line_label {
@@ -127,6 +128,16 @@ td.hp_empty_cell {
 	vertical-align: baseline;
 }
 
+td.hp_empty_cell_tail {
+	padding:0px;
+	margin: 0px;
+	text-align:center;
+	width: auto;
+	font-size: 9pt;
+	text-align: center;
+	vertical-align: baseline;
+}
+
 td.hp_check_box_cell {
 	padding:0px;
 	margin: 0px;
@@ -140,7 +151,7 @@ td.hp_check_box_cell {
 td.hp_text_field_cell {
 	padding: 0px;
 	height: 22px;
-	width: 320px;
+	width: auto;
 	font-size: 10pt;
 	background-color: transparent;
 }

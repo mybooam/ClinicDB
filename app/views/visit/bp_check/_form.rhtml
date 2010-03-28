@@ -1,6 +1,11 @@
 <%= render :partial => '/visit/hp_line_js' %>
 
-<div class=instructions>Enter information from this BP-Check visit.</div>
+<div class=instructions>
+	Use this form to enter information for a <em>Blood Pressure Check</em> visit only.  If this patient
+	is here for a <%= link_to "Full Visit", :controller => :visit, :action => :new_for_patient, :patient_id => @patient.id %>
+	or <%= link_to "Procedure", :controller => :visit, :action => :new_for_patient, :patient_id => @patient.id, :version => 'procedure' %>, 
+	please use the appropriate visit form.
+</div>
 
 <center>
 <table class="layout" valign=top style="border: #aaa solid thin">
@@ -20,34 +25,24 @@
 <br/>
 
 <table class="layout" valign=top style="border: #aaa solid thin">
-	<tr bgcolor=#F0F0FF>
-		<td><label class=req>Notes:</label></td>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label>Notes:</label></td>
 		<td><%= text_area :visit, :hpi, :cols => 40, :rows => 10  %></td>
 	</tr>
-</table>
-
-<br/>
-
-<table class="layout" valign=top style="border: #aaa solid thin">
-	<tr bgcolor=#F0F0FF>
-		<td><label class=req>Assessment/Plan:</label></td>
-		<td><%= text_area :visit, :assessment_and_plan, :cols => 30, :rows => 4  %></td>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label>Assessment/Plan:</label></td>
+		<td><%= text_area :visit, :assessment_and_plan, :cols => 40, :rows => 4  %></td>
 	</tr>
-</table>
-
-<br/>
-
-<table class="layout" valign=top style="border: #aaa solid thin">
-	<tr>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
 		<td><label>Referrals:</label></td>
 		<td><%= text_area :visit, :referrals, :cols => 40, :rows => 1  %></td>
 	</tr>
-	<tr bgcolor=#F0F0FF>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
 		<td><label class=req>Seen by Students:</label></td>
 		<% users = @visit.users.length > 0 ? @visit.users : [session[:user]] %>
 		<td><%= user_field :users_id1, {}, users[0] %><br/><%= user_field :users_id2, {}, users[1]  %></td>
 	</tr>
-	<tr style="border-top: #aaa solid thin">
+	<tr class=<%= cycle 'even_row', 'odd_row' %> style="border-top: #aaa solid thin">
 		<td colspan=2 align=right><%= submit_tag 'Save', :id => "commit" %></td>
 	</tr>
 	<%= hidden_field :visit, :patient_id, :value => "#{@patient.id}" %>

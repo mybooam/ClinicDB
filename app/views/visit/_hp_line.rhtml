@@ -1,23 +1,21 @@
 <% abn_str = (value.downcase=="n/a" || value.downcase=="neg") ? "" : value %>
 
-<table class="hp_line">
-	<% if show_checkbox_labels %>
-		<tr>
-			<td class="hp_empty_cell"></td>
-			<td class="hp_empty_cell"><%= na_value if show_checkbox_labels %></td>
-			<td class="hp_empty_cell"><%= neg_value if show_checkbox_labels %></td>
-			<td class="hp_empty_cell"><%= abn_value if show_checkbox_labels %></td>
-			<td class="hp_empty_cell"></td>
-		</tr>
-	<% end %>
-	<tr class=<%= cycle 'even_row', 'odd_row' %>>
-		<td class="hp_line_label"><%= hp_label(column_name) %>:</td>
-		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_na'), {:class => "hp_check_box", :checked => value.downcase=="n/a"} %></td>
-		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_neg'), {:class => "hp_check_box", :checked => value.downcase=="neg"} %></td>
-		<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_abn'), {:class => "hp_check_box", :checked => abn_str!=""} %></td>
-		<td class="hp_text_field_cell"><%= text_field :cb, (column_name+'_text'), {:disabled => true, :class => "hp_text_field_hidden", :value => abn_str} %></td>
+<% if show_checkbox_labels %>
+	<tr>
+		<td class="hp_empty_cell"></td>
+		<td class="hp_empty_cell"><%= na_value if show_checkbox_labels %></td>
+		<td class="hp_empty_cell"><%= neg_value if show_checkbox_labels %></td>
+		<td class="hp_empty_cell"><%= abn_value if show_checkbox_labels %></td>
+		<td class="hp_empty_cell_tail"></td>
 	</tr>
-</table>
+<% end %>
+<tr class=<%= cycle 'even_row', 'odd_row' %>>
+	<td class="hp_line_label"><%= hp_label(column_name) %>:</td>
+	<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_na'), {:class => "hp_check_box", :checked => value.downcase=="n/a"} %></td>
+	<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_neg'), {:class => "hp_check_box", :checked => value.downcase=="neg"} %></td>
+	<td class="hp_check_box_cell"><%= check_box :cb, (column_name+'_abn'), {:class => "hp_check_box", :checked => abn_str!=""} %></td>
+	<td class="hp_text_field_cell"><%= text_field :cb, (column_name+'_text'), {:disabled => true, :class => "hp_text_field_hidden", :value => abn_str} %></td>
+</tr>
 <%= hidden_field :visit, column_name, {:value => value.downcase} %>
 
 <%= observe_field("cb_#{column_name}_na", :frequency => 0.1, :function => "na_changed(\"#{column_name}\")") %>

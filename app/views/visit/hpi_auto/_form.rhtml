@@ -2,10 +2,10 @@
 
 <div class=instructions>Enter information gathered on this visit.  Only "Chief Complaint" and "Students" are required.</div>
 
-<table class="layout" valign=top style="border: #aaa solid thin">
+<table width=100% class="layout" valign=top style="border: #aaa solid thin">
 	<tr bgcolor=#F0F0FF>
 		<td><label class=req>Chief Complaint:</label></td>
-		<td><%= text_area :visit, :chief_complaint, :cols => 30, :rows => 2  %></td>
+		<td><%= text_area :visit, :chief_complaint, :cols => 40, :rows => 2  %></td>
 	</tr>
 </table>
 
@@ -36,63 +36,60 @@
 </table>
 
 <h2>Review of Systems</h2>
-<% Visit.column_names.select{|k| k.starts_with?("ros_") }.each_with_index do |label, count| %>
-	<%= hp_field_tag(label, {:neg_value => "neg", :show_checkbox_labels => count==0, :value => @visit[label] || "" }) %>
-<% end %>
+<table class="hp_line">
+	<% Visit.column_names.select{|k| k.starts_with?("ros_") }.each_with_index do |label, count| %>
+		<%= hp_field_tag(label, {:neg_value => "neg", :show_checkbox_labels => count==0, :value => @visit[label] || "" }) %>
+	<% end %>
+</table>
 
 <% reset_cycle %>
 <h2>Physical Exam</h2>
-<% Visit.column_names.select{|k| k.starts_with?("pe_") }.each_with_index do |label, count| %>
-	<%= hp_field_tag(label, {:neg_value => "wnl", :show_checkbox_labels => count==0, :value => @visit[label] || "" }) %>
-<% end %>
+<table class="hp_line">
+	<% Visit.column_names.select{|k| k.starts_with?("pe_") }.each_with_index do |label, count| %>
+		<%= hp_field_tag(label, {:neg_value => "wnl", :show_checkbox_labels => count==0, :value => @visit[label] || "" }) %>
+	<% end %>
+</table>
 
 <h2>Social History</h2>
 
-<table class="hp_line">
-	<tr>
-		<td class="hp_line_label">Living Arrangement:</td>
-		<td class="hp_text_field_cell"><%= select :visit, :living_arrangement_id, options_for_select( LivingArrangement.find(:all).collect{|a| [a.name, a.id]}, @visit.living_arrangement_id), { :class => "hp_select_field" } %></td>
+<table width=100% class="layout" valign=top style="border: #aaa solid thin">
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label>Living Arrangements:</label></td>
+		<td><%= select :visit, :living_arrangement_id, options_for_select( LivingArrangement.find(:all).collect{|a| [a.name, a.id]}, @visit.living_arrangement_id), { :class => "hp_select_field" } %></td>
 	</tr>
-	<tr>
-		<td class="hp_line_label">Marital Status:</td>
-		<td class="hp_text_field_cell"><%= select :visit, :marital_status_id, options_for_select( MaritalStatus.find(:all).collect{|a| [a.name, a.id]}, @visit.marital_status_id), { :class => "hp_select_field" } %></td>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label>Marital Status:</label></td>
+		<td><%= select :visit, :marital_status_id, options_for_select( MaritalStatus.find(:all).collect{|a| [a.name, a.id]}, @visit.marital_status_id), { :class => "hp_select_field" } %></td>
 	</tr>
-	<tr>
-		<td class="hp_line_label">Highest Education:</td>
-		<td class="hp_text_field_cell"><%= select :visit, :education_level_id, options_for_select( EducationLevel.find(:all).collect{|a| [a.name, a.id]}, @visit.education_level_id), { :class => "hp_select_field" } %></td>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label>Highest Education:</label></td>
+		<td><%= select :visit, :education_level_id, options_for_select( EducationLevel.find(:all).collect{|a| [a.name, a.id]}, @visit.education_level_id), { :class => "hp_select_field" } %></td>
 	</tr>
-	<tr>
-		<td class="hp_line_label">Disability:</td>
-		<td class="hp_text_field_cell"><%= text_field :visit, :disability %></td>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label>Disability:</label></td>
+		<td><%= text_field :visit, :disability %></td>
 	</tr>
-	<tr>
-		<td class="hp_line_label">Pharmacy:</td>
-		<td class="hp_text_field_cell"><%= select :visit, :pharmacy_id, options_for_select( Pharmacy.find(:all).collect{|a| [a.name, a.id]}, @visit.pharmacy_id), {:class => "hp_select_field" } %></td>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label>Pharmacy:</label></td>
+		<td><%= select :visit, :pharmacy_id, options_for_select( Pharmacy.find(:all).collect{|a| [a.name, a.id]}, @visit.pharmacy_id), {:class => "hp_select_field" } %></td>
 	</tr>
-</table>
-
-<br/>
-
-<table class="layout" valign=top style="border: #aaa solid thin">
-	<tr bgcolor=#F0F0FF>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td colspan=2><h2>Assessment/Plan</h2></td>
+	</tr>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
 		<td><label class=req>Assessment/Plan:</label></td>
-		<td><%= text_area :visit, :assessment_and_plan, :cols => 30, :rows => 4  %></td>
+		<td><%= text_area :visit, :assessment_and_plan, :cols => 40, :rows => 4  %></td>
 	</tr>
-</table>
-
-<br/>
-
-<table class="layout" valign=top style="border: #aaa solid thin">
-	<tr>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
 		<td><label>Referrals:</label></td>
 		<td><%= text_area :visit, :referrals, :cols => 40, :rows => 1  %></td>
 	</tr>
-	<tr bgcolor=#F0F0FF>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
 		<td><label class=req>Seen by Students:</label></td>
 		<% users = @visit.users.length > 0 ? @visit.users : [session[:user]] %>
 		<td><%= user_field :users_id1, {}, users[0] %><br/><%= user_field :users_id2, {}, users[1]  %></td>
 	</tr>
-	<tr style="border-top: #aaa solid thin">
+	<tr class=<%= cycle 'even_row', 'odd_row' %> style="border-top: #aaa solid thin">
 		<td colspan=2 align=right><%= submit_tag 'Save', :id => "commit" %></td>
 	</tr>
 	<%= hidden_field :visit, :patient_id, :value => "#{@patient.id}" %>
