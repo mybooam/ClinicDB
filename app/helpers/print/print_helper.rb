@@ -148,7 +148,7 @@ module Print::PrintHelper
     options[:pad] = options[:pad] || 0.1.in
     left_over = ""
     page_width_box pdf, label, y_pos, height, options do
-      pdf.text_box "#{text}", :at => pdf.bounds.top_left, :width => pdf.bounds.width, :height => pdf.bounds.height, :leading => 3
+      pdf.text_box "#{text}", :at => pdf.bounds.top_left, :width => pdf.bounds.width, :height => pdf.bounds.height, :leading => 3, :overflow => :shrink_to_fit || options[:overflow]
     end
   end
   
