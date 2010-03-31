@@ -1,0 +1,36 @@
+<div class="patient_box">
+	<table class="layout" width=100% >
+		<tr class="visit_box_top">
+			<td class="visit_box_title">
+				<%= "#{visit.visit_date.strftime("%A, %B %e, %Y")} - Visit ##{visit.visit_number}"%>
+			</td>
+			<td class="visit_box_editlink">
+				<%= link_to "[edit]", :controller=>'visit', :action=>'edit_visit', :visit_id => visit.id %> |
+				<% if adminMode? %>
+					<%= link_to "[delete]", :controller=>'visit', :action=>'delete_visit', :visit_id => visit.id %> |
+				<% end %>
+				<%= link_to "[print]", "/visit/print_visit/#{visit.id}.pdf" %>
+			</td>
+		</tr>
+		<tr class="visit_box_soap">
+			<td class="visit_box_soap" colspan=2>
+				<div class="visit_box_group">
+					<div class="visit_box_heading">
+						Quick Note:
+					</div>	
+					<div class="visit_box_text">
+						<%= visit.hpi.gsub(/[\n\r]+/ ,"<br/>") %>
+					</div>
+				</div>
+				<div class="visit_box_group">
+					<div class="visit_box_heading">
+						Seen By:
+					</div>	
+					<div class="visit_box_text">
+						<%= visit.users.collect{|a| link_to a.to_label, :controller => :user, :action => :user_info, :user_id => a.id }.join(", ") %>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>

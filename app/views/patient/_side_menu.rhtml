@@ -3,6 +3,7 @@
 		<li><%= link_to "New Visit", :controller => :visit, :action => :new_for_patient, :patient_id => patient.id %></li>
 		<li><%= link_to "BP-Check Visit", :controller => :visit, :action => :new_for_patient, :patient_id => patient.id, :version => 'bp_check' %></li>
 		<li><%= link_to "Procedure Note", :controller => :visit, :action => :new_for_patient, :patient_id => patient.id, :version => 'procedure' %></li>
+		<li><%= link_to "Quick Note", :controller => :visit, :action => :new_for_patient, :patient_id => patient.id, :version => 'quick_note' %></li>
 		<hr/>
 		<li><%= link_to "New Prescription", :controller => 'drug', :action => 'select_drug', :patient_id => patient.id %></li>
 		<li><%= link_to "New TB-Test", :controller => 'tb_test', :action => 'new_for_patient', :patient_id => patient.id %></li>

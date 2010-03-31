@@ -7,4 +7,6 @@ when "bp_check"
   print_bp_check(pdf, @visit)
 when "procedure"
   print_procedure(pdf, @visit)
+when "quick_note"
+  print_quick_note(pdf, @visit)
 end

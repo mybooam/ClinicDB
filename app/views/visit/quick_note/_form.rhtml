@@ -1,0 +1,24 @@
+<%= render :partial => '/visit/hp_line_js' %>
+
+<div class=instructions>
+	Use this form to enter information for a <em>Quick Note</em> visit only.  If this patient
+	is here for a <%= link_to "Full Visit", :controller => :visit, :action => :new_for_patient, :patient_id => @patient.id %>
+	or <%= link_to "Procedure", :controller => :visit, :action => :new_for_patient, :patient_id => @patient.id, :version => 'procedure' %>, 
+	please use the appropriate visit form.
+</div>
+
+<table class="layout" valign=top style="border: #aaa solid thin">
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label>Quick Note:</label></td>
+		<td><%= text_area :visit, :hpi, :cols => 40, :rows => 20  %></td>
+	</tr>
+	<tr class=<%= cycle 'even_row', 'odd_row' %>>
+		<td><label class=req>Seen by Students:</label></td>
+		<% users = @visit.users.length > 0 ? @visit.users : [session[:user]] %>
+		<td><%= user_field :users_id1, {}, users[0] %><br/><%= user_field :users_id2, {}, users[1]  %></td>
+	</tr>
+	<tr class=<%= cycle 'even_row', 'odd_row' %> style="border-top: #aaa solid thin">
+		<td colspan=2 align=right><%= submit_tag 'Save', :id => "commit" %></td>
+	</tr>
+	<%= hidden_field :visit, :patient_id, :value => "#{@patient.id}" %>
+</table>
