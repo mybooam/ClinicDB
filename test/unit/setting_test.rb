@@ -102,4 +102,72 @@ class SettingTest < ActiveSupport::TestCase
     assert_equal 3, Setting.get_f("no_key", 3)
     assert_equal 123122, Setting.get_f("no_key", 123122)
   end
+  
+  
+  
+  test "get_b" do
+    Setting.set("key1", "true")
+    assert Setting.get_b("key1")
+    assert ! Setting.get_b("key2")
+    assert ! Setting.get_b("key2", false)
+    assert Setting.get_b("key2", true)
+    
+    Setting.set("key1", "-14")
+    assert ! Setting.get_b("key1")
+    assert ! Setting.get_b("key1", false)
+    assert Setting.get_b("key1", true)
+    
+    Setting.set("key1", "Yesterday")
+    assert ! Setting.get_b("key1")
+    assert ! Setting.get_b("key1", false)
+    assert Setting.get_b("key1", true)
+    
+    Setting.set("key1", "Anyes")
+    assert ! Setting.get_b("key1")
+    assert ! Setting.get_b("key1", false)
+    assert Setting.get_b("key1", true)
+    
+    Setting.set("key1", "Falsehood")
+    assert ! Setting.get_b("key1")
+    assert ! Setting.get_b("key1", false)
+    assert Setting.get_b("key1", true)
+    
+    Setting.set("key1", "true")
+    assert Setting.get_b("key1", false)
+    Setting.set("key1", "t")
+    assert Setting.get_b("key1", false)
+    Setting.set("key1", "TRUE")
+    assert Setting.get_b("key1", false)
+    Setting.set("key1", "True")
+    assert Setting.get_b("key1", false)
+    Setting.set("key1", "Yes")
+    assert Setting.get_b("key1", false)
+    Setting.set("key1", "YES")
+    assert Setting.get_b("key1", false)
+    Setting.set("key1", "yes")
+    assert Setting.get_b("key1", false)
+    Setting.set("key1", "y")
+    assert Setting.get_b("key1", false)
+    Setting.set("key1", "Y")
+    assert Setting.get_b("key1", false)
+    
+    Setting.set("key1", "false")
+    assert ! Setting.get_b("key1", true)
+    Setting.set("key1", "f")
+    assert ! Setting.get_b("key1", true)
+    Setting.set("key1", "FALSE")
+    assert ! Setting.get_b("key1", true)
+    Setting.set("key1", "False")
+    assert ! Setting.get_b("key1", true)
+    Setting.set("key1", "No")
+    assert ! Setting.get_b("key1", true)
+    Setting.set("key1", "NO")
+    assert ! Setting.get_b("key1", true)
+    Setting.set("key1", "no")
+    assert ! Setting.get_b("key1", true)
+    Setting.set("key1", "n")
+    assert ! Setting.get_b("key1", true)
+    Setting.set("key1", "N")
+    assert ! Setting.get_b("key1", true)
+  end
 end
