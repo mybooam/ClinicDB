@@ -170,39 +170,7 @@ class PatientController < ApplicationController
   end
 	
 	def live_search
-      search_text = params[:searchtext].upcase 
-      
-      if search_text =~ /^#*\d+$/
-        if search_text =~ /^#/
-          search_text = search_text[1..(search_text.length-1)]
-        end
-        res = PatientIdentifier.patient_by_number(search_text.to_i)
-        @results = []
-        unless res == nil
-          @results << res
-        end
-        render(:layout => false) and return
-      end
-      
-      phrases = search_text.split(' ')
-      
-      phrases = phrases.collect { |a|
-        m = a.match(/^[A-Z]+/)
-        m ? m[0] : nil
-      }.select {|a|
-        a&&a.length>0
-      }
-      
-      patients = Patient.find(:all)
-      
-      res = []
-    
-      for p in patients do
-        matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)}
-        res << {:p => p, :score => matches.length} if matches.length>0
-      end
-      res = res.sort{|a,b| a[:p].to_label <=> b[:p].to_label}.sort{|a,b| b[:score]<=>a[:score]}
-      @results = res.collect{|a| a[:p]}
+      @results = Patient.search_by_string(params[:searchtext])
       render :layout => false 
   end
   

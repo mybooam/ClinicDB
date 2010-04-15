@@ -1,3 +1,5 @@
+require 'lib/string_helpers'
+
 class Patient < ActiveRecord::Base
 	has_many :visits
 	has_many :tb_tests
@@ -78,5 +80,45 @@ class Patient < ActiveRecord::Base
   
   def immunizations_for_date(date)
     immunizations.select {|a| a.given_date == date}
+  end
+  
+  def self.search_by_string(search_text) 
+    search_text.upcase!
+    
+    if search_text =~ /^#*\d+$/
+      if search_text =~ /^#/
+        search_text = search_text[1..(search_text.length-1)]
+      end
+      res = PatientIdentifier.patient_by_number(search_text.to_i)
+      return res == nil ? [] : [res]
+    end
+    
+    phrases = search_text.split(' ')
+    
+    phrases = phrases.collect { |a|
+      m = a.match(/^[A-Z]+/)
+      m ? m[0] : nil
+    }.select {|a|
+      a&&a.length>0
+    }
+    
+    patients = Patient.find(:all)
+    
+    res = []
+    do_fuzzy_patient_search = Setting.get_b("fuzzy_patient_search", false)
+    
+    patients.each do |p|
+      if(do_fuzzy_patient_search)
+        dist = 0
+        phrases.each{|s| dist += [edit_dist(p.first_name.upcase, s), edit_dist(p.last_name.upcase, s)].min}
+        #puts "#{p.to_label} -> #{dist}"
+        res << {:p => p, :score => -dist} # if dist < search_text.length/2
+      else
+        matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)}
+        res << {:p => p, :score => matches.length} if matches.length>0
+      end
+    end
+    res = res.sort{|a,b| a[:p].to_label <=> b[:p].to_label}.sort{|a,b| b[:score]<=>a[:score]}
+    res.collect{|a| a[:p]} 
   end
 end
