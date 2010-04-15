@@ -45,6 +45,21 @@ class Setting < ActiveRecord::Base
     end
   end
   
+  def self.get_b(key, default = false)
+    begin
+      v = get(key, default.to_s)
+      if /\A(t(rue)?|y(es)?)\Z/i =~ v
+        true
+      elsif /\A(f(alse)?|n(o)?)\Z/i =~ v
+        false
+      else
+        default
+      end
+    rescue
+      default
+    end
+  end
+  
   def self.set(key, value)
     res = Setting.find(:all, :conditions => "key == '#{key}'")
     if(res.length==1)
