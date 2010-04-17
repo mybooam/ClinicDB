@@ -5,7 +5,8 @@ def get_local_svn_revision
 end
 
 def get_head_svn_revision
-  $current_head_revision = $current_head_revision || load_head_svn_revision
+  #$current_head_revision = $current_head_revision || 
+  load_head_svn_revision
 end
 
 def get_db_revision
