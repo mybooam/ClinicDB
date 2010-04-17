@@ -1,7 +1,11 @@
 require 'find'
 
-def get_svn_revision
-  $current_revision = $current_revision || load_svn_revision
+def get_local_svn_revision
+  $current_local_revision = $current_local_revision || load_local_svn_revision
+end
+
+def get_head_svn_revision
+  $current_head_revision = $current_head_revision || load_head_svn_revision
 end
 
 def get_db_revision
@@ -29,13 +33,30 @@ def browser_name(request)
 
 private
 
-def load_svn_revision
+def load_local_svn_revision
   rev_lines = `svn info -R #{Rails.root}/ | grep Revision`
   max = 0
   rev_lines.each_line { |line| 
     rev_str = line.split(":")[1].strip
     max = [max, rev_str.to_i].max if rev_str =~ /\d{1,}/
   }
-  puts "Loaded SVN revision ##{max}"
+  puts "Found local SVN revision ##{max}"
   max
+end
+
+def load_head_svn_revision
+  rev = "unknown"
+  begin
+    rev_lines = `svn log #{Rails.root}/ -r HEAD`
+    rev_lines = rev_lines.select{|line| line =~ /\Ar\d{1,}/}
+    puts rev_lines.join "|"
+    rev = "unknown"
+    if rev_lines.size > 0
+      rev = rev_lines[0].split("|")[0].strip
+      rev = rev[1..rev.length-1]
+    end
+  rescue
+  end
+  puts "Found HEAD SVN revision ##{rev}"
+  rev
 end

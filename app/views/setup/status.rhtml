@@ -1,32 +1,36 @@
 <center>
 <h2>Security</h2>
 <table class="list" width=90% >
-	<tr class="even_row"><td>Security Unlocked:</td><td class='status_value'><%= security_unlocked? %></td></tr>
-	<tr class="odd_row"><td>Security Key Present:</td><td class='status_value'><%= securityKeyPresent? %></td></tr>
-	<tr class="even_row"><td>Security Key Location:</td><td class='status_value'><%= securityVolumeDirectory %></td></tr>
-	<tr class="odd_row"><td>Current Security Key Fingerprint:</td><td class='status_value'><%= getKey !=nil ? getFingerprintString(getKey) : "nil" %></td></tr>
-	<tr class="even_row"><td>Stored Security Key Fingerprint:</td><td class='status_value'><%= Setting.get("key_fingerprint") %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Security Unlocked:</td><td class='status_value'><%= security_unlocked? %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Security Key Present:</td><td class='status_value'><%= securityKeyPresent? %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Security Key Location:</td><td class='status_value'><%= securityVolumeDirectory %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Current Security Key Fingerprint:</td><td class='status_value'><%= getKey !=nil ? getFingerprintString(getKey) : "nil" %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Stored Security Key Fingerprint:</td><td class='status_value'><%= Setting.get("key_fingerprint") %></td></tr>
 </table>
 <br/>
+
+<% reset_cycle %>
 
 <h2>Rails/Ruby info</h2>
 <table class="list" width=90% >
-	<tr class="even_row"><td>Rails version:</td><td class='status_value'><%= Rails::VERSION::STRING %></td></tr>
-	<tr class="odd_row"><td>Ruby version:</td><td class='status_value'><%= RUBY_VERSION %></td></tr>
-	<tr class="even_row"><td>Ruby platform:</td><td class='status_value'><%= RUBY_PLATFORM %></td></tr>
-	<tr class="odd_row"><td>Ruby release date:</td><td class='status_value'><%= RUBY_RELEASE_DATE %></td></tr>
-	<tr class="even_row"><td>SVN Revision:</td><td class='status_value'><%= get_svn_revision %></td></tr>
-	<tr class="odd_row"><td>Database Revision:</td><td class='status_value'><%= get_db_revision %></td></tr>
-	<tr class="even_row"><td>Browser:</td><td class='status_value'><%= browser_name(request) %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Rails version:</td><td class='status_value'><%= Rails::VERSION::STRING %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Ruby version:</td><td class='status_value'><%= RUBY_VERSION %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Ruby platform:</td><td class='status_value'><%= RUBY_PLATFORM %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Ruby release date:</td><td class='status_value'><%= RUBY_RELEASE_DATE %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Local SVN Revision:</td><td class='status_value'><%= get_local_svn_revision %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Latest SVN Revision (HEAD):</td><td class='status_value'><%= get_head_svn_revision %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Database Revision:</td><td class='status_value'><%= get_db_revision %></td></tr>
+	<tr class=<%= cycle 'even_row','odd_row' %>><td>Browser:</td><td class='status_value'><%= browser_name(request) %></td></tr>
 </table>
 
 <br/>
 
+<% reset_cycle %>
 <h2>ENV info</h2>
 <% counter = 0 %>
 <table class="list" width=90% >
 	<% ENV.keys.sort.each do |key| %>
-	<tr class="<%= counter = counter +1 ; counter.odd? ? 'odd_row' : 'even_row' %>">
+	<tr class=<%= cycle 'even_row','odd_row' %>>
 		<td><%= key %></td>
 		<td class='status_value'><%= ENV[key] %></td>
 	</tr>
