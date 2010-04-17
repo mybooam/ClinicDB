@@ -108,14 +108,23 @@ class Patient < ActiveRecord::Base
     do_fuzzy_patient_search = Setting.get_b("fuzzy_patient_search", false)
     
     patients.each do |p|
-      if(do_fuzzy_patient_search)
+      matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)}
+      if matches.length > 0
+        res << {:p => p, :score => matches.length}
+      elsif(do_fuzzy_patient_search)
         dist = 0
-        phrases.each{|s| dist += [edit_dist(p.first_name.upcase, s), edit_dist(p.last_name.upcase, s)].min}
-        #puts "#{p.to_label} -> #{dist}"
-        res << {:p => p, :score => -dist} # if dist < search_text.length/2
-      else
-        matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)}
-        res << {:p => p, :score => matches.length} if matches.length>0
+        at_least_one_acceptable = false
+        phrases.each{|s| 
+          fn_dist = edit_dist(p.first_name.upcase, s)
+          ln_dist = edit_dist(p.last_name.upcase, s)
+          dist += [fn_dist, ln_dist].min
+          if(ln_dist<fn_dist) 
+            at_least_one_acceptable = true if ln_dist < p.last_name.length/2
+          else
+            at_least_one_acceptable = true if fn_dist < p.first_name.length/2
+          end
+        }
+        res << {:p => p, :score => -dist} if at_least_one_acceptable
       end
     end
     res = res.sort{|a,b| a[:p].to_label <=> b[:p].to_label}.sort{|a,b| b[:score]<=>a[:score]}
