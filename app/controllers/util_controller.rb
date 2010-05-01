@@ -53,6 +53,19 @@ class UtilController < ApplicationController
     redirect_to :controller =>'home', :action => 'list_patients'
   end
   
+  def resave_all
+    Patient.find(:all).each{|a| a.save}
+    Visit.find(:all).each{|a| a.save}
+    Attending.find(:all).each{|a| a.save}
+    User.find(:all).each{|a| a.save}
+    TbTest.find(:all).each{|a| a.save}
+    Prescription.find(:all).each{|a| a.save}
+    
+    flash[:notice] = "Re-saved all"
+    
+    redirect_to :controller =>'home', :action => 'list_patients'
+  end
+  
   def note_user_activity
     render :nothing => true
   end
