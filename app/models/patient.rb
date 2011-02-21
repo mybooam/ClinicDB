@@ -18,10 +18,12 @@ class Patient < ActiveRecord::Base
   validates_presence_of :sex
   validates_presence_of :ethnicity_id
   
-  before_save      EncryptionWrapper.new(["last_name", "first_name", "adult_illness", "surgeries", "allergies", "drug_notes", "etoh_notes"])
-  after_save       EncryptionWrapper.new(["last_name", "first_name", "adult_illness", "surgeries", "allergies", "drug_notes", "etoh_notes"])
-  after_find       EncryptionWrapper.new(["last_name", "first_name", "adult_illness", "surgeries", "allergies", "drug_notes", "etoh_notes"])
-  after_initialize EncryptionWrapper.new(["last_name", "first_name", "adult_illness", "surgeries", "allergies", "drug_notes", "etoh_notes"])
+  encrypted_field = %w(adult_illness surgeries allergies drug_notes etoh_notes)
+  
+  before_save      EncryptionWrapper.new(encrypted_field, "Patient")
+  after_save       EncryptionWrapper.new(encrypted_field, "Patient")
+  after_find       EncryptionWrapper.new(encrypted_field, "Patient")
+  after_initialize EncryptionWrapper.new(encrypted_field, "Patient")
   
   def after_find
   end
@@ -102,29 +104,30 @@ class Patient < ActiveRecord::Base
       a&&a.length>0
     }
     
-    patients = Patient.find(:all)
+    rows_from_sql = Patient.connection.execute "SELECT first_name, last_name, id FROM patients"
+    rows_from_sql.each{ |p| puts p}
     
     res = []
     do_fuzzy_patient_search = Setting.get_b("fuzzy_patient_search", false)
     
-    patients.each do |p|
-      matches = phrases.select{|s| p.first_name.upcase.include?(s)||p.last_name.upcase.include?(s)}
+    rows_from_sql.each do |p|
+      matches = phrases.select{|s| p['first_name'].upcase.include?(s)||p['last_name'].upcase.include?(s)}
       if matches.length > 0
-        res << {:p => p, :score => matches.length}
+        res << {:p => Patient.find(p['id']), :score => matches.length}
       elsif(do_fuzzy_patient_search)
         dist = 0
         at_least_one_acceptable = false
         phrases.each{|s| 
-          fn_dist = edit_dist(p.first_name.upcase, s)
-          ln_dist = edit_dist(p.last_name.upcase, s)
+          fn_dist = edit_dist(p['first_name'].upcase, s)
+          ln_dist = edit_dist(p['last_name'].upcase, s)
           dist += [fn_dist, ln_dist].min
           if(ln_dist<fn_dist) 
-            at_least_one_acceptable = true if ln_dist < p.last_name.length/2
+            at_least_one_acceptable = true if ln_dist < p['last_name'].length/4
           else
-            at_least_one_acceptable = true if fn_dist < p.first_name.length/2
+            at_least_one_acceptable = true if fn_dist < p['first_name'].length/4
           end
         }
-        res << {:p => p, :score => -dist} if at_least_one_acceptable
+        res << {:p => Patient.find(p['id']), :score => -dist} if at_least_one_acceptable
       end
     end
     res = res.sort{|a,b| a[:p].to_label <=> b[:p].to_label}.sort{|a,b| b[:score]<=>a[:score]}
