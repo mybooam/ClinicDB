@@ -1,7 +1,6 @@
 require 'lib/security_helpers'
 
 class HomeController < ApplicationController
-  
   def index
     @tb_tests_open = TbTest.find(:all, :include => [:patient]).select { |a| a.open? }
   end
@@ -10,7 +9,7 @@ class HomeController < ApplicationController
     begin
       @patient = Patient.find(params['patient_id'], :include=> [:visits, :tb_tests, :immunizations, :prescriptions] )
     rescue
-      flash[:error] = "Patient does not exist.  Please contact an administrator if you receivee this message in error"
+      flash[:error] = "Patient does not exist.  Please contact an administrator if you receive this message in error"
       redirect_to :controller => :home, :action => :index and return
     end
     

@@ -1,23 +1,25 @@
 <%= javascript_include_tag :defaults %>
 
-<h3 style="color:white;">Suggested Encryption Key:</h3>
+<h3 style="color:white;">Encryption Key and Fingerprint:</h3>
 
-<%= text_field_tag :key, @suggest, {:style =>"font-size:16pt", :size => 70, :maxlength => 64} %>
+<div class="setup_instruction" >
+  <p>A security key has been detected attached to this server (<code><%= @key_file %></code>): </p>
+  <p>This is the security key that will be used to encrypt the database.  Each time ClinicDB is to be used, a USB key or other volume must be
+    be present that contains the same <code>secret.key</code> file in the <code>/security</code> directory.
+  </p>
+  <p>
+    <b>IF THE SECURITY KEY IS LOST, AND NO BACKUP REMAINS, IT WILL BE IMPOSSIBLE TO RETRIEVE THE DATA PRESENT IN CLINICDB.</b>
+  </p>
+</div>
+
+<%= text_field_tag :key, @attached_security_key, {:style =>"font-size:16pt", :size => 70, :maxlength => 64, :disabled => true} %>
 
 <% form_tag "accept_encryption" do %>
-	<div style="text-align:justify; background-color:#cfc; width:400px; padding: 2px 15px 2px 15px; margin:30px; margin-left:auto; margin-right:auto; ">
-		<p>Below is the fingerprint of the suggested encryption key.  If you would like to use the above key, copy the above key into a 
-		simple text file located at <code>/security/secret.key</code> on your flash drive and then click 'Accept'.  Make sure that nothing else apperas in that
-		file.  </p>
-		<p>If you know the fingerprint of the key you would like to use, please enter it below and click 'Accept'. </p>
-		<p><b>Once you click 'Accept' below, there is not turning back, the database will be keyed to the secret key that bears the fingerprint below.</b></p>
+	<div class="setup_instruction" >
+		<p>Below is the fingerprint of the selected encryption key.  </p>
+		<p><b>Once you click 'Accept' below, there is no turning back, the database will be keyed to the secret key that bears the fingerprint below.</b></p>
 	</div>
-	<div id="fingerprint_div"><%= text_field_tag :fingerprint, @suggest_fingerprint, {:style =>"font-size:16pt"} %></div><br/>
+	<div id="fingerprint_div"><%= text_field_tag :fingerprint, @fingerprint, {:style =>"font-size:16pt"} %></div><br/>
 	<%= submit_tag 'Accept' %>
 <% end %>
 
-<%= observe_field(:key,
-                 :frequency => 0.1,
-                 :update => :fingerprint_div,
-				 :with => 'key',
-                 :url => { :controller => :setup, :action => :encryption_key_fingerprint }) %>

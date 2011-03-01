@@ -1,7 +1,12 @@
 require "find"
 
+def getVolumes
+  vol = Dir.new("/Volumes/")
+  vol.select{|a| a!="." && a!=".."}.collect{|d| "/Volumes/" + d + "/" }
+end
+
 def securityKeyPresent?
-  Dir.new("/Volumes/").each do |volume| 
+  Dir.new("/Volumes/").each do |volume|
     if File.exist?("/Volumes/#{volume}/security/secret.key") # && File.exist?("/Volumes/#{volume}/security/secret.fingerprint")
       return true
     end
@@ -10,7 +15,7 @@ def securityKeyPresent?
 end
 
 def securityVolumeDirectory
-  Dir.new("/Volumes/").each do |volume| 
+  Dir.new("/Volumes/").each do |volume|
     if File.exist?("/Volumes/#{volume}/security/secret.key") # && File.exist?("/Volumes/#{volume}/security/secret.fingerprint")
       return "/Volumes/#{volume}/"
     end
@@ -40,7 +45,20 @@ def decrypt_string(value)
       decrypt_with_key(value, $security_helper_reset_mode_new_key)
     end
   end
+end
 
+def write_key_file(volume, k)
+  key_file_path = "#{volume}security/secret.key"
+  key_file = File.new(key_file_path, "w")
+  if is_likely_hex_string?(k) && k.length==64
+    formatted_key = k
+  elsif k.length==32
+    formatted_key = hex_array2str(k)
+  else
+    formatted_key = hex_array2str(Digest::SHA256.digest(k))
+  end
+  key_file.write(formatted_key)
+  key_file.close
 end
 
 def hash_password(pword) 
@@ -71,17 +89,6 @@ def set_security_key(new_key)
   $key = nil
 end
 
-private
-
-#def loadPasswordFromFile
-#  if(securityKeyPresent?)
-#    key_file = "#{securityVolumeDirectory}security/secret.key"
-#    File.new(key_file, "r").gets
-#  else
-#    nil
-#  end
-#end
-
 def loadKeyFromFile(key_file_name = "secret.key")
   if(securityKeyPresent?)
     key_file = "#{securityVolumeDirectory}security/#{key_file_name}"
@@ -103,6 +110,7 @@ def loadKeyFromFile(key_file_name = "secret.key")
   end
 end
 
+private
 def is_likely_hex_string?(str)
   str =~ /^[A-Fa-f0-9]*$/
 end

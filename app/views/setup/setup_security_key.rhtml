@@ -1,0 +1,41 @@
+<%= javascript_include_tag :defaults %>
+
+<h3 style="color:white;">Create an Encryption Key:</h3>
+
+<div class="setup_instruction">
+  <p>
+    In order to use ClinicDB, a security key must be created.  This file will be present on a USB key or other removable volume.
+    The database will be fully encrypted using this key.  If the database is stolen or distributed, it will be completely useless
+    without the encryption key.
+  </p>
+
+  <p>
+    The encryption key will be stored on the selected Volume in the file <code>/security/secret.key</code>.  If this key is lost, you will
+    not be able to read the database and all information will be lost forever.  Please make sure to have enough copies for each
+    person that will administer the database.  However, too many copies of the secret key will diminish the security of the information.
+  </p>
+
+  <p>
+    Below is a randomly generated key.  If you would like to use this key, click the "Create secret.key file" next to the volume where the key
+    should be created.  <b>DO NOT PLACE THE KEY FILE ON THE HARD DRIVE OF THIS SERVER.  IT MUST BE PLACED ON A REMOVABLE VOLUME, PREFERABLY A USB KEY.</b>
+  </p>
+</div>
+
+<%= text_field_tag :key, @suggest, {:style =>"font-size:16pt", :size => 70, :maxlength => 64, :disabled => true} %>
+<div class="security_box_button">
+    <%= link_to "<div>Refresh</div>", {:controller => :setup, :action => :setup_security_key}, :class => 'big' %>
+</div>
+
+<div class="setup_instruction">
+    <table>
+      <% @volumes.each do |vol| %>
+        <tr>
+          <td>Click to create key file on <%= link_to vol, :controller => :setup, :action => :create_key_file, :volume => vol, :key => @suggest %></td>
+        </tr>
+      <% end %>
+    </table>
+</div>
+
+<table>
+</table>
+

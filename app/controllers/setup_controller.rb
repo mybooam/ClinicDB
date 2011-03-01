@@ -1,21 +1,51 @@
 require 'lib/security_helpers'
 
 class SetupController < ApplicationController
-  def setup_encryption
+  # This method should run if encryption is not set up and there is no security.key file available
+  # Here the user should receive instructions on how to setup a USB key.
+  def setup_security_key
+    if securityKeyPresent?
+      redirect_to :controller => :setup, :action => :setup_encryption
+      return
+    end
     rkey = OpenSSL::Cipher::Cipher.new("aes-256-cbc").random_key
     @suggest = hex_array2str(rkey)
-    @suggest_fingerprint = getFingerprintString(rkey)
+    @volumes = getVolumes
     render :layout => "security_error"
   end
-  
-  def encryption_key_fingerprint
-    key = params[:key]
-    if key =~ /^[A-Fa-f0-9]{64}$/
-      @fp = getFingerprintString(hex_str2array(key))
-      render :layout => 'none';
+
+  def setup_security_key_manually
+    
+  end
+
+  def create_key_file
+    if securityKeyPresent?
+      flash[:error] = "Cannot create new key file as one already exists."
+      redirect_to :back
+      return
+    end
+
+    write_key_file(params[:volume], params[:key])
+    unless securityKeyPresent?
+      flash[:error] = "Key could not be created, please create it manually"
+      redirect_to :controller => :setup, :action => :setup_security_key_manually
+    end
+    flash[:notice] = "Key file created successfully"
+    redirect_to :controller => :setup, :action => :setup_encryption
+  end
+
+  # This method should attempt to load the key from a file.  If it can, it will make the user accept the key
+  # with the understanding that this cannot be undone and that the database is forever locked
+  def setup_encryption
+    if securityKeyPresent?
+      @key_file = securityVolumeDirectory + "security/secret.key"
+      @attached_security_key = loadKeyFromFile
+      @fingerprint = getFingerprintString(hex_str2array(@attached_security_key))
     else
-      render :text => "Error!"
-     end
+      redirect_to :controller => :setup, :action => :setup_security_key
+      return
+    end
+    render :layout => "security_error"
   end
   
   def accept_encryption
@@ -24,14 +54,22 @@ class SetupController < ApplicationController
       redirect_to :back
       return
     end
+
     fingerprint = params[:fingerprint]
-    if fingerprint =~ /^[A-Fa-f0-9]{8}$/
-      Setting.set("key_fingerprint", fingerprint);
-    else
+
+    unless fingerprint =~ /^[A-Fa-f0-9]{8}$/
       flash[:error] = "Fingerprint was invalid"
       redirect_to :back
       return
     end
+
+    unless securityKeyPresent? && getFingerprintString(hex_str2array(loadKeyFromFile))==fingerprint
+      flash[:error] = "Fingerprint did not match security key file currently attached to this server."
+      redirect_to :back
+      return
+    end
+
+    Setting.set("key_fingerprint", fingerprint);
     redirect_to :controller=>:setup, :action=>:encrypt_all
   end
   
