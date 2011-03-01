@@ -2,24 +2,30 @@
 
 <h3 style="color:white;">Encryption Key and Fingerprint:</h3>
 
-<div class="setup_instruction" >
+<div class="setup_instruction">
   <p>A security key has been detected attached to this server (<code><%= @key_file %></code>): </p>
-  <p>This is the security key that will be used to encrypt the database.  Each time ClinicDB is to be used, a USB key or other volume must be
+
+  <p>This is the security key that will be used to encrypt the database. Each time ClinicDB is to be used, a USB key or
+    other volume must be
     be present that contains the same <code>secret.key</code> file in the <code>/security</code> directory.
   </p>
+
   <p>
-    <b>IF THE SECURITY KEY IS LOST, AND NO BACKUP REMAINS, IT WILL BE IMPOSSIBLE TO RETRIEVE THE DATA PRESENT IN CLINICDB.</b>
+    <b>IF THE SECURITY KEY IS LOST, AND NO BACKUP REMAINS, IT WILL BE IMPOSSIBLE TO RETRIEVE THE DATA PRESENT IN
+      CLINICDB.</b>
   </p>
 </div>
 
 <%= text_field_tag :key, @attached_security_key, {:style =>"font-size:16pt", :size => 70, :maxlength => 64, :disabled => true} %>
 
 <% form_tag "accept_encryption" do %>
-	<div class="setup_instruction" >
-		<p>Below is the fingerprint of the selected encryption key.  </p>
-		<p><b>Once you click 'Accept' below, there is no turning back, the database will be keyed to the secret key that bears the fingerprint below.</b></p>
-	</div>
-	<div id="fingerprint_div"><%= text_field_tag :fingerprint, @fingerprint, {:style =>"font-size:16pt"} %></div><br/>
-	<%= submit_tag 'Accept' %>
+    <div class="setup_instruction">
+      <p>Below is the fingerprint of the selected encryption key. </p>
+
+      <p><b>Once you click 'Accept' below, there is no turning back, the database will be keyed to the secret key that
+        bears the fingerprint below.</b></p>
+    </div>
+    <div id="fingerprint_div"><%= text_field_tag :fingerprint, @fingerprint, {:style =>"font-size:16pt"} %></div><br/>
+    <%= submit_tag 'Accept' %>
 <% end %>
 
