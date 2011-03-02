@@ -23,7 +23,7 @@
 
 <%= text_field_tag :key, @suggest, {:style =>"font-size:16pt", :size => 70, :maxlength => 64, :disabled => true} %>
 <div class="security_box_button">
-    <%= link_to "<div>Refresh</div>", {:controller => :setup, :action => :setup_security_key}, :class => 'big' %>
+    <%= link_to "Refresh", {:controller => :setup, :action => :setup_security_key}, :class => 'big' %>
 </div>
 
 <div class="setup_instruction">

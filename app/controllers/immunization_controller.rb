@@ -1,7 +1,4 @@
 class ImmunizationController < ApplicationController
-	active_scaffold :immunization do |config|
-		config.columns = [:immunization_drug, :lot_number, :expiration_date, :notes, :patient]
-	end
 	
 	def add_for_patient
     immu = Immunization.new(params[:immunization])
